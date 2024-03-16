@@ -27,11 +27,11 @@
 <!-- Demo header-->
 <section class="section-0 d-flex justify-content-between">
     <h2 class="text-start mt-4" style="margin-left: 7px; font-family: serif">Regional Sucre</h2>
-    <img  src="../IMG/Logo_Sena_Sin_Fondo.png" width="150px" height="200px" alt="alt" class="align-self-end img-fluid"/> 
+    <img  src="../IMG/Logo_Sena_Sin_Fondo.png" width="150px" height="200px" alt="alt" class="align-self-end img-fluid "/> 
 </section>
 
 <!--Menu-->
-<header class="header sticky-top">
+<header style="font-family: monospace" class="header sticky-top">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,11 +68,19 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="HomeAdministradores.jsp">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Registros Egresados</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Registros
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Registro Egresados</a>
+                            <a class="dropdown-item" href="#">Registro Poblaciones</a>
+                            <a class="dropdown-item" href="#">Registro ciudades</a>
+                            <a class="dropdown-item" href="#">Registro Formacion y sede</a>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Registros Poblaciones</a>
+                        <a class="nav-link" href="#">Filtrados de Egresados</a>
                     </li>
                 </ul>
             </div>
@@ -81,14 +89,12 @@
 </header>
 
 
-
-
 <section class="section-1">
     <div class="container py-2">
         <div class="row text-center" style="font-family: monospace;">
             <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center ">
-                <div class="card mt-5 ">
-                    <img src="../IMG/Egresados.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
+                <div class="card mt-5 " data-aos="fade-down" data-aos-easing="linear" data-aos-duration="400">
+                    <img src="../IMG/Egresados_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
                     <div class="card-details">
                         <h5 class="mt-2">Registros Egresados</h5>
                         <p class="text-body">Click para ver los registros de  egresados</p>
@@ -97,8 +103,8 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
-                <div class="card mt-5">
-                    <img src="../IMG/Poblaciones.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
+                <div class="card mt-5" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="400">
+                    <img src="../IMG/Poblaciones_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
                     <div class="card-details">
                         <h5 class="mt-2">Registros Poblaciones</h5>
                         <p class="text-body">Click para ver registros de poblaciones</p>
@@ -107,8 +113,8 @@
                 </div>
             </div>
             <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                <div class="card mt-5"> 
-                    <img src="../IMG/SedeFormacion.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
+                <div class="card mt-5" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="400"> 
+                    <img src="../IMG/Formaciones_Sedes_Cards_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
                     <div class="card-details">
                         <h5 class="mt-2" >Formaciones y Sedes</h5>
                         <p class="text-body">Click para ver registros de formaciones y sedes</p>
@@ -121,38 +127,93 @@
 </section>
 
 
-<section class="py-5 section-2">
-    <div class="container py-5 text-center">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h2>Demo section 2</h2>
-                <p class="text-muted lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+<section class="py-2 section-2 ">
+    <div class="container py-2">
+        <div class="row text-center" style="font-family: monospace;">
+            <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center ">
+                <div class="card mt-5" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="400">
+                    <img src="../IMG/Filtro_Egresados_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
+                    <div class="card-details">
+                        <h5 class="mt-2">Filtro de Egresados</h5>
+                        <p class="text-body">Click para filtrar los egresados</p>
+                    </div>
+                    <button class="card-button">Ingreso</button>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
+                <div class="card mt-5" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="400">
+                    <img src="../IMG/Ciudades_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
+                    <div class="card-details">
+                        <h5 class="mt-2">Registros de ciudades</h5>
+                        <p class="text-body">Click para ver registros de ciudades</p>
+                    </div>
+                    <button style="font-family: monospace" class="card-button">Ingreso</button>
+                </div>
+            </div>
+            <div class="col-lg-4 d-flex justify-content-center align-items-center">
+                <div class="card mt-5 mb-2" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="400"> 
+                    <img src="../IMG/Tipos_Docuemnto_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
+                    <div class="card-details">
+                        <h5 class="mt-2" >Tipos de documento</h5>
+                        <p class="text-body">Click para ver registros de tipos de documento</p>
+                    </div>
+                    <button class="card-button">Ingreso</button>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5 section-3">
-    <div class="container py-5 text-center">
+<footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #5EB31A">
+    <div class="container-fluid">
+        <!--Row Principal-->
         <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h2>Demo section 3</h2>
-                <p class="text-muted lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+            <!--Primera Columna-->
+            <div class="col-md-4" id="redes">
+                <!--Rows Internos-->
+                <div class="row col-md-12" style="margin-left: 15px;">
+                    <a href="https://github.com/SebastianHurtado00" target="_blank" style="color: white;">
+                        <label class="form-label mt-3"> <img src="../IMG/github.png" alt="" style="width: 25px;">
+                            GitHub</a></label>
+                </div>
+                <div class="row col-md-12" style="margin-left: 15px;">
+                    <a href="https://www.linkedin.com/in/sebastian-hurtado-72a564267/" target="_blank" style="color: white;">
+                        <label class="form-label mt-3"> <img src="../IMG/linkedin.png" alt="linkedin" style="width: 25px;"> Linkedid
+                        </label>
+                    </a>
+                </div>
+                <!--https://www.instagram.com/sebastian_hurtado86/-->
+                <div class="row" style="margin-left: 15px;">
+                    <a href="https://www.instagram.com/sebastian_hurtado86/?next=%2F" target="_blank" style="color: white;">
+                        <label class="form-label mt-3"> <img src="../IMG/instagram.png" alt="" style="width: 25px;"> Instagram</label>
+                    </a>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
+            <!--Segunda Columna-->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <p class="contact-info" style="margin-left: 20%; color: white;"> &copy; By Sebastian Navaja Hurtado
+                    <br>
+                    Teléfono: +57 310 299 5093
+                    <!-- Esto evitará que el salto de línea se aplique en dispositivos más pequeños -->
+                    Email: slnavaja@soy.sena.edu.co
+                </p>
+            </div>
 
-<section class="py-5 section-4">
-    <div class="container py-5 text-center">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h2>Demo section 4</h2>
-                <p class="text-muted lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+            <!--Columna Logo Personal-->
+            <div class="col-md-4 mt-5" id="logoPersonal">
+                <div class="col-md-4">
+                    <img src="../IMG/letra-n.png" alt="Descripción de la imagen"
+                         style="width: 70px; margin-top: 10; margin-left: 200%;">
+                </div>
             </div>
         </div>
     </div>
-</section>
+</footer>
+
+
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <!-- Bootstrap JavaScript Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -162,19 +223,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var btnMessage = document.getElementById('btn-message');
-                var navbarText = document.getElementById('navbarText');
 
-                navbarText.addEventListener('show.bs.collapse', function () {
-                    btnMessage.classList.add('dropdown-open');
-                });
-
-                navbarText.addEventListener('hide.bs.collapse', function () {
-                    btnMessage.classList.remove('dropdown-open');
-                });
-            });
-
-</script>
 </html>
+<script>
+            AOS.init();
+</script>
