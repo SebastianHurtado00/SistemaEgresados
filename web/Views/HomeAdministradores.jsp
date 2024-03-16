@@ -17,7 +17,7 @@
         <link rel="shortcut icon" href="" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/CardsHome.css"/>
-
+        <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -25,19 +25,44 @@
 </head>
 
 <!-- Demo header-->
-<section class="section-0">
-
+<section class="section-0 d-flex justify-content-between">
+    <h2 class="text-start mt-4" style="margin-left: 7px; font-family: serif">Regional Sucre</h2>
+    <img  src="../IMG/Logo_Sena_Sin_Fondo.png" width="150px" height="200px" alt="alt" class="align-self-end img-fluid"/> 
 </section>
 
-
 <!--Menu-->
-
 <header class="header sticky-top">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!--Boton Usuario y menu de Datos personales y cerrado de sesion -->
+            <div class="navbar-brand order-lg-2" href="#">
+                <strong class="h6 mb-0 font-weight-bold">
+                    <div class="dropdown-center">
+                        <button id="btn-message" class="button-message" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="content-avatar">
+                                <div class="status-user"></div>
+                                <div class="avatar">
+                                    <svg class="user-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M12,12.5c-3.04,0-5.5,1.73-5.5,3.5s2.46,3.5,5.5,3.5,5.5-1.73,5.5-3.5-2.46-3.5-5.5-3.5Zm0-.5c1.66,0,3-1.34,3-3s-1.34-3-3-3-3,1.34-3,3,1.34,3,3,3Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="notice-content">
+                                <div class="username">Jessica Sanders</div>
+                            </div>
+                        </button>
+                        <ul class="dropdown-menu text-center" style="font-family: monospace">
+                            <li><a class="dropdown-item" href="#">Datos perosnales</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                        </ul>
+                    </div>
+                </strong>
+            </div>
+            <!--Items del menu -->
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -50,16 +75,13 @@
                         <a class="nav-link" href="#">Registros Poblaciones</a>
                     </li>
                 </ul>
-
             </div>
-            <span class="navbar-text">
-                <a class="navbar-brand" href="#">
-                    <strong class="h6 mb-0 font-weight-bold text-uppercase">Sticky navbar</strong>
-                </a>
-            </span>
         </div>
     </nav>
 </header>
+
+
+
 
 <section class="section-1">
     <div class="container py-2">
@@ -140,4 +162,19 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var btnMessage = document.getElementById('btn-message');
+                var navbarText = document.getElementById('navbarText');
+
+                navbarText.addEventListener('show.bs.collapse', function () {
+                    btnMessage.classList.add('dropdown-open');
+                });
+
+                navbarText.addEventListener('hide.bs.collapse', function () {
+                    btnMessage.classList.remove('dropdown-open');
+                });
+            });
+
+</script>
 </html>
