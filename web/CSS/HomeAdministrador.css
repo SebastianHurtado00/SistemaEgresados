@@ -11,10 +11,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 0.9rem !important;
 }
 
-.header {
-
-    background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5 100%);
-}
 
 .section-0 {
     background: #5EB31A;
@@ -35,38 +31,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-@media (max-width: 768px) {
-    footer .row {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
 
-
-    footer .col-md-4 {
-        width: 100%;
-        text-align: center;
-    }
-
-    footer #redes {
-        display: none;
-    }
-
-    footer #logoPersonal {
-        display: none;
-    }
-}
-
-@media (max-width: 992px) {
-    .contact-info br.d-none {
-        display: none; /* Oculta el salto de línea en dispositivos medianos */
-    }
-}
 
