@@ -1,4 +1,10 @@
 <%-- 
+    Document   : ListadoRegistroCiudades
+    Created on : 18/03/2024, 08:45:30 AM
+    Author     : ASUS
+--%>
+
+<%-- 
     Document   : ListadoRegistroPoblaciones
     Created on : 17/03/2024, 09:35:58 PM
     Author     : ASUS
@@ -9,7 +15,7 @@
 <html>
     <head>
 
-        <title>Listado Y registro de Poblaciones</title>
+        <title>Listado Y registro de Ciudades</title>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -91,19 +97,17 @@
             </nav>
         </header>
 
-
-
-
     <body style="background: #F1F1F1">
+
         <section class="mt-3 p-5">
 
-            <div class="card mx-auto" style="font-family: monospace" >
-                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de poblaciones</h5>
+            <div class="card mx-auto" style="font-family: monospace ;">
+                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de Ciudades</h5>
                 <div class="input-group mb-3 mt-2 p-2">
                     <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
-                    <input type="text" class="form-control" placeholder="Busqueda de Poblaciones"
+                    <input type="text" class="form-control" placeholder="Busqueda de Ciudades"
                            name="Dato_User" id="filtro">
-                    <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
                             data-bs-target="#ModalRegistro"><a style="color: white ; text-decoration: none">Regitrar Poblacion</a></button>
                 </div>
                 <div class="table-responsive" >
@@ -155,23 +159,23 @@
             </div>
         </section>
 
-        <!-- Modal -->
+        <!-- Modal Registro -->
         <div class="modal fade" id="ModalRegistro" tabindex="-1" aria-labelledby="ModalRegistro" aria-hidden="true" style="font-family: monospace">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Poblaciones</h1>
+                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Ciudades</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body mx-auto">
                         <div class="row">
                             <div class="col-8 mx-auto">
-                                <label for="Id" class="form-label">ID de poblacion</label>
+                                <label for="Id" class="form-label">ID de Ciudad</label>
                                 <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
                             </div>
                             <div class="col-8 mx-auto">
-                                <label for="NombrePoblacion" class="form-label">Nombre de poblacion</label>
-                                <input type="number" id="NombrePoblacion" name="name" class="form-control mb-2" maxlength="45" required>
+                                <label for="NombreCiudad" class="form-label">Nombre de Ciudad</label>
+                                <input type="number" id="NombreCiudad" name="name" class="form-control mb-2" maxlength="45" required>
                             </div>
 
                         </div>

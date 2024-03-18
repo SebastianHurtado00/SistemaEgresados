@@ -28,16 +28,16 @@
                 <div class="wrap-login100">
 
                     <form method="post" action="purueba" class="login100-form">
-                        <img class="mb-4"src="IMG/Logo_Sena_Sin_Fondo.png" width="45%" height="20%" alt="alt" style="margin-left: 55%"/>
-                        <span class="login100-form-title p-b-43 mb-4">
+                        <img class="mb-4"src="IMG/Logo_Sena_Sin_Fondo.png" width="50%" height="20%" alt="alt" style="margin-left: 55%"/>
+                        <span class="login100-form-title p-b-43 mb-5">
                             Inicio de sesion
                         </span>
 
-                        <div class="wrap-input100 validate-input mb-4">
-                            <input class="input100" type="text" name="email" placeholder="Usuario">
+                        <div class="wrap-input100 validate-input mt-3 mb-4">
+                            <input class="input100" type="number" maxlength="99999999999" name="" placeholder="Usuario">
                         </div>
                         <div class="wrap-input100 validate-input mb-4">
-                            <input class="input100" type="password" name="pass" placeholder="Password">                        
+                            <input class="input100" type="password" maxlength="200" name="pass" placeholder="Password">                        
                         </div>
 
                         <div class="flex-sb-m w-full p-t-3 p-b-32 mb-4">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <footer style="max-height: 160px; font-family: monospace; background-color: #5EB31A">
+        <footer style="max-height: 160px; font-family: monospace; background-color: #35C35D">
             <div class="container-fluid">
                 <!--Row Principal-->
                 <div class="row">

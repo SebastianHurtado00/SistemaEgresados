@@ -1,4 +1,10 @@
 <%-- 
+    Document   : DatosPersonales
+    Created on : 18/03/2024, 11:12:56 AM
+    Author     : ASUS
+--%>
+
+<%-- 
     Document   : HomeAdministradores
     Created on : 15/03/2024, 07:46:33 AM
     Author     : ASUS
@@ -17,7 +23,6 @@
         <link rel="shortcut icon" href="" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/Footer.css"/>
-        <link rel="stylesheet" href="../CSS/CardsHome.css"/>
         <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -90,81 +95,61 @@
     </header>
 
     <body style="background: #F1F1F1">
-        <section class="section-1">
-            <h4 class="text-center py-5" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400" style="font-family: monospace">Sistema de Administracion de Egresados</h4>
-            <div class="container">
-                <div class="row text-center" style="font-family: monospace;">
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center ">
-                        <div class="card mt-2 " data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Egresados_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Registros Egresados</h5>
-                                <p class="text-body">Click para ver los registros de  egresados</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D">Ingreso</button>
+        <section style="font-family: monospace">
+            <div class="card mx-auto mt-5 mb-5" style="max-width: 800px">
+                <h5 class="card-title text-center mt-2">Datos Personales</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Num_Cedula" class="form-label">N° Cedula</label>
+                            <input class="form-control" type="number" id="Num_Cedula" max="999999999999" name="name" readonly="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Tipo_Doc" class="form-label">Tipo Cedula</label>
+                            <select class="form-select" id="Tipo_Doc">
+                                <option selected disabled>Seleccione una opción</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Poblaciones_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Registros Poblaciones</h5>
-                                <p class="text-body">Click para ver registros de poblaciones</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label for="Nombre" class="form-label">Nombre</label>
+                            <input class="form-control" type="text" maxlength="45" id="Nombre" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Apellidos" class="form-label">Apellidos</label>
+                            <input class="form-control" type="text" maxlength="45" id="Apellidos" name="name" required>
                         </div>
                     </div>
-                    <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400"> 
-                            <img src="../IMG/Formaciones_Sedes_Cards_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2" >Formaciones y Sedes</h5>
-                                <p class="text-body">Click para ver registros de formaciones y sedes</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Correo" class="form-label">Correo</label>
+                            <input class="form-control" type="email" maxlength="200" id="Correo" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Telefono" class="form-label">Telefono</label>
+                            <input class="form-control" type="tel" max="999999999999" id="Telefono" name="name" required>
                         </div>
                     </div>
+                    <div class="row mt-3 mx-auto">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="password" class="form-label">Password</label>
+                            <input class="form-control" type="password" maxlength="200" id="password" name="name" required>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                    <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                        <button class="btn btn-success" type="button">Modificar</button>
+                    </div>
+
                 </div>
+
             </div>
         </section>
 
-
-        <section class="section-2 mb-5">
-            <div class="container">
-                <div class="row text-center" style="font-family: monospace;">
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center ">
-                        <div class="card mt-5" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Filtro_Egresados_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Filtro de Egresados</h5>
-                                <p class="text-body">Click para filtrar los egresados</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D">Ingreso</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-5" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Ciudades_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Registros de ciudades</h5>
-                                <p class="text-body">Click para ver registros de ciudades</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-5 mb-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400"> 
-                            <img src="../IMG/Tipos_Docuemnto_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2" >Listado de egresados</h5>
-                                <p class="text-body">Click para ver Listado de egresados</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </body>
     <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D">
         <div class="container-fluid">
@@ -227,7 +212,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>
-
 <script>
-    AOS.init();
+                AOS.init();
 </script>

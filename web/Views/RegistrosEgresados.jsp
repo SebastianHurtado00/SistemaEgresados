@@ -54,7 +54,7 @@
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
-                                <li><a class="dropdown-item" href="#">Datos perosnales</a></li>
+                                <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
                             </ul>
@@ -75,8 +75,8 @@
                                 <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
                                 <a class="dropdown-item" href="">Lisatdo de Egresados</a>
                                 <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Lisatdo y Registro de Poblaciones</a>
-                                <a class="dropdown-item" href="#">Listado y Registro de  ciudades</a>
-                                <a class="dropdown-item" href="#">Lisatdo y Registros de Formaciones y sedes</a>
+                                <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
+                                <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -88,204 +88,205 @@
         </nav>
     </header>
 
-    <!--Formulario Egresados -->
-    <section class="mx-auto p-3">
-        <div class="card mx-auto mb-5 mt-5" style="max-width: 900px ; min-width: 200px; font-family: monospace">
-            <h5 class="card-title text-center mt-3" >Registros de egresados</h5>
-            <div class="card-body">
-                <form id="multiPageForm">
-                    <!--Seccion de datos Personales -->
-                    <div class="page" id="page1">
-                        <div class="row">
-                            <h5 class="card-title mb-3">Informacion Personal</h5>
-                            <div class="col-md-6">
-                                <label for="numeroDocumento" class="form-label">N° Documento</label>
-                                <input type="text" id="numeroDocumento" class="form-control mb-3" required maxlength="15">
+    <body style="background: #F1F1F1">
+        <!--Formulario Egresados -->
+        <section class="mx-auto p-3" aty>
+            <div class="card mx-auto mb-5 mt-5" style="max-width: 900px ; min-width: 200px; font-family: monospace">
+                <h5 class="card-title text-center mt-3" >Registros de egresados</h5>
+                <div class="card-body">
+                    <form id="multiPageForm">
+                        <!--Seccion de datos Personales -->
+                        <div class="page" id="page1">
+                            <div class="row">
+                                <h5 class="card-title mb-3">Informacion Personal</h5>
+                                <div class="col-md-6">
+                                    <label for="numeroDocumento" class="form-label">N° Documento</label>
+                                    <input type="text" id="numeroDocumento" class="form-control mb-3" required max="99999999999">
 
-                                <label for="nombres" class="form-label">Nombres</label>
-                                <input type="text" id="nombres" class="form-control mb-3" required maxlength="45">
+                                    <label for="nombres" class="form-label">Nombres</label>
+                                    <input type="text" id="nombres" class="form-control mb-3" required maxlength="45">
 
-                                <label for="apellidos" class="form-label">Apellidos</label>
-                                <input type="text" id="apellidos" class="form-control mb-3" required maxlength="45">
+                                    <label for="apellidos" class="form-label">Apellidos</label>
+                                    <input type="text" id="apellidos" class="form-control mb-3" required maxlength="45">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+                                    <select id="tipoDocumento" class="form-select mb-3" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <!-- Opciones -->
+                                    </select>
+
+                                    <label for="sexo" class="form-label">Sexo</label>
+                                    <select id="sexo" class="form-select mb-3" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <!-- Opciones -->
+                                    </select>
+
+                                    <label for="tipoPoblacion" class="form-label">Tipo de Población</label>
+                                    <select id="tipoPoblacion" class="form-select mb-3" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <!-- Opciones -->
+                                    </select>
+                                </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
-                                <select id="tipoDocumento" class="form-select mb-3" required>
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <!-- Opciones -->
-                                </select>
-
-                                <label for="sexo" class="form-label">Sexo</label>
-                                <select id="sexo" class="form-select mb-3" required>
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <!-- Opciones -->
-                                </select>
-
-                                <label for="tipoPoblacion" class="form-label">Tipo de Población</label>
-                                <select id="tipoPoblacion" class="form-select mb-3" required>
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <!-- Opciones -->
-                                </select>
-                            </div>
+                            <i class="fa-solid fa-arrow-right fa-lg mt-3 px-3 " onclick="nextPage()"></i>
                         </div>
-                        <i class="fa-solid fa-arrow-right fa-lg mt-3 px-3 " onclick="nextPage()"></i>
-                    </div>
 
-                    <!-- Seccion de datos de residencia -->
-                    <div class="page" id="page2" style="display: none;">
-
-                        <div class="row">
-                            <h5 class="card-title mb-3">Informacion Residencia y contactos</h5>
-                            <div class="col-md-6">
-                                <label for="ciudad" class="form-label">Ciudad</label>
-                                <select id="ciudad" class="form-select mb-3" required>
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <!-- Opciones -->
-                                </select>
-
-                                <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" id="direccion" class="form-control mb-3" maxlength="100" placeholder="Opcional">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="numCertificados" class="form-label">N° de Certificados</label>
-                                <input type="number" id="numCertificados" class="form-control mb-3" maxlength="45" placeholder="Opcional">
-
-                                <label for="correo" class="form-label">Correo</label>
-                                <input type="email" id="correo" class="form-control mb-3" maxlength="45">
-                            </div>
+                        <!-- Seccion de datos de residencia -->
+                        <div class="page" id="page2" style="display: none;">
 
                             <div class="row">
-                                <div class = "col-md-3">
+                                <h5 class="card-title mb-3">Informacion Residencia y contactos</h5>
+                                <div class="col-md-6">
+                                    <label for="ciudad" class="form-label">Ciudad</label>
+                                    <select id="ciudad" class="form-select mb-3" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <!-- Opciones -->
+                                    </select>
+
+                                    <label for="direccion" class="form-label">Dirección</label>
+                                    <input type="text" id="direccion" class="form-control mb-3" maxlength="100" placeholder="Opcional">
                                 </div>
-                                <div class = "col-md-6">
-                                    <label for="numContacto" class="form-label mx-auto">Número de Contacto</label>
-                                    <input type="tel" id="numContacto" class="form-control mb-3">
+
+                                <div class="col-md-6">
+                                    <label for="numCertificados" class="form-label">N° de Certificados</label>
+                                    <input type="number" id="numCertificados" class="form-control mb-3" max="99999999999"" placeholder="Opcional">
+
+                                    <label for="correo" class="form-label">Correo</label>
+                                    <input type="email" id="correo" class="form-control mb-3" maxlength="45">
                                 </div>
-                                <div class = "col-md-3">
+
+                                <div class="row">
+                                    <div class = "col-md-3">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label for="numContacto" class="form-label mx-auto">Número de Contacto</label>
+                                        <input type="tel" id="numContacto" class="form-control mb-3">
+                                    </div>
+                                    <div class = "col-md-3">
+                                    </div>
                                 </div>
+
+
                             </div>
 
-
+                            <i class="fa-solid fa-arrow-left fa-lg mt-3 px-3 " onclick="prevPage()"></i>
+                            <i class="fa-solid fa-arrow-right fa-lg mt-3 px-3 " onclick="nextPage()"></i>
                         </div>
 
-                        <i class="fa-solid fa-arrow-left fa-lg mt-3 px-3 " onclick="prevPage()"></i>
-                        <i class="fa-solid fa-arrow-right fa-lg mt-3 px-3 " onclick="nextPage()"></i>
-                    </div>
+                        <!--Informacion Laboral -->
+                        <div class="page" id="page3" style="display: none;">
+                            <h5 class="card-title mb-3">Informacion Academica</h5>
+                            <div class="row mb-5">
+                                <div class="col-md-4">
+                                    <label for="sede" class="form-label">Sede</label>
+                                    <select id="sede" class="form-select mb-3">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <!-- Opciones -->
+                                    </select>
 
-                    <!--Informacion Laboral -->
-                    <div class="page" id="page3" style="display: none;">
-                        <h5 class="card-title mb-3">Informacion Academica</h5>
-                        <div class="row mb-5">
-                            <div class="col-md-4">
-                                <label for="sede" class="form-label">Sede</label>
-                                <select id="sede" class="form-select mb-3">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <!-- Opciones -->
-                                </select>
+                                    <!-- Pregunta y check Box sobre cadena de formacion -->
+                                    <div>
+                                        <!-- Pregunta -->
+                                        <label class="form-label mx-2">¿Cadena de formación?</label>
+                                        <br>
+                                        <!-- Checkbox "Sí" -->
+                                        <div class="form-check form-check-inline mx-4">
+                                            <input class="form-check-input" type="checkbox" id="siCheckbox" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
+                                            <label class="form-check-label" for="siCheckbox">Sí</label>
+                                        </div>
 
-                                <!-- Pregunta y check Box sobre cadena de formacion -->
-                                <div>
-                                    <!-- Pregunta -->
-                                    <label class="form-label mx-2">¿Cadena de formación?</label>
-                                    <br>
-                                    <!-- Checkbox "Sí" -->
-                                    <div class="form-check form-check-inline mx-4">
-                                        <input class="form-check-input" type="checkbox" id="siCheckbox" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
-                                        <label class="form-check-label" for="siCheckbox">Sí</label>
+                                        <!-- Checkbox "No" -->
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="noCheckbox" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
+                                            <label class="form-check-label" for="noCheckbox">No</label>
+                                        </div>
+
+                                        <!-- Contenedor del input -->
+                                        <div id="miInputContainer" style="display: none; margin-top: 10px;">
+                                            <input class="form-control mb-3" type="text" id="miInput" placeholder="Formacion Cursada">
+                                        </div>
                                     </div>
 
-                                    <!-- Checkbox "No" -->
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="noCheckbox" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
-                                        <label class="form-check-label" for="noCheckbox">No</label>
-                                    </div>
+                                </div>
 
-                                    <!-- Contenedor del input -->
-                                    <div id="miInputContainer" style="display: none; margin-top: 10px;">
-                                        <input class="form-control mb-3" type="text" id="miInput" placeholder="Formacion Cursada">
+                                <div class="col-md-4">
+                                    <label for="formacion" class="form-label">Formación</label>
+                                    <select id="formacion" class="form-select mb-3">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <!-- Opciones -->
+                                    </select>
+
+
+
+                                    <!-- Pregunta y check Box sobre Experiencia -->
+                                    <div >
+                                        <!-- Pregunta -->
+                                        <label class="form-label mx-2">¿Experiencia Laboral?</label>
+                                        <br>
+                                        <!-- Checkbox "Sí" -->
+                                        <div class="form-check form-check-inline mx-4">
+                                            <input class="form-check-input" type="checkbox" id="siCheckboxExp" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
+                                            <label class="form-check-label" for="siCheckbox">Sí</label>
+                                        </div>
+
+                                        <!-- Checkbox "No" -->
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="noCheckboxExp" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
+                                            <label class="form-check-label" for="noCheckbox">No</label>
+                                        </div>
+
+                                        <!-- Contenedor del input -->
+                                        <div id="miInputContainerExp" style="display: none; margin-top: 10px;">
+                                            <textarea id="" name="name" rows="5" cols="" class="form-control" placeholder="Describa su experiencia maximo(300 caracteres)" maxlength="300"></textarea>
+
+                                        </div>
                                     </div>
                                 </div>
 
-                            </div>
+                                <div class="col-md-4">
+                                    <label for="nivelFormacion" class="form-label">Nivel de Formación</label>
+                                    <select id="nivelFormacion" class="form-select mb-3">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <!-- Opciones -->
+                                    </select>
 
-                            <div class="col-md-4">
-                                <label for="formacion" class="form-label">Formación</label>
-                                <select id="formacion" class="form-select mb-3">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <!-- Opciones -->
-                                </select>
+                                    <!-- Pregunta y check Box sobre Carrera Universitaria -->
+                                    <div>
+                                        <!-- Pregunta -->
+                                        <label class="form-label mx-2">¿Carrera Univerisitaria?</label>
+                                        <br>
+                                        <!-- Checkbox "Sí" -->
+                                        <div class="form-check form-check-inline mx-4">
+                                            <input class="form-check-input" type="checkbox" id="siCheckboxUni" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
+                                            <label class="form-check-label" for="siCheckbox">Sí</label>
+                                        </div>
 
+                                        <!-- Checkbox "No" -->
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="noCheckboxUni" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
+                                            <label class="form-check-label" for="noCheckbox">No</label>
+                                        </div>
 
-
-                                <!-- Pregunta y check Box sobre Experiencia -->
-                                <div >
-                                    <!-- Pregunta -->
-                                    <label class="form-label mx-2">¿Experiencia Laboral?</label>
-                                    <br>
-                                    <!-- Checkbox "Sí" -->
-                                    <div class="form-check form-check-inline mx-4">
-                                        <input class="form-check-input" type="checkbox" id="siCheckboxExp" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
-                                        <label class="form-check-label" for="siCheckbox">Sí</label>
-                                    </div>
-
-                                    <!-- Checkbox "No" -->
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="noCheckboxExp" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
-                                        <label class="form-check-label" for="noCheckbox">No</label>
-                                    </div>
-
-                                    <!-- Contenedor del input -->
-                                    <div id="miInputContainerExp" style="display: none; margin-top: 10px;">
-                                        <textarea id="" name="name" rows="5" cols="" class="form-control" placeholder="Describa su experiencia maximo(300 caracteres)" maxlength="300"></textarea>
-
+                                        <!-- Contenedor del input -->
+                                        <div id="miInputContainerUni" style="display: none; margin-top: 10px;">
+                                            <input class="form-control mb-3" type="text" maxlength="100" id="miInput" placeholder="Nombre Univerisad">
+                                            <input class="form-control mb-3" type="text" maxlength="100" id="miInput" placeholder="Nombre Carrera">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="nivelFormacion" class="form-label">Nivel de Formación</label>
-                                <select id="nivelFormacion" class="form-select mb-3">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <!-- Opciones -->
-                                </select>
-
-                                <!-- Pregunta y check Box sobre Carrera Universitaria -->
-                                <div>
-                                    <!-- Pregunta -->
-                                    <label class="form-label mx-2">¿Carrera Univerisitaria?</label>
-                                    <br>
-                                    <!-- Checkbox "Sí" -->
-                                    <div class="form-check form-check-inline mx-4">
-                                        <input class="form-check-input" type="checkbox" id="siCheckboxUni" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
-                                        <label class="form-check-label" for="siCheckbox">Sí</label>
-                                    </div>
-
-                                    <!-- Checkbox "No" -->
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="noCheckboxUni" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
-                                        <label class="form-check-label" for="noCheckbox">No</label>
-                                    </div>
-
-                                    <!-- Contenedor del input -->
-                                    <div id="miInputContainerUni" style="display: none; margin-top: 10px;">
-                                        <input class="form-control mb-3" type="text" id="miInput" placeholder="Nombre Univerisad">
-                                        <input class="form-control mb-3" type="text" id="miInput" placeholder="Nombre Carrera">
-                                    </div>
-                                </div>
-                            </div>
+                            <i class="fa-solid fa-arrow-left fa-lg mt-3 px-3 " onclick="prevPage()"></i>
+                            <button class="fa-solid fa-file-arrow-up fa-lg btn"></button>
                         </div>
-
-                        <i class="fa-solid fa-arrow-left fa-lg mt-3 px-3 " onclick="prevPage()"></i>
-                        <button class="fa-solid fa-file-arrow-up fa-lg btn"></button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #5EB31A ; margin-top: 5%">
+        </section>
+    </body>
+    <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D ; margin-top: 5%">
         <div class="container-fluid">
             <!--Row Principal-->
             <div class="row">

@@ -1,4 +1,10 @@
 <%-- 
+    Document   : ListadoRegistroFormacionesSedes
+    Created on : 18/03/2024, 09:28:59 AM
+    Author     : ASUS
+--%>
+
+<%-- 
     Document   : ListadoRegistroPoblaciones
     Created on : 17/03/2024, 09:35:58 PM
     Author     : ASUS
@@ -91,29 +97,83 @@
             </nav>
         </header>
 
-
-
-
     <body style="background: #F1F1F1">
-        <section class="mt-3 p-5">
 
-            <div class="card mx-auto" style="font-family: monospace" >
-                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de poblaciones</h5>
+        <section class="mt-3 p-3">
+            <div class="card mx-auto" style="font-family: monospace; width: 900px" >
+                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de Sedes</h5>
                 <div class="input-group mb-3 mt-2 p-2">
-                    <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
-                    <input type="text" class="form-control" placeholder="Busqueda de Poblaciones"
-                           name="Dato_User" id="filtro">
+                    <input type="text" class="form-control" placeholder="Busqueda de Sedes"
+                           name="Dato_User" id="filtro1">
                     <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
-                            data-bs-target="#ModalRegistro"><a style="color: white ; text-decoration: none">Regitrar Poblacion</a></button>
+                            data-bs-target="#ModalRegistroSede"><a style="color: white ; text-decoration: none">Regitrar Sede</a></button>
                 </div>
                 <div class="table-responsive" >
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 500px">
-                        <table class="table table-striped-columns" style="height: 500px">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 300px">
+                        <table id="tabla1" class="table table-striped-columns" style="height: 500px">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">ID Poblacion</th>
-                                    <th scope="col">Nombre Poblacion</th>
+                                    <th scope="col">ID Sedes</th>
+                                    <th scope="col">Nombre Sede</th>
+                                    <th scope="col">Configuracion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                </tr> <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                </tr> <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-2 p-3">
+            <div class="card mx-auto" style="font-family: monospace ; width: 900px" >
+                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de Formaciones</h5>
+                <div class="input-group mb-3 mt-2 p-2">
+
+                    <input type="text" class="form-control" placeholder="Busqueda de Formaciones"
+                           name="Dato_User" id="filtro2">
+                    <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
+                            data-bs-target="#ModalRegistroFormaciones"><a style="color: white ; text-decoration: none">Regitrar Formacion</a></button>
+                </div>
+                <div class="table-responsive" >
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 300px">
+                        <table id="tabla2" class="table table-striped-columns" style="height: 500px">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">ID Sedes</th>
+                                    <th scope="col">Nombre Sede</th>
                                     <th scope="col">Configuracion</th>
 
                                 </tr>
@@ -155,23 +215,23 @@
             </div>
         </section>
 
-        <!-- Modal -->
-        <div class="modal fade" id="ModalRegistro" tabindex="-1" aria-labelledby="ModalRegistro" aria-hidden="true" style="font-family: monospace">
+        <!-- Modal Regsitro de Sede -->
+        <div class="modal fade" id="ModalRegistroSede" tabindex="-1" aria-labelledby="ModalRegistroSede" aria-hidden="true" style="font-family: monospace">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Poblaciones</h1>
+                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Sedes</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body mx-auto">
                         <div class="row">
                             <div class="col-8 mx-auto">
-                                <label for="Id" class="form-label">ID de poblacion</label>
+                                <label for="Id" class="form-label">ID de Sede</label>
                                 <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
                             </div>
                             <div class="col-8 mx-auto">
-                                <label for="NombrePoblacion" class="form-label">Nombre de poblacion</label>
-                                <input type="number" id="NombrePoblacion" name="name" class="form-control mb-2" maxlength="45" required>
+                                <label for="NombreSede" class="form-label">Nombre de Sede</label>
+                                <input type="number" id="NombreSede" name="name" class="form-control mb-2" maxlength="60" required>
                             </div>
 
                         </div>
@@ -185,8 +245,45 @@
         </div>
 
 
+        <!-- Modal Regsitro de Formaciones -->
+        <div class="modal fade" id="ModalRegistroFormaciones" tabindex="-1" aria-labelledby="ModalRegistroFormacion" aria-hidden="true" style="font-family: monospace">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Formacion</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mx-auto">
+                        <div class="row">
+                            <div class="col-8 mx-auto">
+                                <label for="Id" class="form-label">ID de Formacion</label>
+                                <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
+                            </div>
+                            <div class="col-8 mx-auto">
+                                <label for="NombreFormacion" class="form-label">Nombre de Formacion</label>
+                                <input type="number" id="NombreFormacion" name="name" class="form-control mb-2" maxlength="45" required>
+                            </div>
+                            <div class="col-8 mx-auto">
+                                <label for="SedePerteneciente" class="form-label">Sede perteneciente</label>
+                                <select id="SedePerteneciente" class="form-select">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </body>
+
     <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D ; margin-top: 5%">
         <div class="container-fluid">
             <!--Row Principal-->
@@ -248,6 +345,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>
-<script src="../JS/ReconocimientoVoz.js"></script>
-<script src="../JS/FiltradoTablas.js"></script>
+<script src="../JS/FiltradoTablaFormacionSede.js"></script>
 </html>
