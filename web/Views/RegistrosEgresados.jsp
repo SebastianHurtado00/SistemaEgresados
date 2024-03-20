@@ -49,8 +49,10 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="notice-content">
+                                <div class="notice-content" style="font-family: monospace">
                                     <div class="username">Jessica Sanders</div>
+                                         <div class="text-center text-small text-gray">Admin</div>
+
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -73,14 +75,14 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
-                                <a class="dropdown-item" href="">Lisatdo de Egresados</a>
+                                 <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
                                 <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Lisatdo y Registro de Poblaciones</a>
                                 <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                 <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Filtrados de Egresados</a>
+                            <a class="nav-link" href="FiltradoEgresados.jsp">Filtrados de Egresados</a>
                         </li>
                     </ul>
                 </div>
@@ -90,8 +92,11 @@
 
     <body style="background: #F1F1F1">
         <!--Formulario Egresados -->
-        <section class="mx-auto p-3" aty>
-            <div class="card mx-auto mb-5 mt-5" style="max-width: 900px ; min-width: 200px; font-family: monospace">
+        <section class="p-3" aty>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end  justify-content-sm-end">
+                <button class="btn btn-outline-success mt-4" type="button" style="font-family: monospace">Importar datos desde CSV <i class="fa-solid fa-file-import"></i></button>
+                </div>
+            <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
                 <h5 class="card-title text-center mt-3" >Registros de egresados</h5>
                 <div class="card-body">
                     <form id="multiPageForm">
@@ -283,8 +288,22 @@
                         </div>
                     </form>
                 </div>
+                
             </div>
         </section>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     </body>
     <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D ; margin-top: 5%">
         <div class="container-fluid">
@@ -313,7 +332,7 @@
                 </div>
                 <!--Segunda Columna-->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <p class="contact-info" style="margin-left: 10%; color: white;"> &copy; By Sebastian Navaja Hurtado
+                    <p class="contact-info" style="margin-left: 10%; color: white;"> &copy; By Sebastian Navaja - Crystian Peralta
                         <br>
                         Teléfono: +57 310 299 5093
                         <!-- Esto evitará que el salto de línea se aplique en dispositivos más pequeños -->
@@ -346,5 +365,4 @@
     </script>
     <script src="../JS/NavegacionFormularioEgresados.js"></script>
     <script src="../JS/LogicaCheakBox.js"></script>
-</script>
 </html>

@@ -58,8 +58,9 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <div class="notice-content">
+                                    <div class="notice-content"style="font-family: monospace">
                                         <div class="username">Jessica Sanders</div>
+                                          <div class="text-center text-small text-gray">Admin</div>
                                     </div>
                                 </button>
                                 <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -82,14 +83,14 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
-                                    <a class="dropdown-item" href="">Lisatdo de Egresados</a>
+                                    <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
                                     <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Lisatdo y Registro de Poblaciones</a>
                                     <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                     <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Filtrados de Egresados</a>
+                                <a class="nav-link" href="FiltradoEgresados.jsp">Filtrados de Egresados</a>
                             </li>
                         </ul>
                     </div>
@@ -218,7 +219,7 @@
                 </div>
                 <!--Segunda Columna-->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <p class="contact-info" style="margin-left: 10%; color: white;"> &copy; By Sebastian Navaja Hurtado
+                    <p class="contact-info" style="margin-left: 10%; color: white;">  &copy; By Sebastian Navaja - Crystian Peralta
                         <br>
                         Teléfono: +57 310 299 5093
                         <br>

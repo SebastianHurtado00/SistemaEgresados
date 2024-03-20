@@ -1,6 +1,6 @@
 <%-- 
-    Document   : HomeAdministradores
-    Created on : 15/03/2024, 07:46:33 AM
+    Document   : RestablecimientoContrasehaEgresados
+    Created on : 20/03/2024, 10:52:30 AM
     Author     : ASUS
 --%>
 
@@ -17,8 +17,8 @@
         <link rel="shortcut icon" href="" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/Footer.css"/>
-        <link rel="stylesheet" href="../CSS/CardsHome.css"/>
         <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
+        <link rel="stylesheet" href="../CSS/TableScroll.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="notice-content" style="font-family: monospace;">
                                     <div class="username">Jessica Sanders</div>
-                                      <div class="text-center text-small text-gray">Admin</div>
+                                    <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -75,7 +75,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
-                                <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
+                                 <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
                                 <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Listado y Registro de Poblaciones</a>
                                 <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                 <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
@@ -90,83 +90,49 @@
         </nav>
     </header>
 
+
     <body style="background: #F1F1F1">
-        <section class="section-1">
-            <h4 class="text-center py-5" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400" style="font-family: monospace">Sistema de Administracion de Egresados</h4>
-            <div class="container">
-                <div class="row text-center" style="font-family: monospace;">
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center ">
-                        <div class="card mt-2 " data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Egresados_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Registros Egresados</h5>
-                                <p class="text-body">Click para ver los registros de  egresados</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D">Ingreso</button>
+
+        <section>
+
+            <div class="card mx-auto mt-5 mb-5" style="width: 50% ; min-width: 200px; font-family: monospace">
+                <h5 class="card-title text-center mt-3">Restablecimiento de contraseña</h5>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="number" name="name" placeholder="Ingrese un numero de cedula">
+                        <button class="btn btn-outline-success">Buscar</button>
+                    </div>
+                    <div class="table-responsive mb-2" >
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 180px">
+                            <table class="table table-striped-columns " style="height: 100px">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">N° Cedula</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Campos del usuario encontrado -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Poblaciones_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Registros Poblaciones</h5>
-                                <p class="text-body">Click para ver registros de poblaciones</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400"> 
-                            <img src="../IMG/Formaciones_Sedes_Cards_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2" >Formaciones y Sedes</h5>
-                                <p class="text-body">Click para ver registros de formaciones y sedes</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
-                        </div>
+                    <div class="d-grid gap-2 mx-auto mb-5">
+                        <button class="btn btn-outline-warning mx-auto ">Restablecer Contraseña</button>
                     </div>
                 </div>
             </div>
         </section>
 
+ 
 
-        <section class="section-2 mb-5">
-            <div class="container">
-                <div class="row text-center" style="font-family: monospace;">
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center ">
-                        <div class="card mt-5" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Filtro_Egresados_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Filtro de Egresados</h5>
-                                <p class="text-body">Click para filtrar los egresados</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D">Ingreso</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-5" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
-                            <img src="../IMG/Ciudades_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2">Registros de ciudades</h5>
-                                <p class="text-body">Click para ver registros de ciudades</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-5 mb-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400"> 
-                            <img src="../IMG/Tipos_Docuemnto_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
-                            <div class="card-details">
-                                <h5 class="mt-2" >Listado de egresados</h5>
-                                <p class="text-body">Click para ver Listado de egresados</p>
-                            </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
     </body>
+
+
+
     <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D">
         <div class="container-fluid">
             <!--Row Principal-->
@@ -213,8 +179,6 @@
         </div>
     </footer>
 
-
-
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -228,7 +192,3 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>
-
-<script>
-    AOS.init();
-</script>

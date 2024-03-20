@@ -89,7 +89,7 @@
                     </div>
                     <!--Segunda Columna-->
                     <div class="col-md-4 d-flex align-items-center justify-content-center mt-3">
-                        <p class="contact-info" style="margin-left: 10%; color: white; font-family: monospace"> &copy; By Sebastian Navaja Hurtado
+                        <p class="contact-info" style="margin-left: 10%; color: white; font-family: monospace"> &copy; By Sebastian Navaja - Crystian Peralta
                             <br>
                             Teléfono: +57 310 299 5093
                             <!-- Esto evitará que el salto de línea se aplique en dispositivos más pequeños -->

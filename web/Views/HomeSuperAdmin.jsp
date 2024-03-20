@@ -1,6 +1,6 @@
 <%-- 
-    Document   : HomeAdministradores
-    Created on : 15/03/2024, 07:46:33 AM
+    Document   : HomeSuperAdmin
+    Created on : 20/03/2024, 09:27:09 AM
     Author     : ASUS
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
 
-        <title>Home Administradores</title>
+        <title>Home Super Administrador</title>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,7 +29,6 @@
         <h2 class="text-start mt-4" style="margin-left: 7px; font-family: serif">Regional Sucre</h2>
         <img  src="../IMG/Logo_Sena_Sin_Fondo.png" width="150px" height="200px" alt="alt" class="align-self-end img-fluid "/> 
     </section>
-
     <!--Menu-->
     <header style="font-family: monospace" class="header sticky-top">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -50,9 +49,9 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="notice-content" style="font-family: monospace;">
+                                <div class="notice-content" style="font-family: monospace">
                                     <div class="username">Jessica Sanders</div>
-                                      <div class="text-center text-small text-gray">Admin</div>
+                                    <div class="text-center text-small text-gray">Super Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -67,28 +66,150 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="HomeAdministradores.jsp">Home</a>
+                            <a class="nav-link active" aria-current="page" href="HomeSuperAdmin.jsp">Home</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Registros
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
+                                <a class="dropdown-item" id="paginaActual" href="RegistrosEgresados.jsp">Registro Egresados</a>
                                 <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
                                 <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Listado y Registro de Poblaciones</a>
                                 <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                 <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="FiltradoEgresados.jsp">Filtrados de Egresados</a>
+
+                        <li  class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuSuperAdmin" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Funciones especiales
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuSuperAdmin">
+                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#RegistroAdministradores">Registro de Administradores</a>
+                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#RegistroSuperAdministradores" href="">Registro Super Admins</a>
+                                <a class="dropdown-item" href="RegistrosDeAcceos.jsp">Registros Accesos</a>
+                                <a class="dropdown-item" href="ListadoAdministradores.jsp">Listado de administradores</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+
+
+
     </header>
+
+    <!--Modales-->
+    <!-- Registro Administradores -->
+    <div class="modal fade" id="RegistroAdministradores" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: monospace">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de administradores</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <label for="CCadmin" class="form-label">Cedula</label>
+                            <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
+
+                            <label for="NombreAdmin" class="form-label">Nombre</label>
+                            <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
+
+                            <label for="emailAdmin" class="form-label">email</label>
+                            <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
+
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
+                            <select id="TipoDocAdmin" class="form-select mb-2">
+                                <option value="value" selected disabled>Seleccione una opción</option>
+                            </select>
+
+                            <label for="ApellidoAdmin" class="form-label">Apellido</label>
+                            <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
+
+                            <label for="TelefonoAdmin" class="form-label">Telefono</label>
+                            <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="PasswordAdmin" class="form-label">Password</label>
+                                <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
+                            </div>
+                            <div class="col-md-3">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registro SuperAdministradores -->
+    <div class="modal fade" id="RegistroSuperAdministradores" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: monospace">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de Super Administradores</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <label for="CCadmin" class="form-label">Cedula</label>
+                            <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
+
+                            <label for="NombreAdmin" class="form-label">Nombre</label>
+                            <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
+
+                            <label for="emailAdmin" class="form-label">email</label>
+                            <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
+
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
+                            <select id="TipoDocAdmin" class="form-select mb-2">
+                                <option value="value" selected disabled>Seleccione una opción</option>
+                            </select>
+
+                            <label for="ApellidoAdmin" class="form-label">Apellido</label>
+                            <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
+
+                            <label for="TelefonoAdmin" class="form-label">Telefono</label>
+                            <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="PasswordAdmin" class="form-label">Password</label>
+                                <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
+                            </div>
+                            <div class="col-md-3">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <body style="background: #F1F1F1">
         <section class="section-1">
@@ -230,5 +351,5 @@
 </html>
 
 <script>
-    AOS.init();
+        AOS.init();
 </script>
