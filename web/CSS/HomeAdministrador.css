@@ -11,6 +11,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 0.9rem !important;
 }
 
+.a-link{
+    text-decoration: none;
+    color: black;
+}
 
 .section-0 {
     background: #35C35D;

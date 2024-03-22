@@ -14,6 +14,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS v5.2.1 -->
+        <link rel="shortcut icon" href="../IMG/bloqueo-de-rotacion.webp" type="image/x-icon">
         <link rel="shortcut icon" href="" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/Footer.css"/>
@@ -95,8 +96,8 @@
 
         <section>
 
-            <div class="card mx-auto mt-5 mb-5" style="width: 50% ; min-width: 200px; font-family: monospace">
-                <h5 class="card-title text-center mt-3">Restablecimiento de contraseña</h5>
+            <div class="card mx-auto mt-5 mb-5" style="width: 50% ; min-width: 250px; font-family: monospace">
+                <h5 class="card-title text-center mt-3"> <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/> Restablecimiento de contraseña</h5>
                 <div class="card-body">
                     <div class="input-group mb-3">
                         <input class="form-control" type="number" name="name" placeholder="Ingrese un numero de cedula">

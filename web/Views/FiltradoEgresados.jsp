@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS v5.2.1 -->
-    <link rel="shortcut icon" href="" type="image/x-icon">
+    <link rel="shortcut icon" href="../IMG/graduado.webp" type="image/x-icon">
     <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
     <link rel="stylesheet" href="../CSS/Footer.css"/>
     <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
                                     <div class="username">Jessica Sanders</div>
-                                      <div class="text-center text-small text-gray">Admin</div>
+                                    <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -96,7 +96,7 @@
 
         <section class="mt-3 p-5">
             <div class="card mx-auto p-2" style="font-family: monospace" >
-                <h5 class="card-title text-center mt-4" >Filtrado de egresados</h5>
+                <h5 class="card-title text-center mt-4" > <img src="../IMG/formacion.webp" alt="alt" width="30px" height="30px"/> Filtrado de egresados</h5>
                 <div class="input-group mb-3 mt-2 p-2">
                     <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
                     <input type="text" class="form-control" placeholder="Busqueda de Egresados"
@@ -105,12 +105,13 @@
 
                 <div class="row">
                     <div class="col-md-4">
+                        <img src="../IMG/sexo.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="sexo" class="form-label">Sexo</label>
                         <select id="sexo" class="form-select mb-3">
                             <option value="" selected disabled>Seleccione una opción</option>
                             <!-- Opciones -->
                         </select>
-
+                        <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="sede" class="form-label">Sede</label>
                         <select id="sede" class="form-select mb-3">
                             <option value="" selected disabled>Seleccione una opción</option>
@@ -118,12 +119,14 @@
                         </select>
                     </div>
                     <div class="col-md-4">
+                        <img src="../IMG/formacion.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="formacion" class="form-label">Formacion</label>
                         <select id="formacion" class="form-select mb-3">
                             <option value="" selected disabled>Seleccione una opción</option>
                             <!-- Opciones -->
                         </select>
 
+                        <img src="../IMG/experiencia.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="Experiencia" class="form-label">Experiencia</label>
                         <select id="Experiencia" class="form-select mb-3">
                             <option value="" selected disabled>Seleccione una opción</option>
@@ -131,12 +134,14 @@
                         </select>
                     </div>
                     <div class="col-md-4">
+                        <img src="../IMG/labor.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="Laborando" class="form-label">Laborando</label>
                         <select id="Laborando" class="form-select mb-3">
                             <option value="" selected disabled>Seleccione una opción</option>
                             <!-- Opciones -->
                         </select>
 
+                        <img src="../IMG/edificios.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="Ciudad" class="form-label">Ciudad</label>
                         <select id="Ciudad" class="form-select mb-3">
                             <option value="" selected disabled>Seleccione una opción</option>
@@ -190,7 +195,7 @@
                         </table>
                     </div>
                 </div>
-                
+
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end justify-content-sm-end mt-2 " style="margin-right: 2%">
                     <button  data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <div class="svg-wrapper-1">
@@ -212,12 +217,12 @@
                         <span>Correo</span>
                     </button>
                 </div>
-                 
-                  
-                     
+
+
+
                 <div class="mx-auto">
-                <button class="btn btn-outline-danger mb-2">Descargar Reporte PDF Filtrado <i class="fa-regular fa-file-pdf"></i></i></button>
-            </div>
+                    <button class="btn btn-outline-danger mb-2">Descargar Reporte PDF Filtrado <i class="fa-regular fa-file-pdf"></i></i></button>
+                </div>
             </div>
 
             <!-- Modal -->

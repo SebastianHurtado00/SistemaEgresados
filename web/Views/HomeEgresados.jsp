@@ -14,7 +14,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS v5.2.1 -->
-        <link rel="shortcut icon" href="" type="image/x-icon">
+        <link rel="shortcut icon" href="../IMG/work-from-home.webp" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/Footer.css"/>
         <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
                                     <div class="username">Jessica Sanders</div>
-                                      <div class="text-center text-small text-gray">Admin</div>
+                                    <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -74,36 +74,41 @@
 
     <body style="background: #F1F1F1">
         <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
-            <h5 class="card-title text-center mt-3" >Registros de egresados</h5>
+            <h5 class="card-title text-center mt-3" ><img src="../IMG/graduado.webp" alt="alt" width="50px" height="50px"/>Registros de egresados</h5>
             <div class="card-body">
                 <form id="multiPageForm">
                     <!--Seccion de datos Personales -->
                     <div class="row">
                         <h5 class="card-title mb-3">Informacion Personal</h5>
                         <div class="col-md-6">
+                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                             <label for="numeroDocumento" class="form-label">N° Documento</label>
                             <input type="text" id="numeroDocumento" class="form-control mb-3" required max="99999999999">
 
+                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="nombres" class="form-label">Nombres</label>
                             <input type="text" id="nombres" class="form-control mb-3" required maxlength="45">
 
+                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="apellidos" class="form-label">Apellidos</label>
                             <input type="text" id="apellidos" class="form-control mb-3" required maxlength="45">
                         </div>
 
                         <div class="col-md-6">
+                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
                             <select id="tipoDocumento" class="form-select mb-3" required>
                                 <option value="" selected disabled>Seleccione una opción</option>
                                 <!-- Opciones -->
                             </select>
-
+                            <img src="../IMG/sexo.webp" alt="alt" width="30px" height="30px"/>
                             <label for="sexo" class="form-label">Sexo</label>
                             <select id="sexo" class="form-select mb-3" required>
                                 <option value="" selected disabled>Seleccione una opción</option>
                                 <!-- Opciones -->
                             </select>
 
+                            <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/>
                             <label for="tipoPoblacion" class="form-label">Tipo de Población</label>
                             <select id="tipoPoblacion" class="form-select mb-3" required>
                                 <option value="" selected disabled>Seleccione una opción</option>
@@ -114,20 +119,25 @@
                     <div class="row">
                         <h5 class="card-title mb-3">Informacion Residencia y contactos</h5>
                         <div class="col-md-6">
+                            <img src="../IMG/edificios.webp" alt="alt" width="30px" height="30px"/>
                             <label for="ciudad" class="form-label">Ciudad</label>
                             <select id="ciudad" class="form-select mb-3" required>
                                 <option value="" selected disabled>Seleccione una opción</option>
                                 <!-- Opciones -->
                             </select>
 
+                            <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="direccion" class="form-label">Dirección</label>
                             <input type="text" id="direccion" class="form-control mb-3" maxlength="100" placeholder="Opcional">
                         </div>
 
                         <div class="col-md-6">
+                            <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="30px" height="30px"/>
+
                             <label for="numCertificados" class="form-label">N° de Certificados</label>
                             <input type="number" id="numCertificados" class="form-control mb-3" max="99999999999"" placeholder="Opcional">
 
+                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
                             <label for="correo" class="form-label">Correo</label>
                             <input type="email" id="correo" class="form-control mb-3" maxlength="45">
                         </div>
@@ -136,6 +146,7 @@
                             <div class = "col-md-3">
                             </div>
                             <div class = "col-md-6">
+                                <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                                 <label for="numContacto" class="form-label mx-auto">Número de Contacto</label>
                                 <input type="tel" id="numContacto" class="form-control mb-3">
                             </div>
@@ -149,6 +160,7 @@
                     <h5 class="card-title mb-3">Informacion Academica</h5>
                     <div class="row mb-5">
                         <div class="col-md-4">
+                            <img src="../IMG/SedeFormacion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="sede" class="form-label">Sede</label>
                             <select id="sede" class="form-select mb-3">
                                 <option value="" selected disabled>Seleccione una opción</option>
@@ -181,6 +193,7 @@
                         </div>
 
                         <div class="col-md-4">
+                            <img src="../IMG/formacion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="formacion" class="form-label">Formación</label>
                             <select id="formacion" class="form-select mb-3">
                                 <option value="" selected disabled>Seleccione una opción</option>
@@ -215,6 +228,7 @@
                         </div>
 
                         <div class="col-md-4">
+                            <img src="../IMG/crecimiento.webp" alt="alt" width="30px" height="30px"/>
                             <label for="nivelFormacion" class="form-label">Nivel de Formación</label>
                             <select id="nivelFormacion" class="form-select mb-3">
                                 <option value="" selected disabled>Seleccione una opción</option>

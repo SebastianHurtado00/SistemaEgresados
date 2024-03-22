@@ -20,6 +20,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS v5.2.1 -->
+        <link rel="shortcut icon" href="../IMG/edificios.webp" type="image/x-icon">
         <link rel="shortcut icon" href="" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/Footer.css"/>
@@ -60,7 +61,7 @@
                                     </div>
                                     <div class="notice-content"style="font-family: monospace">
                                         <div class="username">Jessica Sanders</div>
-                                          <div class="text-center text-small text-gray">Admin</div>
+                                        <div class="text-center text-small text-gray">Admin</div>
                                     </div>
                                 </button>
                                 <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -102,14 +103,14 @@
 
         <section class="mt-3 p-5">
 
-            <div class="card mx-auto" style="font-family: monospace ;">
-                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de Ciudades</h5>
+            <div class="card mx-auto" style="font-family: monospace ; max-width: 900px ; min-width: 200px;">
+                <h5 class="card-title text-center mt-4" > <img src="../IMG/edificios.webp" alt="alt" width="30px" height="30px"/> Listado Registro y edicion de Ciudades</h5>
                 <div class="input-group mb-3 mt-2 p-2">
                     <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
-                    <input type="text" class="form-control" placeholder="Busqueda de Ciudades"
+                    <input type="text" class="form-control" placeholder="Bus    queda de Ciudades"
                            name="Dato_User" id="filtro">
                     <button class="btn btn-success" type="button" data-bs-toggle="modal"
-                            data-bs-target="#ModalRegistro"><a style="color: white ; text-decoration: none">Regitrar Poblacion</a></button>
+                            data-bs-target="#ModalRegistro"><a style="color: white ; text-decoration: none">Regitrar Ciudad</a></button>
                 </div>
                 <div class="table-responsive" >
                     <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 500px">
@@ -171,10 +172,12 @@
                     <div class="modal-body mx-auto">
                         <div class="row">
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
                                 <label for="Id" class="form-label">ID de Ciudad</label>
-                                <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
+                                <input type="number" id="Id" name="name" class="form-control mb-4" max="99999999999" required>
                             </div>
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/paisaje-urbano.webp" alt="alt" width="25px" height="25px"/> 
                                 <label for="NombreCiudad" class="form-label">Nombre de Ciudad</label>
                                 <input type="number" id="NombreCiudad" name="name" class="form-control mb-2" maxlength="45" required>
                             </div>

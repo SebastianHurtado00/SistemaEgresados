@@ -14,7 +14,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS v5.2.1 -->
-        <link rel="shortcut icon" href="" type="image/x-icon">
+        <link rel="shortcut icon" href="../IMG/personas.webp" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/Footer.css"/>
         <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="notice-content"style="font-family: monospace">
                                         <div class="username">Jessica Sanders</div>
-                                             <div class="text-center text-small text-gray">Admin</div>
+                                        <div class="text-center text-small text-gray">Admin</div>
 
                                     </div>
                                 </button>
@@ -78,7 +78,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
-                                   <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
+                                    <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
                                     <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Lisatdo y Registro de Poblaciones</a>
                                     <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                     <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
@@ -94,13 +94,11 @@
         </header>
 
 
-
-
     <body style="background: #F1F1F1">
         <section class="mt-3 p-5">
 
-            <div class="card mx-auto" style="font-family: monospace" >
-                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de poblaciones</h5>
+            <div class="card mx-auto" style="font-family: monospace ;max-width: 900px ; min-width:  250px; " >
+                <h5 class="card-title text-center mt-4" > <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/> Listado Registro y edicion de poblaciones</h5>
                 <div class="input-group mb-3 mt-2 p-2">
                     <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
                     <input type="text" class="form-control" placeholder="Busqueda de Poblaciones"
@@ -168,10 +166,12 @@
                     <div class="modal-body mx-auto">
                         <div class="row">
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="30px" height="30px"/>
                                 <label for="Id" class="form-label">ID de poblacion</label>
-                                <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
+                                <input type="number" id="Id" name="name" class="form-control mb-4" max="99999999999" required>
                             </div>
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/>
                                 <label for="NombrePoblacion" class="form-label">Nombre de poblacion</label>
                                 <input type="number" id="NombrePoblacion" name="name" class="form-control mb-2" maxlength="45" required>
                             </div>

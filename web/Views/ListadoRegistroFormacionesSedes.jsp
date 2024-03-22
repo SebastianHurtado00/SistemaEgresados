@@ -20,7 +20,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS v5.2.1 -->
-        <link rel="shortcut icon" href="" type="image/x-icon">
+        <link rel="shortcut icon" href="../IMG/marcador-de-posicion.webp" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
         <link rel="stylesheet" href="../CSS/Footer.css"/>
         <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="notice-content"style="font-family: monospace">
                                         <div class="username">Jessica Sanders</div>
-                                             <div class="text-center text-small text-gray">Admin</div>
+                                        <div class="text-center text-small text-gray">Admin</div>
 
                                     </div>
                                 </button>
@@ -84,7 +84,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
-                                     <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
+                                    <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
                                     <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Lisatdo y Registro de Poblaciones</a>
                                     <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                     <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
@@ -102,8 +102,8 @@
     <body style="background: #F1F1F1">
 
         <section class="mt-3 p-3">
-            <div class="card mx-auto" style="font-family: monospace; width: 900px" >
-                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de Sedes</h5>
+            <div class="card mx-auto" style="font-family: monospace; max-width: 900px ; min-width: 200px;" >
+                <h5 class="card-title text-center mt-4" > <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="30px" height="30px"/>  Listado Registro y edicion de Sedes</h5>
                 <div class="input-group mb-3 mt-2 p-2">
                     <input type="text" class="form-control" placeholder="Busqueda de Sedes"
                            name="Dato_User" id="filtro1">
@@ -159,8 +159,8 @@
         </section>
 
         <section class="mt-2 p-3">
-            <div class="card mx-auto" style="font-family: monospace ; width: 900px" >
-                <h5 class="card-title text-center mt-4" >Listado Registro y edicion de Formaciones</h5>
+            <div class="card mx-auto" style="font-family: monospace ; max-width: 900px ; min-width:  250px;" >
+                <h5 class="card-title text-center mt-4" > <img src="../IMG/formacion.webp" alt="alt" width="30px" height="30px"/> Listado Registro y edicion de Formaciones</h5>
                 <div class="input-group mb-3 mt-2 p-2">
 
                     <input type="text" class="form-control" placeholder="Busqueda de Formaciones"
@@ -228,10 +228,12 @@
                     <div class="modal-body mx-auto">
                         <div class="row">
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
                                 <label for="Id" class="form-label">ID de Sede</label>
-                                <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
+                                <input type="number" id="Id" name="name" class="form-control mb-3" max="99999999999" required>
                             </div>
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
                                 <label for="NombreSede" class="form-label">Nombre de Sede</label>
                                 <input type="number" id="NombreSede" name="name" class="form-control mb-2" maxlength="60" required>
                             </div>
@@ -258,14 +260,17 @@
                     <div class="modal-body mx-auto">
                         <div class="row">
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
                                 <label for="Id" class="form-label">ID de Formacion</label>
                                 <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
                             </div>
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/formacion.webp" alt="alt" width="25px" height="25px"/> 
                                 <label for="NombreFormacion" class="form-label">Nombre de Formacion</label>
                                 <input type="number" id="NombreFormacion" name="name" class="form-control mb-2" maxlength="45" required>
                             </div>
                             <div class="col-8 mx-auto">
+                                <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
                                 <label for="SedePerteneciente" class="form-label">Sede perteneciente</label>
                                 <select id="SedePerteneciente" class="form-select">
                                     <option value="" selected disabled>Seleccione una opción</option>

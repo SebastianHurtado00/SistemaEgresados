@@ -13,6 +13,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="shortcut icon" href="../IMG/work-from-home.webp" type="image/x-icon">
         <!-- Bootstrap CSS v5.2.1 -->
         <link rel="shortcut icon" href="" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
@@ -112,25 +113,31 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                             <label for="CCadmin" class="form-label">Cedula</label>
                             <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
 
+                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="NombreAdmin" class="form-label">Nombre</label>
                             <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
 
+                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
                             <label for="emailAdmin" class="form-label">email</label>
                             <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
 
                         </div>
                         <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
                             <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
                             <select id="TipoDocAdmin" class="form-select mb-2">
                                 <option value="value" selected disabled>Seleccione una opción</option>
                             </select>
 
+                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="ApellidoAdmin" class="form-label">Apellido</label>
                             <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
 
+                            <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                             <label for="TelefonoAdmin" class="form-label">Telefono</label>
                             <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
                         </div>
@@ -139,6 +146,7 @@
 
                             </div>
                             <div class="col-md-6">
+                                <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
                                 <label for="PasswordAdmin" class="form-label">Password</label>
                                 <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
                             </div>
@@ -167,25 +175,31 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                             <label for="CCadmin" class="form-label">Cedula</label>
                             <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
 
+                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="NombreAdmin" class="form-label">Nombre</label>
                             <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
 
+                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
                             <label for="emailAdmin" class="form-label">email</label>
                             <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
 
                         </div>
                         <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
                             <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
                             <select id="TipoDocAdmin" class="form-select mb-2">
                                 <option value="value" selected disabled>Seleccione una opción</option>
                             </select>
 
+                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="ApellidoAdmin" class="form-label">Apellido</label>
                             <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
 
+                            <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                             <label for="TelefonoAdmin" class="form-label">Telefono</label>
                             <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
                         </div>
@@ -194,6 +208,7 @@
 
                             </div>
                             <div class="col-md-6">
+                                <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
                                 <label for="PasswordAdmin" class="form-label">Password</label>
                                 <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
                             </div>
@@ -217,7 +232,7 @@
             <div class="container">
                 <div class="row text-center" style="font-family: monospace;">
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center ">
-                        <div class="card mt-2 " data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
+                        <div class="card mt-2 mb-4" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
                             <img src="../IMG/Egresados_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
                             <div class="card-details">
                                 <h5 class="mt-2">Registros Egresados</h5>
@@ -227,7 +242,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
-                        <div class="card mt-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
+                        <div class="card mt-2 mb-4" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400">
                             <img src="../IMG/Poblaciones_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
                             <div class="card-details">
                                 <h5 class="mt-2">Registros Poblaciones</h5>
@@ -351,5 +366,5 @@
 </html>
 
 <script>
-        AOS.init();
+                AOS.init();
 </script>

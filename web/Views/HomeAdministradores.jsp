@@ -13,6 +13,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="shortcut icon" href="../IMG/work-from-home.webp" type="image/x-icon">
         <!-- Bootstrap CSS v5.2.1 -->
         <link rel="shortcut icon" href="" type="image/x-icon">
         <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
@@ -52,7 +53,7 @@
                                 </div>
                                 <div class="notice-content" style="font-family: monospace;">
                                     <div class="username">Jessica Sanders</div>
-                                      <div class="text-center text-small text-gray">Admin</div>
+                                    <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -102,7 +103,7 @@
                                 <h5 class="mt-2">Registros Egresados</h5>
                                 <p class="text-body">Click para ver los registros de  egresados</p>
                             </div>
-                            <button class="card-button" style="background:#35C35D">Ingreso</button>
+                            <button class="card-button" style="background:#35C35D"><a class="a-link" href="../Views/RegistrosEgresados.jsp">Ingreso</a></button>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
@@ -112,7 +113,7 @@
                                 <h5 class="mt-2">Registros Poblaciones</h5>
                                 <p class="text-body">Click para ver registros de poblaciones</p>
                             </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
+                            <button class="card-button" style="background:#35C35D "><a class="a-link" href="../Views/ListadoRegistroPoblaciones.jsp">Ingreso</a></button>
                         </div>
                     </div>
                     <div class="col-lg-4 d-flex justify-content-center align-items-center">
@@ -122,7 +123,7 @@
                                 <h5 class="mt-2" >Formaciones y Sedes</h5>
                                 <p class="text-body">Click para ver registros de formaciones y sedes</p>
                             </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
+                            <button class="card-button" style="background:#35C35D "><a class="a-link" href="../Views/ListadoRegistroFormacionesSedes.jsp">Ingreso</a></button>
                         </div>
                     </div>
                 </div>
@@ -140,7 +141,7 @@
                                 <h5 class="mt-2">Filtro de Egresados</h5>
                                 <p class="text-body">Click para filtrar los egresados</p>
                             </div>
-                            <button class="card-button" style="background:#35C35D">Ingreso</button>
+                            <button class="card-button" style="background:#35C35D"><a class="a-link" href="../Views/FiltradoEgresados.jsp">Ingreso</a></button>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center align-items-center">
@@ -150,17 +151,17 @@
                                 <h5 class="mt-2">Registros de ciudades</h5>
                                 <p class="text-body">Click para ver registros de ciudades</p>
                             </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
+                            <button class="card-button" style="background:#35C35D "><a class="a-link" href="../Views/ListadoRegistroCiudades.jsp">Ingreso</a></button>
                         </div>
                     </div>
                     <div class="col-lg-4 d-flex justify-content-center align-items-center">
                         <div class="card mt-5 mb-2" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400"> 
                             <img src="../IMG/Tipos_Docuemnto_Card_11zon.webp" class="card-img-top" alt="Imagen_Egresados" width="300px" height="200px">
                             <div class="card-details">
-                                <h5 class="mt-2" >Listado de egresados</h5>
-                                <p class="text-body">Click para ver Listado de egresados</p>
+                                <h5 class="mt-2" >Restablecer contraseña</h5>
+                                <p class="text-body">Click para Restablecimiento contraseña</p>
                             </div>
-                            <button class="card-button" style="background:#35C35D ">Ingreso</button>
+                            <button class="card-button" style="background:#35C35D "><a class="a-link" href="../Views/RestablecimientoContrasehaEgresados.jsp">Ingreso</a></button>
                         </div>
                     </div>
                 </div>
@@ -230,5 +231,5 @@
 </html>
 
 <script>
-    AOS.init();
+                AOS.init();
 </script>

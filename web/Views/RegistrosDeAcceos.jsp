@@ -21,9 +21,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-      <script src="https://kit.fontawesome.com/0702706600.js" crossorigin="anonymous"></script>
-      <script src="../JS/ReconocimientoVoz.js"></script>
-  
+    <script src="https://kit.fontawesome.com/0702706600.js" crossorigin="anonymous"></script>
+    <script src="../JS/ReconocimientoVoz.js"></script>
+
 </head>
 
 <!-- Demo header-->
@@ -114,25 +114,31 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
+                        <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                         <label for="CCadmin" class="form-label">Cedula</label>
                         <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
 
+                        <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                         <label for="NombreAdmin" class="form-label">Nombre</label>
                         <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
 
+                        <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
                         <label for="emailAdmin" class="form-label">email</label>
                         <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
 
                     </div>
                     <div class="col-md-6 col-sm-12">
+                        <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
                         <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
                         <select id="TipoDocAdmin" class="form-select mb-2">
                             <option value="value" selected disabled>Seleccione una opción</option>
                         </select>
 
+                        <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                         <label for="ApellidoAdmin" class="form-label">Apellido</label>
                         <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
 
+                        <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                         <label for="TelefonoAdmin" class="form-label">Telefono</label>
                         <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
                     </div>
@@ -141,6 +147,7 @@
 
                         </div>
                         <div class="col-md-6">
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
                             <label for="PasswordAdmin" class="form-label">Password</label>
                             <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
                         </div>
@@ -169,25 +176,31 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
+                        <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                         <label for="CCadmin" class="form-label">Cedula</label>
                         <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
 
+                        <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                         <label for="NombreAdmin" class="form-label">Nombre</label>
                         <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
 
+                        <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
                         <label for="emailAdmin" class="form-label">email</label>
                         <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
 
                     </div>
                     <div class="col-md-6 col-sm-12">
+                        <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
                         <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
                         <select id="TipoDocAdmin" class="form-select mb-2">
                             <option value="value" selected disabled>Seleccione una opción</option>
                         </select>
 
+                        <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                         <label for="ApellidoAdmin" class="form-label">Apellido</label>
                         <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
 
+                        <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                         <label for="TelefonoAdmin" class="form-label">Telefono</label>
                         <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
                     </div>
@@ -196,6 +209,7 @@
 
                         </div>
                         <div class="col-md-6">
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
                             <label for="PasswordAdmin" class="form-label">Password</label>
                             <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
                         </div>
@@ -218,7 +232,7 @@
     <section>
 
         <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
-            <h5 class="card-title text-center mt-3">Registros sobres los accesos al sistema</h5>
+            <h5 class="card-title text-center mt-3"><img src="../IMG/red.webp" alt="alt" width="50px" height="50px"/>Registros sobres los accesos al sistema</h5>
             <div class="card-body">
                 <div class="input-group mb-3 mt-2 p-2">
                     <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
@@ -342,6 +356,6 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../JS/FiltradoTablas.js"></script>
+<script src="../JS/FiltradoTablas.js"></script>
 
 
