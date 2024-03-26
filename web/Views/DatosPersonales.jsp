@@ -4,6 +4,7 @@
     Author     : ASUS
 --%>
 
+<%@page import="Entidades.Usuarios"%>
 <%-- 
     Document   : HomeAdministradores
     Created on : 15/03/2024, 07:46:33 AM
@@ -13,6 +14,31 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+
+        response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
+        HttpSession sessionObtenida = request.getSession();
+        String MenuHome = "";
+        if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
+
+            Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
+            Usuarios userSuperAdmin = (Usuarios) sessionObtenida.getAttribute("SuperAdmin");
+
+            if (userAdmin != null) {
+                MenuHome = "HomeAdministradores.jsp";
+            } else {
+                MenuHome = "HomeSuperAdmin.jsp";
+            }
+
+        } else {
+            //Si no hay session administrativa se maata la sssion que entre
+            HttpSession sessionCerrar = request.getSession(false); // Obtén la sesión sin crear una nueva si no existe.
+            if (sessionCerrar != null) {
+                sessionCerrar.invalidate(); // Invalida la sesión actual
+            }
+            response.sendRedirect("index.jsp"); // Redirige al índice
+        }
+    %>
     <head>
 
         <title>Home Administradores</title>
@@ -57,7 +83,7 @@
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
                                     <div class="username">Jessica Sanders</div> 
-                                      <div class="text-center text-small text-gray">Admin</div>
+                                    <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -72,7 +98,7 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="HomeAdministradores.jsp">Home</a>
+                            <a class="nav-link active" aria-current="page" href="<%=MenuHome %>">Home</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,7 +106,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="RegistrosEgresados.jsp">Registro Egresados</a>
-                                 <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
+                                <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
                                 <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Listado y Registro de Poblaciones</a>
                                 <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                 <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>

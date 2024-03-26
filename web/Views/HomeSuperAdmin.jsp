@@ -4,8 +4,22 @@
     Author     : ASUS
 --%>
 
+<%@page import="Entidades.Tipodocumento"%>
+<%@page import="java.util.List"%>
+<%@page import="Controladores.TipodocumentoJpaController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%
+    response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
+    HttpSession sessionObtenida = request.getSession();
+    if (sessionObtenida.getAttribute("SuperAdmin") == null) {
+        response.sendRedirect("../index.jsp");
+    }
+    TipodocumentoJpaController controlTipoDocs = new TipodocumentoJpaController();
+    List<Tipodocumento> ListaTiposDocs = controlTipoDocs.findTipodocumentoEntities();
+    List<Tipodocumento> ListaTiposDocs2 = controlTipoDocs.findTipodocumentoEntities();
+%>
 <html>
     <head>
 
@@ -23,6 +37,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     </head>
 
     <!-- Demo header-->
@@ -31,6 +46,7 @@
         <img  src="../IMG/Logo_Sena_Sin_Fondo.png" width="150px" height="200px" alt="alt" class="align-self-end img-fluid "/> 
     </section>
     <!--Menu-->
+
     <header style="font-family: monospace" class="header sticky-top">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -58,7 +74,7 @@
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
                                 <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                             </ul>
                         </div>
                     </strong>
@@ -105,124 +121,119 @@
     <!-- Registro Administradores -->
     <div class="modal fade" id="RegistroAdministradores" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: monospace">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de administradores</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="CCadmin" class="form-label">Cedula</label>
-                            <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
-
-                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="NombreAdmin" class="form-label">Nombre</label>
-                            <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
-
-                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="emailAdmin" class="form-label">email</label>
-                            <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
-
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
-                            <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
-                            <select id="TipoDocAdmin" class="form-select mb-2">
-                                <option value="value" selected disabled>Seleccione una opción</option>
-                            </select>
-
-                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="ApellidoAdmin" class="form-label">Apellido</label>
-                            <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
-
-                            <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="TelefonoAdmin" class="form-label">Telefono</label>
-                            <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
-                        </div>
+            <form action="<%=request.getContextPath()%>/CrudAdministradores" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de administradores</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6 col-sm-12">
+                                <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="CCadmin" class="form-label">Cedula</label>
+                                <input  class="form-control mb-2" id="CCadmin" type="number" name="CedulaAdmin" max="999999999999" required>
+
+                                <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="NombreAdmin" class="form-label">Nombre</label>
+                                <input  class="form-control mb-2" id="NombreAdmin" type="text" name="NombreAdmin" maxlength="45" required>
+
+                                <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="emailAdmin" class="form-label">email</label>
+                                <input  class="form-control mb-2" id="emailAdmin" type="email" name="EmailAdmin" maxlength="200" required>
 
                             </div>
-                            <div class="col-md-6">
-                                <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
-                                <label for="PasswordAdmin" class="form-label">Password</label>
-                                <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6 col-sm-12">
+                                <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
+                                <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
+                                <select id="TipoDocAdmin" name="TipodocumentAdmin" class="form-select mb-2" required>
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <%
 
+                                        for (Tipodocumento tipoDoc : ListaTiposDocs) {
+                                            out.print("<option value ='" + tipoDoc.getId() + "'> ");
+                                            out.print(tipoDoc.getNombre());
+                                            out.print("</option>");
+                                        }
+                                    %>
+                                </select>
+
+                                <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="ApellidoAdmin" class="form-label">Apellido</label>
+                                <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="ApellidoAdmin" maxlength="45" required>
+
+                                <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="TelefonoAdmin" class="form-label">Telefono</label>
+                                <input  class="form-control mb-2" id="TelefonoAdmin" type="number" name="TelefonoAdmin" max="999999999999" required>
                             </div>
+
+
                         </div>
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type="" name="BtnAdmin" value="BtnGuardarAdmin" class="btn btn-success">Registrar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Registrar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <!-- Registro SuperAdministradores -->
     <div class="modal fade" id="RegistroSuperAdministradores" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: monospace">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de Super Administradores</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="CCadmin" class="form-label">Cedula</label>
-                            <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
-
-                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="NombreAdmin" class="form-label">Nombre</label>
-                            <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
-
-                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="emailAdmin" class="form-label">email</label>
-                            <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
-
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
-                            <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
-                            <select id="TipoDocAdmin" class="form-select mb-2">
-                                <option value="value" selected disabled>Seleccione una opción</option>
-                            </select>
-
-                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="ApellidoAdmin" class="form-label">Apellido</label>
-                            <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
-
-                            <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="TelefonoAdmin" class="form-label">Telefono</label>
-                            <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
-                        </div>
+            <form action="<%=request.getContextPath()%>/RegistroTemporalSuperAdmin" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de Super Administradores</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6 col-sm-12">
+                                <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="CCsuper" class="form-label">Cedula</label>
+                                <input  class="form-control mb-2" id="CCsuper" type="number" name="CedulaSuper" max="999999999999" required>
+
+                                <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="NombreSuper" class="form-label">Nombre</label>
+                                <input  class="form-control mb-2" id="NombreSuper" type="text" name="NombreSuper" maxlength="45" required>
+
+                                <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="emailSuper" class="form-label">email</label>
+                                <input  class="form-control mb-2" id="emailSuper" type="text" name="emailSuper" maxlength="200" required>
 
                             </div>
-                            <div class="col-md-6">
-                                <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
-                                <label for="PasswordAdmin" class="form-label">Password</label>
-                                <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6 col-sm-12">
+                                <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px" />
+                                <label class="form-label" for="TipoDocSuper">Tipo Documento</label>
+                                <select id="TipoDocSuper" name="TipoDocSuper" class="form-select mb-2" required="">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <%
+                                        for (Tipodocumento tipoDoc : ListaTiposDocs2) {
+                                            out.print("<option value ='" + tipoDoc.getId() + "'> ");
+                                            out.print(tipoDoc.getNombre());
+                                            out.print("</option>");
+                                        }
+                                    %>
+                                </select>
 
+                                <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="ApellidoAdmin" class="form-label">Apellido</label>
+                                <input  class="form-control mb-2" id="ApellidoSuper" type="text" name="ApellidoSuper" maxlength="45" required>
+
+                                <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
+                                <label for="TelefonoSuper" class="form-label">Telefono</label>
+                                <input  class="form-control mb-2" id="TelefonoSuper" type="number" name="TelefonoSuper" max="999999999999" required>
                             </div>
+
+
                         </div>
-
+                    </div>
+                    <div class="modal-footer">
+                        <button value="GuardarSuper" name="BtnSuperAdmin" class="btn btn-success">Registrar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Registrar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -349,6 +360,67 @@
         </div>
     </footer>
 
+    <%
+        String res = request.getParameter("respuesta");
+
+        if (res != null) {
+            switch (res) {
+                case "AdminGuaradado":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Administrador guardado correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "CCRegistrada":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Cedula ya registrada
+            </div>
+        </div>
+    </div>
+    <%                    break;
+        case "ExitoSuperAdmin":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Super Admin registrado correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+        }
+
+    %>
+
 
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -361,10 +433,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-/WfsFq4XLtXJzweC9UJ7o4JvW/2HGM8eNQwuqzoU4llitlLVvc/UnzgZ81gMdd6R" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </html>
 
 <script>
                 AOS.init();
+</script>
+
+<script>
+    // Activar el toast cuando la página se carga
+    window.onload = function () {
+        var toastEl = document.querySelector('.toast');
+        var toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    };
 </script>

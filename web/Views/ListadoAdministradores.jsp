@@ -8,7 +8,13 @@
 <!DOCTYPE html>
 
 <head>
-
+    <%
+        response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
+        HttpSession sessionObtenida = request.getSession();
+        if (sessionObtenida.getAttribute("SuperAdmin") == null) {
+            response.sendRedirect("../index.jsp");
+        }
+    %>
     <title>Listado de administradires</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">

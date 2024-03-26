@@ -5,6 +5,18 @@
 --%>
 
 <html lang="en">
+    <%
+        //En dado caso que se regrese al index se mata la session
+        response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
+        HttpSession sessionObtenida = request.getSession();
+        if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("Egresado") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
+            HttpSession sessionCerrar = request.getSession(false); // Obtén la sesión sin crear una nueva si no existe.
+            if (sessionCerrar != null) {
+                sessionCerrar.invalidate(); // Invalida la sesión actual
+            }
+            response.sendRedirect("index.jsp"); // Redirige al índice
+        }
+    %>
     <head>
         <title>Inicio sesion</title>
         <!-- Required meta tags -->
@@ -27,17 +39,17 @@
             <div class="container-login100">
                 <div class="wrap-login100">
 
-                    <form method="post" action="purueba" class="login100-form">
+                    <form method="post" action="LogicaIngreso" class="login100-form">
                         <img class="mb-4"src="IMG/Logo_Sena_Sin_Fondo.png" width="50%" height="20%" alt="alt" style="margin-left: 55%"/>
                         <span class="login100-form-title p-b-43 mb-5">
                             Inicio de sesion
                         </span>
 
                         <div class="wrap-input100 validate-input mt-3 mb-4">
-                            <input class="input100" type="number" maxlength="99999999999" name="" placeholder="Usuario">
+                            <input name="CC" class="input100" type="number" maxlength="99999999999" name="" placeholder="Usuario">
                         </div>
                         <div class="wrap-input100 validate-input mb-4">
-                            <input class="input100" type="password" maxlength="200" name="pass" placeholder="Password">                        
+                            <input name="contrasenha" class="input100" type="password" maxlength="200" name="pass" placeholder="Password">                        
                         </div>
 
                         <div class="flex-sb-m w-full p-t-3 p-b-32 mb-4">
@@ -50,7 +62,7 @@
 
 
                         <div class="container-login100-form-btn">
-                            <button class="login100-form-btn">
+                            <button value="action" name="BtnIngreso" class="login100-form-btn">
                                 Inicio de sesion
                             </button>
                         </div>

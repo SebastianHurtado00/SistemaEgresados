@@ -7,6 +7,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+        response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
+        HttpSession sessionObtenida = request.getSession();
+        if (sessionObtenida.getAttribute("Admin") == null) {
+            response.sendRedirect("../index.jsp");
+        }
+    %>
     <head>
 
         <title>Home Administradores</title>
@@ -59,7 +66,7 @@
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
                                 <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                             </ul>
                         </div>
                     </strong>

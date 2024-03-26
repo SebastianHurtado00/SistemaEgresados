@@ -6,6 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
+    HttpSession sessionObtenida = request.getSession();
+    if (sessionObtenida.getAttribute("Egresado") == null) {
+        response.sendRedirect("../index.jsp");
+    }
+%>
 <html>
     <head>
 
@@ -55,7 +62,7 @@
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
-                                <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                             </ul>
                         </div>
                     </strong>
