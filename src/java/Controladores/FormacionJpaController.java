@@ -93,14 +93,7 @@ public class FormacionJpaController implements Serializable {
             List<Egresado> egresadoListOld = persistentFormacion.getEgresadoList();
             List<Egresado> egresadoListNew = formacion.getEgresadoList();
             List<String> illegalOrphanMessages = null;
-            for (Egresado egresadoListOldEgresado : egresadoListOld) {
-                if (!egresadoListNew.contains(egresadoListOldEgresado)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Egresado " + egresadoListOldEgresado + " since its formacionID field is not nullable.");
-                }
-            }
+     
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
@@ -108,12 +101,8 @@ public class FormacionJpaController implements Serializable {
                 sedeIDNew = em.getReference(sedeIDNew.getClass(), sedeIDNew.getId());
                 formacion.setSedeID(sedeIDNew);
             }
-            List<Egresado> attachedEgresadoListNew = new ArrayList<Egresado>();
-            for (Egresado egresadoListNewEgresadoToAttach : egresadoListNew) {
-                egresadoListNewEgresadoToAttach = em.getReference(egresadoListNewEgresadoToAttach.getClass(), egresadoListNewEgresadoToAttach.getNumeroCedula());
-                attachedEgresadoListNew.add(egresadoListNewEgresadoToAttach);
-            }
-            egresadoListNew = attachedEgresadoListNew;
+      
+            
             formacion.setEgresadoList(egresadoListNew);
             formacion = em.merge(formacion);
             if (sedeIDOld != null && !sedeIDOld.equals(sedeIDNew)) {
@@ -124,17 +113,7 @@ public class FormacionJpaController implements Serializable {
                 sedeIDNew.getFormacionList().add(formacion);
                 sedeIDNew = em.merge(sedeIDNew);
             }
-            for (Egresado egresadoListNewEgresado : egresadoListNew) {
-                if (!egresadoListOld.contains(egresadoListNewEgresado)) {
-                    Formacion oldFormacionIDOfEgresadoListNewEgresado = egresadoListNewEgresado.getFormacionID();
-                    egresadoListNewEgresado.setFormacionID(formacion);
-                    egresadoListNewEgresado = em.merge(egresadoListNewEgresado);
-                    if (oldFormacionIDOfEgresadoListNewEgresado != null && !oldFormacionIDOfEgresadoListNewEgresado.equals(formacion)) {
-                        oldFormacionIDOfEgresadoListNewEgresado.getEgresadoList().remove(egresadoListNewEgresado);
-                        oldFormacionIDOfEgresadoListNewEgresado = em.merge(oldFormacionIDOfEgresadoListNewEgresado);
-                    }
-                }
-            }
+       
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

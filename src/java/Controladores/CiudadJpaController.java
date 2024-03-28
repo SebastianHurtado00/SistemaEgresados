@@ -27,7 +27,7 @@ import javax.persistence.Persistence;
 public class CiudadJpaController implements Serializable {
 
     public CiudadJpaController() {
-      this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
+       this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -93,24 +93,11 @@ public class CiudadJpaController implements Serializable {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             List<Egresado> attachedEgresadoListNew = new ArrayList<Egresado>();
-            for (Egresado egresadoListNewEgresadoToAttach : egresadoListNew) {
-                egresadoListNewEgresadoToAttach = em.getReference(egresadoListNewEgresadoToAttach.getClass(), egresadoListNewEgresadoToAttach.getNumeroCedula());
-                attachedEgresadoListNew.add(egresadoListNewEgresadoToAttach);
-            }
+        
             egresadoListNew = attachedEgresadoListNew;
             ciudad.setEgresadoList(egresadoListNew);
             ciudad = em.merge(ciudad);
-            for (Egresado egresadoListNewEgresado : egresadoListNew) {
-                if (!egresadoListOld.contains(egresadoListNewEgresado)) {
-                    Ciudad oldCiudadIDOfEgresadoListNewEgresado = egresadoListNewEgresado.getCiudadID();
-                    egresadoListNewEgresado.setCiudadID(ciudad);
-                    egresadoListNewEgresado = em.merge(egresadoListNewEgresado);
-                    if (oldCiudadIDOfEgresadoListNewEgresado != null && !oldCiudadIDOfEgresadoListNewEgresado.equals(ciudad)) {
-                        oldCiudadIDOfEgresadoListNewEgresado.getEgresadoList().remove(egresadoListNewEgresado);
-                        oldCiudadIDOfEgresadoListNewEgresado = em.merge(oldCiudadIDOfEgresadoListNewEgresado);
-                    }
-                }
-            }
+          
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

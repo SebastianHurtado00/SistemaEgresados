@@ -5,7 +5,7 @@
 package Controladores;
 
 import Controladores.exceptions.NonexistentEntityException;
-import Entidades.Bitacoraaccesos;
+import Entidades.ControlAcceso;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,9 +20,9 @@ import javax.persistence.criteria.Root;
  *
  * @author ASUS
  */
-public class BitacoraaccesosJpaController implements Serializable {
+public class ControlAccesoJpaController implements Serializable {
 
-    public BitacoraaccesosJpaController() {
+    public ControlAccesoJpaController() {
        this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
@@ -31,12 +31,12 @@ public class BitacoraaccesosJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Bitacoraaccesos bitacoraaccesos) {
+    public void create(ControlAcceso controlAcceso) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(bitacoraaccesos);
+            em.persist(controlAcceso);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,19 +45,19 @@ public class BitacoraaccesosJpaController implements Serializable {
         }
     }
 
-    public void edit(Bitacoraaccesos bitacoraaccesos) throws NonexistentEntityException, Exception {
+    public void edit(ControlAcceso controlAcceso) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            bitacoraaccesos = em.merge(bitacoraaccesos);
+            controlAcceso = em.merge(controlAcceso);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = bitacoraaccesos.getId();
-                if (findBitacoraaccesos(id) == null) {
-                    throw new NonexistentEntityException("The bitacoraaccesos with id " + id + " no longer exists.");
+                Integer id = controlAcceso.getId();
+                if (findControlAcceso(id) == null) {
+                    throw new NonexistentEntityException("The controlAcceso with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -73,14 +73,14 @@ public class BitacoraaccesosJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Bitacoraaccesos bitacoraaccesos;
+            ControlAcceso controlAcceso;
             try {
-                bitacoraaccesos = em.getReference(Bitacoraaccesos.class, id);
-                bitacoraaccesos.getId();
+                controlAcceso = em.getReference(ControlAcceso.class, id);
+                controlAcceso.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The bitacoraaccesos with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The controlAcceso with id " + id + " no longer exists.", enfe);
             }
-            em.remove(bitacoraaccesos);
+            em.remove(controlAcceso);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -89,19 +89,19 @@ public class BitacoraaccesosJpaController implements Serializable {
         }
     }
 
-    public List<Bitacoraaccesos> findBitacoraaccesosEntities() {
-        return findBitacoraaccesosEntities(true, -1, -1);
+    public List<ControlAcceso> findControlAccesoEntities() {
+        return findControlAccesoEntities(true, -1, -1);
     }
 
-    public List<Bitacoraaccesos> findBitacoraaccesosEntities(int maxResults, int firstResult) {
-        return findBitacoraaccesosEntities(false, maxResults, firstResult);
+    public List<ControlAcceso> findControlAccesoEntities(int maxResults, int firstResult) {
+        return findControlAccesoEntities(false, maxResults, firstResult);
     }
 
-    private List<Bitacoraaccesos> findBitacoraaccesosEntities(boolean all, int maxResults, int firstResult) {
+    private List<ControlAcceso> findControlAccesoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Bitacoraaccesos.class));
+            cq.select(cq.from(ControlAcceso.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -113,20 +113,20 @@ public class BitacoraaccesosJpaController implements Serializable {
         }
     }
 
-    public Bitacoraaccesos findBitacoraaccesos(Integer id) {
+    public ControlAcceso findControlAcceso(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Bitacoraaccesos.class, id);
+            return em.find(ControlAcceso.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getBitacoraaccesosCount() {
+    public int getControlAccesoCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Bitacoraaccesos> rt = cq.from(Bitacoraaccesos.class);
+            Root<ControlAcceso> rt = cq.from(ControlAcceso.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

@@ -4,6 +4,7 @@
     Author     : ASUS
 --%>
 
+<%@page import="Entidades.Usuarios"%>
 <%@page import="Entidades.Tipodocumento"%>
 <%@page import="java.util.List"%>
 <%@page import="Controladores.TipodocumentoJpaController"%>
@@ -13,12 +14,15 @@
 <%
     response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
     HttpSession sessionObtenida = request.getSession();
+    Usuarios usuarioEntrante = new Usuarios();
     if (sessionObtenida.getAttribute("SuperAdmin") == null) {
         response.sendRedirect("../index.jsp");
-    }
-    TipodocumentoJpaController controlTipoDocs = new TipodocumentoJpaController();
-    List<Tipodocumento> ListaTiposDocs = controlTipoDocs.findTipodocumentoEntities();
-    List<Tipodocumento> ListaTiposDocs2 = controlTipoDocs.findTipodocumentoEntities();
+    } else {
+
+        usuarioEntrante = (Usuarios) sessionObtenida.getAttribute("SuperAdmin");
+        TipodocumentoJpaController controlTipoDocs = new TipodocumentoJpaController();
+        List<Tipodocumento> ListaTiposDocs = controlTipoDocs.findTipodocumentoEntities();
+        List<Tipodocumento> ListaTiposDocs2 = controlTipoDocs.findTipodocumentoEntities();
 %>
 <html>
     <head>
@@ -67,7 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
-                                    <div class="username">Jessica Sanders</div>
+                                    <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                     <div class="text-center text-small text-gray">Super Admin</div>
                                 </div>
                             </button>
@@ -414,7 +418,7 @@
     <%
                     break;
                 default:
-                    throw new AssertionError();
+                    break;
             }
 
         }
@@ -430,12 +434,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-/WfsFq4XLtXJzweC9UJ7o4JvW/2HGM8eNQwuqzoU4llitlLVvc/UnzgZ81gMdd6R" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS/IniciarToast.js"></script>
 
 </html>
 
@@ -443,11 +445,4 @@
                 AOS.init();
 </script>
 
-<script>
-    // Activar el toast cuando la página se carga
-    window.onload = function () {
-        var toastEl = document.querySelector('.toast');
-        var toast = new bootstrap.Toast(toastEl);
-        toast.show();
-    };
-</script>
+<%    }%>

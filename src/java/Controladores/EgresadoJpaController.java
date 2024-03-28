@@ -31,7 +31,7 @@ import javax.persistence.Persistence;
 public class EgresadoJpaController implements Serializable {
 
     public EgresadoJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
+         this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
 

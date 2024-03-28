@@ -81,36 +81,16 @@ public class TipoPoblacionJpaController implements Serializable {
             List<Egresado> egresadoListOld = persistentTipoPoblacion.getEgresadoList();
             List<Egresado> egresadoListNew = tipoPoblacion.getEgresadoList();
             List<String> illegalOrphanMessages = null;
-            for (Egresado egresadoListOldEgresado : egresadoListOld) {
-                if (!egresadoListNew.contains(egresadoListOldEgresado)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Egresado " + egresadoListOldEgresado + " since its tipoPoblacionID field is not nullable.");
-                }
-            }
+
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             List<Egresado> attachedEgresadoListNew = new ArrayList<Egresado>();
-            for (Egresado egresadoListNewEgresadoToAttach : egresadoListNew) {
-                egresadoListNewEgresadoToAttach = em.getReference(egresadoListNewEgresadoToAttach.getClass(), egresadoListNewEgresadoToAttach.getNumeroCedula());
-                attachedEgresadoListNew.add(egresadoListNewEgresadoToAttach);
-            }
+
             egresadoListNew = attachedEgresadoListNew;
             tipoPoblacion.setEgresadoList(egresadoListNew);
             tipoPoblacion = em.merge(tipoPoblacion);
-            for (Egresado egresadoListNewEgresado : egresadoListNew) {
-                if (!egresadoListOld.contains(egresadoListNewEgresado)) {
-                    TipoPoblacion oldTipoPoblacionIDOfEgresadoListNewEgresado = egresadoListNewEgresado.getTipoPoblacionID();
-                    egresadoListNewEgresado.setTipoPoblacionID(tipoPoblacion);
-                    egresadoListNewEgresado = em.merge(egresadoListNewEgresado);
-                    if (oldTipoPoblacionIDOfEgresadoListNewEgresado != null && !oldTipoPoblacionIDOfEgresadoListNewEgresado.equals(tipoPoblacion)) {
-                        oldTipoPoblacionIDOfEgresadoListNewEgresado.getEgresadoList().remove(egresadoListNewEgresado);
-                        oldTipoPoblacionIDOfEgresadoListNewEgresado = em.merge(oldTipoPoblacionIDOfEgresadoListNewEgresado);
-                    }
-                }
-            }
+
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -205,5 +185,5 @@ public class TipoPoblacionJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

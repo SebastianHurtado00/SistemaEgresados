@@ -13,6 +13,7 @@
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
         HttpSession sessionObtenida = request.getSession();
         String MenuHome = "";
+        Usuarios usuarioEntrante = new Usuarios();
         if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
 
             Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
@@ -20,8 +21,10 @@
 
             if (userAdmin != null) {
                 MenuHome = "HomeAdministradores.jsp";
+                usuarioEntrante = userAdmin;
             } else {
                 MenuHome = "HomeSuperAdmin.jsp";
+                usuarioEntrante = userSuperAdmin;
             }
 
         } else {
@@ -78,14 +81,14 @@
                                     </div>
                                 </div>
                                 <div class="notice-content" style="font-family: monospace;">
-                                    <div class="username">Jessica Sanders</div>
+                                    <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                     <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
                                 <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                             </ul>
                         </div>
                     </strong>

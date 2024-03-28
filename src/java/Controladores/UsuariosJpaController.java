@@ -25,7 +25,7 @@ import javax.persistence.Persistence;
 public class UsuariosJpaController implements Serializable {
 
     public UsuariosJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
+         this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -170,5 +170,5 @@ public class UsuariosJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

@@ -28,7 +28,7 @@ import javax.persistence.Persistence;
 public class SedeJpaController implements Serializable {
 
     public SedeJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
+         this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -122,42 +122,16 @@ public class SedeJpaController implements Serializable {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             List<Formacion> attachedFormacionListNew = new ArrayList<Formacion>();
-            for (Formacion formacionListNewFormacionToAttach : formacionListNew) {
-                formacionListNewFormacionToAttach = em.getReference(formacionListNewFormacionToAttach.getClass(), formacionListNewFormacionToAttach.getId());
-                attachedFormacionListNew.add(formacionListNewFormacionToAttach);
-            }
+         
             formacionListNew = attachedFormacionListNew;
             sede.setFormacionList(formacionListNew);
             List<Egresado> attachedEgresadoListNew = new ArrayList<Egresado>();
-            for (Egresado egresadoListNewEgresadoToAttach : egresadoListNew) {
-                egresadoListNewEgresadoToAttach = em.getReference(egresadoListNewEgresadoToAttach.getClass(), egresadoListNewEgresadoToAttach.getNumeroCedula());
-                attachedEgresadoListNew.add(egresadoListNewEgresadoToAttach);
-            }
+          
             egresadoListNew = attachedEgresadoListNew;
             sede.setEgresadoList(egresadoListNew);
             sede = em.merge(sede);
-            for (Formacion formacionListNewFormacion : formacionListNew) {
-                if (!formacionListOld.contains(formacionListNewFormacion)) {
-                    Sede oldSedeIDOfFormacionListNewFormacion = formacionListNewFormacion.getSedeID();
-                    formacionListNewFormacion.setSedeID(sede);
-                    formacionListNewFormacion = em.merge(formacionListNewFormacion);
-                    if (oldSedeIDOfFormacionListNewFormacion != null && !oldSedeIDOfFormacionListNewFormacion.equals(sede)) {
-                        oldSedeIDOfFormacionListNewFormacion.getFormacionList().remove(formacionListNewFormacion);
-                        oldSedeIDOfFormacionListNewFormacion = em.merge(oldSedeIDOfFormacionListNewFormacion);
-                    }
-                }
-            }
-            for (Egresado egresadoListNewEgresado : egresadoListNew) {
-                if (!egresadoListOld.contains(egresadoListNewEgresado)) {
-                    Sede oldSedeIDOfEgresadoListNewEgresado = egresadoListNewEgresado.getSedeID();
-                    egresadoListNewEgresado.setSedeID(sede);
-                    egresadoListNewEgresado = em.merge(egresadoListNewEgresado);
-                    if (oldSedeIDOfEgresadoListNewEgresado != null && !oldSedeIDOfEgresadoListNewEgresado.equals(sede)) {
-                        oldSedeIDOfEgresadoListNewEgresado.getEgresadoList().remove(egresadoListNewEgresado);
-                        oldSedeIDOfEgresadoListNewEgresado = em.merge(oldSedeIDOfEgresadoListNewEgresado);
-                    }
-                }
-            }
+      
+      
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

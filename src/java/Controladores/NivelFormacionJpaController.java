@@ -27,7 +27,7 @@ import javax.persistence.Persistence;
 public class NivelFormacionJpaController implements Serializable {
 
     public NivelFormacionJpaController() {
-       this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
+         this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
 

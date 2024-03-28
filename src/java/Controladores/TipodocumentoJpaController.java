@@ -26,16 +26,16 @@ import javax.persistence.Persistence;
  * @author ASUS
  */
 public class TipodocumentoJpaController implements Serializable {
-    
+
     public TipodocumentoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
-    
+
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
+
     public void create(Tipodocumento tipodocumento) throws PreexistingEntityException, Exception {
         if (tipodocumento.getEgresadoList() == null) {
             tipodocumento.setEgresadoList(new ArrayList<Egresado>());
@@ -90,7 +90,7 @@ public class TipodocumentoJpaController implements Serializable {
             }
         }
     }
-    
+
     public void edit(Tipodocumento tipodocumento) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -174,7 +174,7 @@ public class TipodocumentoJpaController implements Serializable {
             }
         }
     }
-    
+
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
@@ -213,15 +213,15 @@ public class TipodocumentoJpaController implements Serializable {
             }
         }
     }
-    
+
     public List<Tipodocumento> findTipodocumentoEntities() {
         return findTipodocumentoEntities(true, -1, -1);
     }
-    
+
     public List<Tipodocumento> findTipodocumentoEntities(int maxResults, int firstResult) {
         return findTipodocumentoEntities(false, maxResults, firstResult);
     }
-    
+
     private List<Tipodocumento> findTipodocumentoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -237,7 +237,7 @@ public class TipodocumentoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public Tipodocumento findTipodocumento(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -246,7 +246,7 @@ public class TipodocumentoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public int getTipodocumentoCount() {
         EntityManager em = getEntityManager();
         try {

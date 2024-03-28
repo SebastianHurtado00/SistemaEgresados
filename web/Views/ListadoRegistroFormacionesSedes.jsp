@@ -4,6 +4,11 @@
     Author     : ASUS
 --%>
 
+<%@page import="Entidades.Formacion"%>
+<%@page import="Controladores.FormacionJpaController"%>
+<%@page import="Entidades.Sede"%>
+<%@page import="java.util.List"%>
+<%@page import="Controladores.SedeJpaController"%>
 <%@page import="Entidades.Usuarios"%>
 <%-- 
     Document   : ListadoRegistroPoblaciones
@@ -19,6 +24,7 @@
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
         HttpSession sessionObtenida = request.getSession();
         String MenuHome = "";
+        Usuarios usuarioEntrante = new Usuarios();
         if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
 
             Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
@@ -26,8 +32,10 @@
 
             if (userAdmin != null) {
                 MenuHome = "HomeAdministradores.jsp";
+                usuarioEntrante = userAdmin;
             } else {
                 MenuHome = "HomeSuperAdmin.jsp";
+                usuarioEntrante = userSuperAdmin;
             }
 
         } else {
@@ -84,7 +92,7 @@
                                         </div>
                                     </div>
                                     <div class="notice-content"style="font-family: monospace">
-                                        <div class="username">Jessica Sanders</div>
+                                        <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                         <div class="text-center text-small text-gray">Admin</div>
 
                                     </div>
@@ -92,7 +100,7 @@
                                 <ul class="dropdown-menu text-center" style="font-family: monospace">
                                     <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                    <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                                 </ul>
                             </div>
                         </strong>
@@ -101,7 +109,7 @@
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="<%=MenuHome %>">Home</a>
+                                <a class="nav-link active" aria-current="page" href="<%=MenuHome%>">Home</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -137,45 +145,41 @@
                 </div>
                 <div class="table-responsive" >
                     <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 300px">
-                        <table id="tabla1" class="table table-striped-columns" style="height: 500px">
+                        <table id="tabla1" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">ID Sedes</th>
                                     <th scope="col">Nombre Sede</th>
+                                    <th>                     </th>
                                     <th scope="col">Configuracion</th>
                                 </tr>
                             </thead>
                             <tbody>
+
+
+                                <%
+                                    SedeJpaController controlSedes = new SedeJpaController();
+                                    List<Sede> Listasede = controlSedes.findSedeEntities();
+
+                                    for (Sede sede : Listasede) {
+
+
+                                %>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
+                                    <td class="align-middle"><%=sede.getId()%></td>
+                                    <td class="align-middle"><%=sede.getNombre()%></td>
+                                    <td></td>
+                                    <td class="align-middle"><i class="fa-solid fa-gear fa-lg mx-5"type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#ModalRegistroModificar" data-info = '{
+                                                                "IdSede" : "<%=sede.getId()%>" ,
+                                                                "NombreSede" : "<%=sede.getNombre()%>"
+                                                                }'></i></td>
 
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
+
+                                <%                                    }
+                                %>
+
                             </tbody>
                         </table>
                     </div>
@@ -195,46 +199,35 @@
                 </div>
                 <div class="table-responsive" >
                     <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 300px">
-                        <table id="tabla2" class="table table-striped-columns" style="height: 500px">
+                        <table id="tabla2" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">ID Sedes</th>
-                                    <th scope="col">Nombre Sede</th>
+
+                                    <th scope="col">ID Formacion</th>
+                                    <th scope="col">Nombre Fomracion</th>
+                                    <th scope="col">Sede perteneciente</th>
                                     <th scope="col">Configuracion</th>
 
                                 </tr>
                             </thead>
                             <tbody>
+                                <% FormacionJpaController controlFormacion = new FormacionJpaController();
+                                    List<Formacion> ListaFormacion = controlFormacion.findFormacionEntities();
+                                    for (Formacion formacion : ListaFormacion) {
+                                %>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-
+                                    <td class="align-middle"><%= formacion.getId()%></td>
+                                    <td class="align-middle"><%= formacion.getNombre()%></td>
+                                    <td class="align-middle"><%= formacion.getSedeID().getNombre()%></td>
+                                    <td class="align-middle">
+                                        <i class="fa-solid fa-gear fa-lg mx-5" type="button" data-bs-toggle="modal" data-bs-target="#ModalModificarFormaciones" data-info='{
+                                           "IdFormacion": "<%= formacion.getId()%>",
+                                           "NombreFormacion": "<%= formacion.getNombre()%>",
+                                           "SedePerteneciente": "<%= formacion.getSedeID().getId()%>"
+                                           }'></i>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
+                                <% }%>
                             </tbody>
                         </table>
                     </div>
@@ -245,31 +238,66 @@
         <!-- Modal Regsitro de Sede -->
         <div class="modal fade" id="ModalRegistroSede" tabindex="-1" aria-labelledby="ModalRegistroSede" aria-hidden="true" style="font-family: monospace">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Sedes</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body mx-auto">
-                        <div class="row">
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
-                                <label for="Id" class="form-label">ID de Sede</label>
-                                <input type="number" id="Id" name="name" class="form-control mb-3" max="99999999999" required>
-                            </div>
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
-                                <label for="NombreSede" class="form-label">Nombre de Sede</label>
-                                <input type="number" id="NombreSede" name="name" class="form-control mb-2" maxlength="60" required>
-                            </div>
+                <form action="<%=request.getContextPath()%>/CrudFormacionesSedes" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Registro Sedes</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="IdRegistrarSede" class="form-label">ID de Sede</label>
+                                    <input type="number" id="IdRegistrarSede" name="IdRegistrarSede" class="form-control mb-3" max="99999999999" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="NombreSede" class="form-label">Nombre de Sede</label>
+                                    <input type="text" id="NombreSede" name="NombreSede" class="form-control mb-2" maxlength="60" required>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button value="guardarSede" name="btnFormacionesSedes" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal Modificar Sede -->
+        <div class="modal fade" id="ModalRegistroModificar" tabindex="-1" aria-labelledby="ModalRegistroModificar" aria-hidden="true" style="font-family: monospace">
+            <div class="modal-dialog modal-dialog-centered">
+                <form action="<%=request.getContextPath()%>/CrudFormacionesSedes" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Modificar Sede</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="IdModificarSede" class="form-label">ID de Sede</label>
+                                    <input type="number" id="IdModificarSede" name="IdModificarSede" class="form-control mb-3" max="99999999999" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="NombreSedeModificar" class="form-label">Nombre de Sede</label>
+                                    <input type="text" id="NombreSedeModificar" name="NombreSedeModificar" class="form-control mb-2" maxlength="60" required>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button value="ModificarSedes" name="btnFormacionesSedes" class="btn btn-warning">Modificar</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -277,39 +305,92 @@
         <!-- Modal Regsitro de Formaciones -->
         <div class="modal fade" id="ModalRegistroFormaciones" tabindex="-1" aria-labelledby="ModalRegistroFormacion" aria-hidden="true" style="font-family: monospace">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Formacion</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body mx-auto">
-                        <div class="row">
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
-                                <label for="Id" class="form-label">ID de Formacion</label>
-                                <input type="number" id="Id" name="name" class="form-control mb-2" max="99999999999" required>
-                            </div>
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/formacion.webp" alt="alt" width="25px" height="25px"/> 
-                                <label for="NombreFormacion" class="form-label">Nombre de Formacion</label>
-                                <input type="number" id="NombreFormacion" name="name" class="form-control mb-2" maxlength="45" required>
-                            </div>
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
-                                <label for="SedePerteneciente" class="form-label">Sede perteneciente</label>
-                                <select id="SedePerteneciente" class="form-select">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                </select>
+                <form action="<%=request.getContextPath()%>/CrudFormacionesSedes" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Registro Formacion</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="Id" class="form-label">ID de Formacion</label>
+                                    <input type="number" id="Id" name="IdRegistroFormacion" class="form-control mb-2" max="99999999999" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/formacion.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="NombreFormacionRegistrar" class="form-label">Nombre de Formacion</label>
+                                    <input type="text" id="NombreFormacionRegistrar" name="NombreFormacionRegistrar" class="form-control mb-2" maxlength="45" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="SedePerteneciente" class="form-label">Sede perteneciente</label>
+                                    <select id="SedePerteneciente" name="SedePerteneciente" class="form-select" required>
+                                        <option disabled selected value="">Seleccione una opción</option>
+                                        <% for (Sede sede : Listasede) {%>
+                                        <option value="<%= sede.getId()%>"><%= sede.getNombre()%></option>
+                                        <% }%>
+                                    </select>
+
+                                </div>
 
                             </div>
-
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button name="btnFormacionesSedes" value="RegistroFormaciones" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Modal Modificar de Formaciones -->
+        <div class="modal fade" id="ModalModificarFormaciones" tabindex="-1" aria-labelledby="ModalModificarFormaciones" aria-hidden="true" style="font-family: monospace">
+            <div class="modal-dialog modal-dialog-centered">
+                <form action="<%=request.getContextPath()%>/CrudFormacionesSedes" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Modificar Formacion</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="IdFormacionModificar" class="form-label">ID de Formacion</label>
+                                    <input type="number" id="IdFormacionModificar" name="IdFormacionModificar" class="form-control mb-2" max="99999999999" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/formacion.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="NombreFormacionModificar" class="form-label">Nombre de Formacion</label>
+                                    <input type="text" id="NombreFormacionModificar" name="NombreFormacionModificar" class="form-control mb-2" maxlength="45" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="SedePertenecienteModificar" class="form-label">Sede perteneciente</label>
+                                    <select id="SedePertenecienteModificar"name="SedePertenecienteModificar" class="form-select" required>
+                                        <option  selected disabled value="">Seleccione una opción</option>
+                                        <% for (Sede sede : Listasede) {%>
+                                        <option value="<%=sede.getId()%>"><%=sede.getNombre()%></option>
+                                        <%
+                                            }
+                                        %>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button name="btnFormacionesSedes" value="FormacionesModificar" class="btn btn-warning">Modificar</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -364,6 +445,84 @@
     </footer>
 
 
+    <%
+        String res = request.getParameter("respuesta");
+
+        if (res != null) {
+            switch (res) {
+                case "RegsitroGuardado":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Registro guardado correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "Existente":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Registro ya existente
+            </div>
+        </div>
+    </div>
+    <%                    break;
+        case "SinCambios":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upps!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                No se han encontrado cambios!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "ModificacionExitosa":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Registro Modificado corectamente!!
+            </div>
+        </div>
+    </div>
+    <%
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+    %>
+
+
 </body>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -378,4 +537,69 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>
 <script src="../JS/FiltradoTablaFormacionSede.js"></script>
+<script src="../JS/IniciarToast.js"></script>
 </html>
+
+<script>
+            //Formaciones Tratamiento de Modal
+// DOMContentLoaded Este evento se dispara cuando el documento HTML ha sido completamente cargado y analizado.
+            document.addEventListener("DOMContentLoaded", function () {
+
+                // Selecciona todos los botones "Editar" que tienen ciertos atributos específicos.
+                var editarButtonsFormacion = document.querySelectorAll('i[data-bs-target="#ModalModificarFormaciones"][data-info*="IdFormacion"]');
+
+                //Creamos un metodo que llenara nuestro ventana emergente con la informacion del votante
+                function llenarModal(data) {
+                    // Llena los campos del modal con los datos del votante
+                    document.getElementById("IdFormacionModificar").value = data.IdFormacion;
+                    document.getElementById("NombreFormacionModificar").value = data.NombreFormacion;
+                    document.getElementById("SedePertenecienteModificar").value = data.SedePerteneciente;
+                }
+
+                // Itera sobre cada botón "Editar".
+                editarButtonsFormacion.forEach(function (button) {
+                    // Agrega un evento de clic a cada botón "Editar".
+                    button.addEventListener("click", function () {
+                        // Obtiene la información del votante desde el atributo "data-info" en formato JSON.
+                        //RECORDAR JS sabe la data-info porque este esta realizando el evento en cada boton editar y obtendra la info del boton al que se le de click
+                        // this.getAttribute("data-info") = De este boton al que se le dio click dame su data-info
+                        var data = JSON.parse(this.getAttribute("data-info"));
+                        //Con la data recibida del boton se llena el modal con su metodo
+                        llenarModal(data);
+                    });
+                });
+            });
+
+</script>
+
+<script>
+    //Sede Tratamiento de Modal
+// DOMContentLoaded Este evento se dispara cuando el documento HTML ha sido completamente cargado y analizado.
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // Selecciona todos los botones "Editar" que tienen ciertos atributos específicos.
+        var editarButtonsSede = document.querySelectorAll('i[data-bs-target="#ModalRegistroModificar"][data-info*="IdSede"]');
+
+        //Creamos un metodo que llenara nuestro ventana emergente con la informacion del votante
+        function llenarModal(data) {
+            // Llena los campos del modal con los datos del votante
+            document.getElementById("IdModificarSede").value = data.IdSede;
+            document.getElementById("NombreSedeModificar").value = data.NombreSede;
+
+        }
+
+        // Itera sobre cada botón "Editar".
+        editarButtonsSede.forEach(function (button) {
+            // Agrega un evento de clic a cada botón "Editar".
+            button.addEventListener("click", function () {
+                // Obtiene la información del votante desde el atributo "data-info" en formato JSON.
+                //RECORDAR JS sabe la data-info porque este esta realizando el evento en cada boton editar y obtendra la info del boton al que se le de click
+                // this.getAttribute("data-info") = De este boton al que se le dio click dame su data-info
+                var data = JSON.parse(this.getAttribute("data-info"));
+                //Con la data recibida del boton se llena el modal con su metodo
+                llenarModal(data);
+            });
+        });
+    });
+
+</script>

@@ -8,14 +8,7 @@
     <%
         //En dado caso que se regrese al index se mata la session
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
-        HttpSession sessionObtenida = request.getSession();
-        if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("Egresado") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
-            HttpSession sessionCerrar = request.getSession(false); // Obtén la sesión sin crear una nueva si no existe.
-            if (sessionCerrar != null) {
-                sessionCerrar.invalidate(); // Invalida la sesión actual
-            }
-            response.sendRedirect("index.jsp"); // Redirige al índice
-        }
+
     %>
     <head>
         <title>Inicio sesion</title>
@@ -119,6 +112,65 @@
                 </div>
             </div>
         </footer>
+
+        <%            String res = request.getParameter("respuesta");
+            
+            if (res != null) {
+                switch (res) {
+                    case "contrasenhaIncorrecta":
+        %>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header  text-white" style="background: #35C35D">
+                    <strong class="me-auto ">Upps!!</strong>
+                    <small>Ahora</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Contraseña Incorrecta!!
+                </div>
+            </div>
+        </div>
+        <%        
+                break;
+            case "UserNoExistente":
+
+        %>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header  text-white" style="background: #35C35D">
+                    <strong class="me-auto ">Upss!!</strong>
+                    <small>Ahora</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Usuario No existente!!
+                </div>
+            </div>
+        </div>
+        <%                        break;
+                    default:
+                        break;
+                }
+                
+            }
+
+        %>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+                integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-/WfsFq4XLtXJzweC9UJ7o4JvW/2HGM8eNQwuqzoU4llitlLVvc/UnzgZ81gMdd6R" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="JS/IniciarToast.js"></script>
+
+
     </body>
 
 </html>

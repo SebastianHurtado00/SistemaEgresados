@@ -4,6 +4,9 @@
     Author     : ASUS
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Controladores.TipoPoblacionJpaController"%>
+<%@page import="Entidades.TipoPoblacion"%>
 <%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,6 +17,7 @@
             response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
             HttpSession sessionObtenida = request.getSession();
             String MenuHome = "";
+            Usuarios usuarioEntrante = new Usuarios();
             if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
 
                 Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
@@ -21,8 +25,10 @@
 
                 if (userAdmin != null) {
                     MenuHome = "HomeAdministradores.jsp";
+                    usuarioEntrante = userAdmin;
                 } else {
                     MenuHome = "HomeSuperAdmin.jsp";
+                    usuarioEntrante = userSuperAdmin;
                 }
 
             } else {
@@ -45,9 +51,8 @@
         <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="../CSS/TableScroll.css"/>
-
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" href="../CSS/TableScroll.css"/>
         <script src="https://kit.fontawesome.com/0702706600.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -78,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="notice-content"style="font-family: monospace">
-                                        <div class="username">Jessica Sanders</div>
+                                        <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                         <div class="text-center text-small text-gray">Admin</div>
 
                                     </div>
@@ -86,7 +91,7 @@
                                 <ul class="dropdown-menu text-center" style="font-family: monospace">
                                     <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                    <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                                 </ul>
                             </div>
                         </strong>
@@ -95,7 +100,7 @@
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="<%=MenuHome %>">Home</a>
+                                <a class="nav-link active" aria-current="page" href="<%=MenuHome%>">Home</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -132,11 +137,10 @@
                             data-bs-target="#ModalRegistro"><a style="color: white ; text-decoration: none">Regitrar Poblacion</a></button>
                 </div>
                 <div class="table-responsive" >
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 500px">
-                        <table class="table table-striped-columns" style="height: 500px">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 500px">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">ID Poblacion</th>
                                     <th scope="col">Nombre Poblacion</th>
                                     <th scope="col">Configuracion</th>
@@ -144,35 +148,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
+                                <%
+                                    TipoPoblacionJpaController controlPoblaciones = new TipoPoblacionJpaController();
+                                    List<TipoPoblacion> ListaPoblaciones = controlPoblaciones.findTipoPoblacionEntities();
+                                    for (TipoPoblacion poblacion : ListaPoblaciones) {
 
-                                </tr>
+
+                                %>
                                 <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
+                                    <td class="align-middle"><%=poblacion.getId()%></td>
+                                    <td class="align-middle" ><%=poblacion.getNombre()%></td>
+                                    <td class="align-middle"> <i class="fa-solid fa-gear fa-lg mx-5"type="button" data-bs-toggle="modal"
+                                                                 data-bs-target="#ModalModificacion" data-info = '{
+                                                                 "IdPoblacion" : "<%=poblacion.getId()%>" ,
+                                                                 "NombrePoblacion" : "<%=poblacion.getNombre()%>"
+                                                                 }'></i></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
+                                <%                                        }
+                                %>
+
                             </tbody>
                         </table>
                     </div>
@@ -180,39 +174,71 @@
             </div>
         </section>
 
-        <!-- Modal -->
+        <!-- Modal Registro de Poblaciones -->
         <div class="modal fade" id="ModalRegistro" tabindex="-1" aria-labelledby="ModalRegistro" aria-hidden="true" style="font-family: monospace">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Poblaciones</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body mx-auto">
-                        <div class="row">
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="30px" height="30px"/>
-                                <label for="Id" class="form-label">ID de poblacion</label>
-                                <input type="number" id="Id" name="name" class="form-control mb-4" max="99999999999" required>
-                            </div>
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/>
-                                <label for="NombrePoblacion" class="form-label">Nombre de poblacion</label>
-                                <input type="number" id="NombrePoblacion" name="name" class="form-control mb-2" maxlength="45" required>
-                            </div>
+                <form action="<%=request.getContextPath()%>/CrudPoblaciones" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Registro Poblaciones</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="30px" height="30px"/>
+                                    <label for="Id" class="form-label">ID de poblacion</label>
+                                    <input type="number" id="Id" name="IdPoblacion" class="form-control mb-4" max="99999999999" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/>
+                                    <label for="NombrePoblacion" class="form-label">Nombre de poblacion</label>
+                                    <input type="text" id="NombrePoblacion" name="NombrePoblacion" class="form-control mb-2" maxlength="45" required>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button value="Registrar" name="BotonPoblacion" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success">Guardar</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 
+        <!-- Modal Modificacion de Poblaciones -->
+        <div class="modal fade" id="ModalModificacion" tabindex="-1" aria-labelledby="ModalModificacion" aria-hidden="true" style="font-family: monospace">
+            <div class="modal-dialog modal-dialog-centered">
+                <form action="<%=request.getContextPath()%>/CrudPoblaciones" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Modificacion de  Poblaciones</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="30px" height="30px"/>
+                                    <label for="IdPoblacionModificar" class="form-label">ID de poblacion</label>
+                                    <input type="number" id="IdPoblacionModificar" name="IdPoblacionModificar" class="form-control mb-4" max="99999999999" readonly>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/>
+                                    <label for="NombrePoblacionModificar" class="form-label">Nombre de poblacion</label>
+                                    <input type="text" id="NombrePoblacionModificar" name="NombrePoblacionModificar" class="form-control mb-2" maxlength="45" required>
+                                </div>
 
-
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button value="Modificar" name="BotonPoblacion" class="btn btn-warning">Modificar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </body>
     <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D ; margin-top: 5%">
         <div class="container-fluid">
@@ -261,20 +287,130 @@
         </div>
     </footer>
 
+    <%
 
-</body>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        String res = request.getParameter("respuesta");
+        if (res != null) {
+            switch (res) {
+                case "RegistroExitoso":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Poblacion registrada Correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "PoblacionExistente":
 
-<!-- Bootstrap JavaScript Libraries -->
-<!-- Bootstrap JavaScript Libraries -->
-<!-- Bootstrap JavaScript Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-</script>
-<script src="../JS/ReconocimientoVoz.js"></script>
-<script src="../JS/FiltradoTablas.js"></script>
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Esta poblacion ya ha sido registrada!!
+            </div>
+        </div>
+    </div>
+    <%                        break;
+
+        case "SinCambios":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                No se han encontrado Cambios!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+
+        case "Cambios":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exitoo!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Poblacion modificada con exito!!
+            </div>
+        </div>
+    </div>
+    <%
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
+    %>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS/IniciarToast.js"></script>
+    <script src="../JS/ReconocimientoVoz.js"></script>
+    <script src="../JS/FiltradoTablas.js"></script>
+
 </html>
+
+<script>
+// DOMContentLoaded Este evento se dispara cuando el documento HTML ha sido completamente cargado y analizado.
+                        document.addEventListener("DOMContentLoaded", function () {
+
+                            // Selecciona todos los botones "Editar" que tienen ciertos atributos específicos.
+                            var editarButtons = document.querySelectorAll('i[data-bs-target="#ModalModificacion"][data-info*="IdPoblacion"]');
+
+                            //Creamos un metodo que llenara nuestro ventana emergente con la informacion del votante
+                            function llenarModal(data) {
+                                // Llena los campos del modal con los datos del votante
+                                document.getElementById("IdPoblacionModificar").value = data.IdPoblacion;
+                                document.getElementById("NombrePoblacionModificar").value = data.NombrePoblacion;
+                            }
+
+                            // Itera sobre cada botón "Editar".
+                            editarButtons.forEach(function (button) {
+                                // Agrega un evento de clic a cada botón "Editar".
+                                button.addEventListener("click", function () {
+                                    // Obtiene la información del votante desde el atributo "data-info" en formato JSON.
+                                    //RECORDAR JS sabe la data-info porque este esta realizando el evento en cada boton editar y obtendra la info del boton al que se le de click
+                                    // this.getAttribute("data-info") = De este boton al que se le dio click dame su data-info
+                                    var data = JSON.parse(this.getAttribute("data-info"));
+                                    //Con la data recibida del boton se llena el modal con su metodo
+                                    llenarModal(data);
+                                });
+                            });
+                        });
+
+</script>

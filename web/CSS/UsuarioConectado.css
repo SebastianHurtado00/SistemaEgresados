@@ -27,7 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-radius: 68px;
     cursor: pointer;
     padding: 6px 10px 6px 6px;
-    width: 190px;
+    width: 170px;
     height: 40px;
     border: 0;
     overflow: hidden;
@@ -83,14 +83,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding-left: 8px;
     text-align: initial;
     color: var(--text-color);
+    flex-grow: 1; /* Para que el contenido ocupe todo el espacio disponible */
 }
 
 .username {
-    display: flex;
-    align-items: center;
-    opacity: 1;
-    transform: scaleY(1);
-    transition: var(--btn-transition);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.avatar {
+    flex-shrink: 0; /* Evita que el avatar se contraiga */
+}
+
+.user-img {
+    width: 30px; /* Ajusta el tamaño del avatar según sea necesario */
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%; /* Añade borde redondeado al avatar */
 }
 
 

@@ -6,6 +6,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -88,14 +89,27 @@ public class TipoPoblacion implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoPoblacion)) {
+        if (this == object) {
+            return true;
+        }
+
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
+
         TipoPoblacion other = (TipoPoblacion) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+
+        // Comparar los atributos para determinar si son iguales
+        if (this.id != other.id) {
             return false;
         }
+
+        // Comparar más atributos si es necesario
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+
+        // Agrega más comparaciones para otros atributos si es necesario
         return true;
     }
 
@@ -103,5 +117,5 @@ public class TipoPoblacion implements Serializable {
     public String toString() {
         return "Entidades.TipoPoblacion[ id=" + id + " ]";
     }
-    
+
 }

@@ -4,6 +4,9 @@
     Author     : ASUS
 --%>
 
+<%@page import="Entidades.Ciudad"%>
+<%@page import="java.util.List"%>
+<%@page import="Controladores.CiudadJpaController"%>
 <%@page import="Entidades.Usuarios"%>
 <%-- 
     Document   : ListadoRegistroPoblaciones
@@ -20,6 +23,7 @@
             response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
             HttpSession sessionObtenida = request.getSession();
             String MenuHome = "";
+            Usuarios usuarioEntrante = new Usuarios();
             if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
 
                 Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
@@ -27,8 +31,10 @@
 
                 if (userAdmin != null) {
                     MenuHome = "HomeAdministradores.jsp";
+                    usuarioEntrante = userAdmin;
                 } else {
                     MenuHome = "HomeSuperAdmin.jsp";
+                    usuarioEntrante = userSuperAdmin;
                 }
 
             } else {
@@ -43,6 +49,7 @@
         <title>Listado Y registro de Ciudades</title>
         <!-- Required meta tags -->
         <meta charset="utf-8">
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS v5.2.1 -->
         <link rel="shortcut icon" href="../IMG/edificios.webp" type="image/x-icon">
@@ -85,14 +92,14 @@
                                         </div>
                                     </div>
                                     <div class="notice-content"style="font-family: monospace">
-                                        <div class="username">Jessica Sanders</div>
+                                        <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                         <div class="text-center text-small text-gray">Admin</div>
                                     </div>
                                 </button>
                                 <ul class="dropdown-menu text-center" style="font-family: monospace">
                                     <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                    <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                                 </ul>
                             </div>
                         </strong>
@@ -101,7 +108,7 @@
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="<%=MenuHome %>">Home</a>
+                                <a class="nav-link active" aria-current="page" href="<%=MenuHome%>">Home</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -132,53 +139,46 @@
                 <h5 class="card-title text-center mt-4" > <img src="../IMG/edificios.webp" alt="alt" width="30px" height="30px"/> Listado Registro y edicion de Ciudades</h5>
                 <div class="input-group mb-3 mt-2 p-2">
                     <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
-                    <input type="text" class="form-control" placeholder="Bus    queda de Ciudades"
+                    <input type="text" class="form-control" placeholder="Busqueda de Ciudades"
                            name="Dato_User" id="filtro">
                     <button class="btn btn-success" type="button" data-bs-toggle="modal"
                             data-bs-target="#ModalRegistro"><a style="color: white ; text-decoration: none">Regitrar Ciudad</a></button>
                 </div>
                 <div class="table-responsive" >
                     <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 500px">
-                        <table class="table table-striped-columns" style="height: 500px">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">ID Poblacion</th>
-                                    <th scope="col">Nombre Poblacion</th>
+
+                                    <th scope="col">ID  Ciudad</th>
+                                    <th scope="col">Nombre Ciudad</th>
                                     <th scope="col">Configuracion</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
+                                <%
+                                    CiudadJpaController controlCiudades = new CiudadJpaController();
+                                    List<Ciudad> listaCiudades = controlCiudades.findCiudadEntities();
 
-                                </tr>
+                                    for (Ciudad ciudades : listaCiudades) {
+
+                                %>
+
                                 <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
+
+                                    <td class="align-middle"><%=ciudades.getId()%></td>
+                                    <td class="align-middle"><%=ciudades.getNombre()%></td>
+                                    <td class="align-middle"><i class="fa-solid fa-gear fa-lg mx-5"type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#ModalModificacion" data-info = '{
+                                                                "IdCiudad" : "<%=ciudades.getId()%>" ,
+                                                                "NombreCiudad" : "<%=ciudades.getNombre()%>"
+                                                                }'></i></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
+
+                                <%                                    }
+                                %>
                             </tbody>
                         </table>
                     </div>
@@ -189,34 +189,67 @@
         <!-- Modal Registro -->
         <div class="modal fade" id="ModalRegistro" tabindex="-1" aria-labelledby="ModalRegistro" aria-hidden="true" style="font-family: monospace">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalRegistro">Registro Ciudades</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body mx-auto">
-                        <div class="row">
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
-                                <label for="Id" class="form-label">ID de Ciudad</label>
-                                <input type="number" id="Id" name="name" class="form-control mb-4" max="99999999999" required>
-                            </div>
-                            <div class="col-8 mx-auto">
-                                <img src="../IMG/paisaje-urbano.webp" alt="alt" width="25px" height="25px"/> 
-                                <label for="NombreCiudad" class="form-label">Nombre de Ciudad</label>
-                                <input type="number" id="NombreCiudad" name="name" class="form-control mb-2" maxlength="45" required>
-                            </div>
+                <form action="<%=request.getContextPath()%>/CrudCiudades">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Registro Ciudades</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="IdCiudad" class="form-label">ID de Ciudad</label>
+                                    <input type="number" id="IdCiudad" name="IdCiudad" class="form-control mb-4" max="99999999999" required>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/paisaje-urbano.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="NombreCiudad" class="form-label">Nombre de Ciudad</label>
+                                    <input type="text" id="NombreCiudad" name="NombreCiudad" class="form-control mb-2" maxlength="45" required>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button value="GuardarCiudad" name="BtnCiudades" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success">Guardar</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
+        <!-- Modal Modificacion de Poblaciones -->
+        <div class="modal fade" id="ModalModificacion" tabindex="-1" aria-labelledby="ModalModificacion" aria-hidden="true" style="font-family: monospace">
+            <div class="modal-dialog modal-dialog-centered">
+                <form action="<%=request.getContextPath()%>/CrudCiudades" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalRegistro">Modificar Ciudades</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-auto">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/codigo-de-barras.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="IdCiudadModificar" class="form-label">ID de Ciudad</label>
+                                    <input type="number" id="IdCiudadModificar" name="IdCiudadModificar" class="form-control mb-4" max="99999999999" readonly>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <img src="../IMG/paisaje-urbano.webp" alt="alt" width="25px" height="25px"/> 
+                                    <label for="NombreCiudadModificar" class="form-label">Nombre de Ciudad</label>
+                                    <input type="text" id="NombreCiudadModificar" name="NombreCiudadModificar" class="form-control mb-2" maxlength="45" required>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button value="ModificarCiudad" name="BtnCiudades" class="btn btn-warning">Modificar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
 
     </body>
@@ -268,10 +301,90 @@
     </footer>
 
 
+    <%
+
+        String res = request.getParameter("respuesta");
+        if (res != null) {
+            switch (res) {
+                case "GuardadoCiudad":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Ciudad registrada Correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "IdRegistrado":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Esta Ciudad ya ha sido registrada!!
+            </div>
+        </div>
+    </div>
+    <%                        break;
+
+        case "registrosIguales":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                No se han encontrado Cambios!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+
+        case "ModificacionExitosa":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exitoo!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Ciudad modificada con exito!!
+            </div>
+        </div>
+    </div>
+    <%
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
+    %>
 </body>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+<!-- Bootstrap JavaScript Libraries -->
 <!-- Bootstrap JavaScript Libraries -->
 <!-- Bootstrap JavaScript Libraries -->
 <!-- Bootstrap JavaScript Libraries -->
@@ -283,4 +396,36 @@
 </script>
 <script src="../JS/ReconocimientoVoz.js"></script>
 <script src="../JS/FiltradoTablas.js"></script>
+<script src="../JS/IniciarToast.js"></script>
+
+<script>
+// DOMContentLoaded Este evento se dispara cuando el documento HTML ha sido completamente cargado y analizado.
+                        document.addEventListener("DOMContentLoaded", function () {
+
+                            // Selecciona todos los botones "Editar" que tienen ciertos atributos específicos.
+                            var editarButtons = document.querySelectorAll('i[data-bs-target="#ModalModificacion"][data-info*="IdCiudad"]');
+
+                            //Creamos un metodo que llenara nuestro ventana emergente con la informacion del votante
+                            function llenarModal(data) {
+                                // Llena los campos del modal con los datos del votante
+                                document.getElementById("IdCiudadModificar").value = data.IdCiudad;
+                                document.getElementById("NombreCiudadModificar").value = data.NombreCiudad;
+                            }
+
+                            // Itera sobre cada botón "Editar".
+                            editarButtons.forEach(function (button) {
+                                // Agrega un evento de clic a cada botón "Editar".
+                                button.addEventListener("click", function () {
+                                    // Obtiene la información del votante desde el atributo "data-info" en formato JSON.
+                                    //RECORDAR JS sabe la data-info porque este esta realizando el evento en cada boton editar y obtendra la info del boton al que se le de click
+                                    // this.getAttribute("data-info") = De este boton al que se le dio click dame su data-info
+                                    var data = JSON.parse(this.getAttribute("data-info"));
+                                    //Con la data recibida del boton se llena el modal con su metodo
+                                    llenarModal(data);
+                                });
+                            });
+                        });
+
+</script>
+
 </html>

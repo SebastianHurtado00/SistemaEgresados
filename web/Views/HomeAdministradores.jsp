@@ -4,15 +4,19 @@
     Author     : ASUS
 --%>
 
+<%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <%
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
         HttpSession sessionObtenida = request.getSession();
+        Usuarios usuarioEntrante = new Usuarios();
         if (sessionObtenida.getAttribute("Admin") == null) {
             response.sendRedirect("../index.jsp");
-        }
+        } else {
+
+            usuarioEntrante = (Usuarios) sessionObtenida.getAttribute("Admin");
     %>
     <head>
 
@@ -58,9 +62,11 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="notice-content" style="font-family: monospace;">
-                                    <div class="username">Jessica Sanders</div>
-                                    <div class="text-center text-small text-gray">Admin</div>
+                                <div class="username-container">
+                                    <div class="notice-content" style="font-family: monospace;">
+                                        <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
+                                        <div class="text-center text-small text-gray mx-2">Admin</div>
+                                    </div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -233,6 +239,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>
@@ -240,3 +247,6 @@
 <script>
                 AOS.init();
 </script>
+<%
+    }
+%>

@@ -4,6 +4,7 @@
     Author     
 --%>
 
+<%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -11,9 +12,13 @@
     <%
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
         HttpSession sessionObtenida = request.getSession();
+        Usuarios usuarioEntrante = new Usuarios();
         if (sessionObtenida.getAttribute("SuperAdmin") == null) {
             response.sendRedirect("../index.jsp");
-        }
+        } else {
+
+            usuarioEntrante = (Usuarios) sessionObtenida.getAttribute("SuperAdmin");
+
     %>
     <title>Listado de administradires</title>
     <!-- Required meta tags -->
@@ -58,14 +63,14 @@
                                 </div>
                             </div>
                             <div class="notice-content" style="font-family: monospace">
-                                <div class="username">Jessica Sanders</div>
+                                <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                 <div class="text-center text-small text-gray">Super Admin</div>
                             </div>
                         </button>
                         <ul class="dropdown-menu text-center" style="font-family: monospace">
                             <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                            <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                         </ul>
                     </div>
                 </strong>
@@ -364,4 +369,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/FiltradoTablas.js"></script>
 
-
+<%
+    }
+%>

@@ -6,6 +6,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -93,18 +94,36 @@ public class Formacion implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Formacion)) {
-            return false;
-        }
-        Formacion other = (Formacion) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
+@Override
+public boolean equals(Object object) {
+    if (this == object) {
         return true;
     }
+    
+    if (object == null || getClass() != object.getClass()) {
+        return false;
+    }
+    
+    Formacion other = (Formacion) object;
+    
+    // Comparar los atributos para determinar si son iguales
+    if (!Objects.equals(this.id, other.id)) {
+        return false;
+    }
+    
+    if (!Objects.equals(this.nombre, other.nombre)) {
+        return false;
+    }
+    
+    if (!Objects.equals(this.sedeID, other.sedeID)) {
+        return false;
+    }
+    
+    // Agrega más comparaciones para otros atributos si es necesario
+    
+    return true;
+}
+
 
     @Override
     public String toString() {

@@ -8,7 +8,6 @@ import Controladores.TipodocumentoJpaController;
 import Controladores.UsuariosJpaController;
 import Entidades.Tipodocumento;
 import Entidades.Usuarios;
-import Entidades.Usuarios_;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;

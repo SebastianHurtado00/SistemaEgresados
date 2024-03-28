@@ -70,6 +70,7 @@ public class LogicaIngreso extends HttpServlet {
                         //Redireccionamos a super admin con su session
                         HttpSession SessionSuperAdmin = request.getSession();
                         SessionSuperAdmin.setAttribute("SuperAdmin", user);
+                        SessionSuperAdmin.setAttribute("especial", 1);
                         response.sendRedirect("Views/HomeSuperAdmin.jsp");
                         break;
 

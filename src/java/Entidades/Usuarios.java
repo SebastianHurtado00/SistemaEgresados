@@ -36,10 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password")})
 public class Usuarios implements Serializable {
 
-    @Basic(optional = false)
-    @Column(name = "Telefono")
-    private long telefono;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -54,6 +50,9 @@ public class Usuarios implements Serializable {
     @Basic(optional = false)
     @Column(name = "correo")
     private String correo;
+    @Basic(optional = false)
+    @Column(name = "Telefono")
+    private long telefono;
     @Basic(optional = false)
     @Column(name = "rol")
     private int rol;
@@ -71,7 +70,7 @@ public class Usuarios implements Serializable {
         this.cedula = cedula;
     }
 
-    public Usuarios(Integer cedula, String nombre, String apellido, String correo, Long telefono, int rol, String password) {
+    public Usuarios(Integer cedula, String nombre, String apellido, String correo, long telefono, int rol, String password) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -113,6 +112,14 @@ public class Usuarios implements Serializable {
         this.correo = correo;
     }
 
+    public long getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(long telefono) {
+        this.telefono = telefono;
+    }
+
     public int getRol() {
         return rol;
     }
@@ -144,6 +151,16 @@ public class Usuarios implements Serializable {
         return hash;
     }
 
+    public String EncryptarClave(String clave) {
+
+        Hash hash = Password.hash(clave).addPepper().withScrypt();
+        return hash.getResult();
+    }
+
+    public boolean DencryptarClave(String clavehast, String clavelogin) {
+        return Password.check(clavelogin, clavehast).addPepper().withScrypt();
+    }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -160,23 +177,6 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "Entidades.Usuarios[ cedula=" + cedula + " ]";
-    }
-
-    public long getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(long telefono) {
-        this.telefono = telefono;
-    }
-
-    public String EncryptarClave(String clave) {
-        Hash hash = Password.hash(clave).addPepper().withScrypt();
-        return hash.getResult();
-    }
-
-    public boolean DencryptarClave(String clavehast, String clavelogin) {
-        return Password.check(clavelogin, clavehast).addPepper().withScrypt();
     }
 
 }

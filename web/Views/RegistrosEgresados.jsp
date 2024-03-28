@@ -4,6 +4,21 @@
     Author     : ASUS
 --%>
 
+<%@page import="Controladores.TipoPoblacionJpaController"%>
+<%@page import="Entidades.TipoPoblacion"%>
+<%@page import="Entidades.Ciudad"%>
+<%@page import="Entidades.Formacion"%>
+<%@page import="Entidades.Sede"%>
+<%@page import="Entidades.Sexo"%>
+<%@page import="Controladores.NivelFormacionJpaController"%>
+<%@page import="Entidades.NivelFormacion"%>
+<%@page import="Controladores.CiudadJpaController"%>
+<%@page import="Controladores.FormacionJpaController"%>
+<%@page import="Controladores.SedeJpaController"%>
+<%@page import="Controladores.SexoJpaController"%>
+<%@page import="java.util.List"%>
+<%@page import="Controladores.TipodocumentoJpaController"%>
+<%@page import="Entidades.Tipodocumento"%>
 <%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +28,7 @@
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
         HttpSession sessionObtenida = request.getSession();
         String MenuHome = "";
+        Usuarios usuarioEntrante = new Usuarios();
         if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
 
             Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
@@ -20,8 +36,10 @@
 
             if (userAdmin != null) {
                 MenuHome = "HomeAdministradores.jsp";
+                usuarioEntrante = userAdmin;
             } else {
                 MenuHome = "HomeSuperAdmin.jsp";
+                usuarioEntrante = userSuperAdmin;
             }
 
         } else {
@@ -32,6 +50,24 @@
             }
             response.sendRedirect("index.jsp"); // Redirige al índice
         }
+
+        TipodocumentoJpaController controlTipoDoc = new TipodocumentoJpaController();
+        SexoJpaController controlSexo = new SexoJpaController();
+        SedeJpaController controlSede = new SedeJpaController();
+        FormacionJpaController controlFormacion = new FormacionJpaController();
+        CiudadJpaController controlCiudad = new CiudadJpaController();
+        NivelFormacionJpaController controlNivelFomacion = new NivelFormacionJpaController();
+        TipoPoblacionJpaController controlTipoPoblacion = new TipoPoblacionJpaController();
+
+        List<Tipodocumento> listaTipoDoc = controlTipoDoc.findTipodocumentoEntities();
+        List<Sexo> listaSexo = controlSexo.findSexoEntities();
+        List<TipoPoblacion> listaTipoPoblacion = controlTipoPoblacion.findTipoPoblacionEntities();
+        List<Sede> ListaSedes = controlSede.findSedeEntities();
+        List<Formacion> listaFormacion = controlFormacion.findFormacionEntities();
+        List<Ciudad> listaCiudades = controlCiudad.findCiudadEntities();
+        List<NivelFormacion> listaNivelFormacion = controlNivelFomacion.findNivelFormacionEntities();
+
+
     %>
     <head>
 
@@ -77,7 +113,7 @@
                                     </div>
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
-                                    <div class="username">Jessica Sanders</div>
+                                    <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                     <div class="text-center text-small text-gray">Admin</div>
 
                                 </div>
@@ -85,7 +121,7 @@
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
                                 <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                             </ul>
                         </div>
                     </strong>
@@ -123,12 +159,13 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end  justify-content-sm-end">
                 <button class="btn btn-outline-success mt-4" type="button" style="font-family: monospace">Importar datos desde CSV <i class="fa-solid fa-file-import"></i></button>
             </div>
-            <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
+            <form action="<%=request.getContextPath()%>/RegistroEgresados" method="post">
+                <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
 
-                <h5 class="card-title text-center mt-3" ><img src="../IMG/graduado.webp" alt="alt" width="50px" height="50px"/>  Registros de egresados</h5>
+                    <h5 class="card-title text-center mt-3" ><img src="../IMG/graduado.webp" alt="alt" width="50px" height="50px"/>  Registros de egresados</h5>
 
-                <div class="card-body">
-                    <form id="multiPageForm">
+                    <div class="card-body">
+
                         <!--Seccion de datos Personales -->
                         <div class="page" id="page1">
                             <div class="row">
@@ -136,70 +173,89 @@
                                 <div class="col-md-6">
                                     <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="numeroDocumento" class="form-label">N° Documento</label>
-                                    <input type="text" id="numeroDocumento" class="form-control mb-3" required max="99999999999">
+                                    <input type="number" name="numeroDocumento" id="numeroDocumento" class="form-control mb-3" required max="99999999999">
 
                                     <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="nombres" class="form-label">Nombres</label>
-                                    <input type="text" id="nombres" class="form-control mb-3" required maxlength="45">
+                                    <input type="text" id="nombres" name="nombres" class="form-control mb-3" required maxlength="45">
 
                                     <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="apellidos" class="form-label">Apellidos</label>
-                                    <input type="text" id="apellidos" class="form-control mb-3" required maxlength="45">
+                                    <input type="text" name="apellidos" id="apellidos" class="form-control mb-3" required maxlength="45">
                                 </div>
 
                                 <div class="col-md-6">
                                     <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
-                                    <select id="tipoDocumento" class="form-select mb-3" required>
+                                    <select name="tipoDocumento" id="tipoDocumento" class="form-select mb-3" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
-                                        <!-- Opciones -->
+                                        <%
+
+                                            for (Tipodocumento tipoDoc : listaTipoDoc) {
+                                                out.print("<option value ='" + tipoDoc.getId() + "'> ");
+                                                out.print(tipoDoc.getNombre());
+                                                out.print("</option>");
+                                            }
+                                        %>
                                     </select>
 
                                     <img src="../IMG/sexo.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="sexo" class="form-label">Sexo</label>
-                                    <select id="sexo" class="form-select mb-3" required>
+                                    <select name="sexo" id="sexo" class="form-select mb-3" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
-                                        <!-- Opciones -->
+                                        <%
+                                            for (Sexo sex : listaSexo) {
+                                        %>
+                                        <option value="<%=sex.getId()%>"><%=sex.getNombre()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
 
                                     <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="tipoPoblacion" class="form-label">Tipo de Población</label>
-                                    <select id="tipoPoblacion" class="form-select mb-3" required>
+                                    <select name="tipoPoblacion" id="tipoPoblacion" class="form-select mb-3" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
-                                        <!-- Opciones -->
+                                        <%
+                                            for (TipoPoblacion TipoPoblacion : listaTipoPoblacion) {
+                                        %>
+                                        <option value="<%=TipoPoblacion.getId()%>"><%=TipoPoblacion.getNombre()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
                                 </div>
                             </div>
-                            <i class="fa-solid fa-arrow-right fa-lg mt-3 px-3 " onclick="nextPage()"></i>
-                        </div>
-
-                        <!-- Seccion de datos de residencia -->
-                        <div class="page" id="page2" style="display: none;">
-
                             <div class="row">
                                 <h5 class="card-title mb-4">Informacion Residencia y contactos</h5>
                                 <div class="col-md-6">
 
                                     <img src="../IMG/edificios.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="ciudad" class="form-label">Ciudad</label>
-                                    <select id="ciudad" class="form-select mb-3" required>
+                                    <select name="ciudad" id="ciudad" class="form-select mb-3" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
-                                        <!-- Opciones -->
+                                        <%
+                                            for (Ciudad ciudad : listaCiudades) {
+                                        %>
+                                        <option value="<%=ciudad.getId()%>"><%=ciudad.getNombre()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
 
                                     <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="direccion" class="form-label">Dirección</label>
-                                    <input type="text" id="direccion" class="form-control mb-3" maxlength="100" placeholder="Opcional">
+                                    <input type="text"name="direccion" id="direccion" class="form-control mb-3" maxlength="100" placeholder="Opcional">
                                 </div>
 
                                 <div class="col-md-6">
                                     <img src="../IMG/certificado.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="numCertificados" class="form-label">N° de Certificados</label>
-                                    <input type="number" id="numCertificados" class="form-control mb-3" max="99999999999"" placeholder="Opcional">
+                                    <input type="number" name="numCertificados" id="numCertificados" class="form-control mb-3" max="99999999999"" placeholder="Opcional">
 
                                     <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="correo" class="form-label">Correo</label>
-                                    <input type="email" id="correo" class="form-control mb-3" maxlength="45">
+                                    <input type="email" name="correo" id="correo" class="form-control mb-3" maxlength="45">
                                 </div>
 
                                 <div class="row">
@@ -208,26 +264,26 @@
                                     <div class = "col-md-6">
                                         <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                                         <label for="numContacto" class="form-label mx-auto">Número de Contacto</label>
-                                        <input type="tel" id="numContacto" class="form-control mb-3">
+                                        <input type="tel" name="numContacto" id="numContacto" class="form-control mb-3">
                                     </div>
                                     <div class = "col-md-3">
                                     </div>
                                 </div>
                             </div>
-                            <i class="fa-solid fa-arrow-left fa-lg mt-3 px-3 " onclick="prevPage()"></i>
-                            <i class="fa-solid fa-arrow-right fa-lg mt-3 px-3 " onclick="nextPage()"></i>
-                        </div>
-
-                        <!--Informacion Laboral -->
-                        <div class="page" id="page3" style="display: none;">
-                            <h5 class="card-title mb-4">Informacion Academica</h5>
                             <div class="row mb-5">
+                                <h5 class="card-title mb-4">Informacion Academica y laboral</h5>
                                 <div class="col-md-4">
                                     <img src="../IMG/SedeFormacion.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="sede" class="form-label">Sede</label>
-                                    <select id="sede" class="form-select mb-3">
+                                    <select name="sede" id="sede" class="form-select mb-3">
                                         <option value="" selected disabled>Seleccione una opción</option>
-                                        <!-- Opciones -->
+                                        <%
+                                            for (Sede sede : ListaSedes) {
+                                        %>
+                                        <option value="<%=sede.getId()%>"><%=sede.getNombre()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
 
                                     <!-- Pregunta y check Box sobre cadena de formacion -->
@@ -237,19 +293,19 @@
                                         <br>
                                         <!-- Checkbox "Sí" -->
                                         <div class="form-check form-check-inline mx-4">
-                                            <input class="form-check-input" type="checkbox" id="siCheckbox" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
+                                            <input class="form-check-input"  name="CadenaFormacion" type="checkbox" id="siCheckbox" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox'), validarCheckboxes()">
                                             <label class="form-check-label" for="siCheckbox">Sí</label>
                                         </div>
 
                                         <!-- Checkbox "No" -->
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="noCheckbox" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
+                                            <input class="form-check-input" name="CadenaFormacion" type="checkbox" id="noCheckbox" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox'), validarCheckboxes()">
                                             <label class="form-check-label" for="noCheckbox">No</label>
                                         </div>
 
                                         <!-- Contenedor del input -->
                                         <div id="miInputContainer" style="display: none; margin-top: 10px;">
-                                            <input class="form-control mb-3" type="text" id="miInput" placeholder="Formacion Cursada">
+                                            <input name="FormacionCursada" class="form-control mb-3" type="text" id="miInput" placeholder="Formacion Cursada">
                                         </div>
                                     </div>
 
@@ -258,9 +314,15 @@
                                 <div class="col-md-4">
                                     <img src="../IMG/formacion.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="formacion" class="form-label">Formación</label>
-                                    <select id="formacion" class="form-select mb-3">
-                                        <option value="" selected disabled>Seleccione una opción</option>
-                                        <!-- Opciones -->
+                                    <select name="formacion" id="formacion" class="form-select mb-3">
+                                        <option  value="" selected disabled>Seleccione una opción</option>
+                                        <%
+                                            for (Formacion formacion : listaFormacion) {
+                                        %>
+                                        <option value="<%=formacion.getId()%>"><%=formacion.getNombre()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
 
 
@@ -272,19 +334,19 @@
                                         <br>
                                         <!-- Checkbox "Sí" -->
                                         <div class="form-check form-check-inline mx-4">
-                                            <input class="form-check-input" type="checkbox" id="siCheckboxExp" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
+                                            <input class="form-check-input" name="Experiencia" type="checkbox" id="siCheckboxExp" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp'), validarCheckboxes()">
                                             <label class="form-check-label" for="siCheckbox">Sí</label>
                                         </div>
 
                                         <!-- Checkbox "No" -->
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="noCheckboxExp" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
+                                            <input class="form-check-input"  name="Experiencia" type="checkbox" id="noCheckboxExp" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp'), validarCheckboxes()">
                                             <label class="form-check-label" for="noCheckbox">No</label>
                                         </div>
 
                                         <!-- Contenedor del input -->
                                         <div id="miInputContainerExp" style="display: none; margin-top: 10px;">
-                                            <textarea id="" name="name" rows="5" cols="" class="form-control" placeholder="Describa su experiencia maximo(300 caracteres)" maxlength="300"></textarea>
+                                            <textarea id="" name="ExperienciaDescrip" rows="5" cols="" class="form-control" placeholder="Describa su experiencia maximo(300 caracteres)" maxlength="300"></textarea>
 
                                         </div>
                                     </div>
@@ -293,9 +355,15 @@
                                 <div class="col-md-4">
                                     <img src="../IMG/crecimiento.webp" alt="alt" width="30px" height="30px"/>
                                     <label for="nivelFormacion" class="form-label">Nivel de Formación</label>
-                                    <select id="nivelFormacion" class="form-select mb-3">
+                                    <select id="nivelFormacion" name="nivelFormacion" class="form-select mb-3">
                                         <option value="" selected disabled>Seleccione una opción</option>
-                                        <!-- Opciones -->
+                                        <%
+                                            for (NivelFormacion Niveñformacion : listaNivelFormacion) {
+                                        %>
+                                        <option value="<%=Niveñformacion.getId()%>"><%=Niveñformacion.getNombre()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
 
                                     <!-- Pregunta y check Box sobre Carrera Universitaria -->
@@ -305,46 +373,49 @@
                                         <br>
                                         <!-- Checkbox "Sí" -->
                                         <div class="form-check form-check-inline mx-4">
-                                            <input class="form-check-input" type="checkbox" id="siCheckboxUni" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
+                                            <input class="form-check-input" type="checkbox" name="CarreraUniversitaria" id="siCheckboxUni" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni'), validarCheckboxes()">
                                             <label class="form-check-label" for="siCheckbox">Sí</label>
                                         </div>
 
                                         <!-- Checkbox "No" -->
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="noCheckboxUni" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
+                                            <input class="form-check-input" type="checkbox" id="noCheckboxUni" name="CarreraUniversitaria" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni'), validarCheckboxes()">
                                             <label class="form-check-label" for="noCheckbox">No</label>
                                         </div>
 
                                         <!-- Contenedor del input -->
                                         <div id="miInputContainerUni" style="display: none; margin-top: 10px;">
-                                            <input class="form-control mb-3" type="text" maxlength="100" id="miInput" placeholder="Nombre Univerisad">
-                                            <input class="form-control mb-3" type="text" maxlength="100" id="miInput" placeholder="Nombre Carrera">
+                                            <input class="form-control mb-3" type="text" maxlength="100" id="miInput"name="NombreUni" placeholder="Nombre Univerisad">
+                                            <input class="form-control mb-3" type="text" maxlength="100" id="miInput" name="NombreCarrera" placeholder="Nombre Carrera">
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mb-5">
+                                <!-- Pregunta y check Box su estdo de trabajo -->
+                                <div class="d-flex justify-content-center" >
+                                    <!-- Pregunta -->
+                                    <label class="form-label mx-2">¿Se encuntra trabajando actualmente?</label>
+                                    <br>
+                                    <!-- Checkbox "Sí" -->
+                                    <div class="form-check form-check-inline mx-4">
+                                        <input class="form-check-input" type="checkbox" name="trabajando" id="siCheckboxTraba" value="1" onchange="validarCheckboxes(); uncheckCheckbox('noCheckboxTraba');">
+                                        <label class="form-check-label" for="siCheckbox">Sí</label>
+                                    </div>
 
-                            <i class="fa-solid fa-arrow-left fa-lg mt-3 px-3 " onclick="prevPage()"></i>
-                            <button class="fa-solid fa-file-arrow-up fa-lg btn"></button>
+                                    <!-- Checkbox "No" -->
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="noCheckboxTraba" name="trabajando" value="0" onchange="validarCheckboxes(); uncheckCheckbox('siCheckboxTraba');">
+                                        <label class="form-check-label" for="noCheckbox">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button value="RegistrarEgresados" name="BtnEgresados" class="btn btn-outline-success" disabled >Guardar</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
-
-            </div>
+            </form>
         </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
     </body>
     <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D ; margin-top: 5%">
         <div class="container-fluid">
@@ -391,6 +462,52 @@
             </div>
         </div>
     </footer>
+    <%
+        String res = request.getParameter("respuesta");
+
+        if (res != null) {
+            switch (res) {
+                case "RegstroExitoso":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Registro guardado correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "Existente":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Cedula ya registrada
+            </div>
+        </div>
+    </div>
+    <%                    break;
+                default:
+                    break;
+            }
+
+        }
+
+    %>
+
+
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -406,4 +523,34 @@
     </script>
     <script src="../JS/NavegacionFormularioEgresados.js"></script>
     <script src="../JS/LogicaCheakBox.js"></script>
+    <script src="../JS/IniciarToast.js"></script>
+    <script>
+                                            function validarCheckboxes() {
+                                                var siCheckboxExp = document.getElementById("siCheckboxExp");
+                                                var noCheckboxExp = document.getElementById("noCheckboxExp");
+                                                var siCheckboxUni = document.getElementById("siCheckboxUni");
+                                                var noCheckboxUni = document.getElementById("noCheckboxUni");
+                                                var siCheckboxCadena = document.getElementById("siCheckbox");
+                                                var noCheckboxCadena = document.getElementById("noCheckbox");
+                                                var siCheckboxTraba = document.getElementById("siCheckboxTraba");
+                                                var noCheckboxTraba = document.getElementById("noCheckboxTraba");
+                                                var submitButton = document.querySelector("[name='BtnEgresados']");
+
+                                                // Verificar si al menos uno de los checkboxes de cada grupo está seleccionado
+                                                var experienciaLaboralSeleccionada = siCheckboxExp.checked || noCheckboxExp.checked;
+                                                var carreraUniversitariaSeleccionada = siCheckboxUni.checked || noCheckboxUni.checked;
+                                                var cadenaFormacionSeleccionada = siCheckboxCadena.checked || noCheckboxCadena.checked;
+                                                var trabajandoSeleccionado = siCheckboxTraba.checked || noCheckboxTraba.checked;
+
+                                                // Habilitar el botón de enviar si al menos uno de los checkboxes de cada grupo está seleccionado
+                                                submitButton.disabled = !(experienciaLaboralSeleccionada && carreraUniversitariaSeleccionada && cadenaFormacionSeleccionada && trabajandoSeleccionado);
+                                            }
+
+    </script>
+    <script>
+        function uncheckCheckbox(checkboxId) {
+            // Desmarca el otro checkbox
+            document.getElementById(checkboxId).checked = false;
+        }
+    </script>
 </html>

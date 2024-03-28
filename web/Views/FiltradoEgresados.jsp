@@ -14,6 +14,7 @@
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
         HttpSession sessionObtenida = request.getSession();
         String MenuHome = "";
+        Usuarios usuarioEntrante = new Usuarios();
         if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
 
             Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
@@ -21,8 +22,10 @@
 
             if (userAdmin != null) {
                 MenuHome = "HomeAdministradores.jsp";
+                usuarioEntrante = userAdmin;
             } else {
                 MenuHome = "HomeSuperAdmin.jsp";
+                usuarioEntrante = userSuperAdmin;
             }
 
         } else {
@@ -79,14 +82,14 @@
                                     </div>
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
-                                    <div class="username">Jessica Sanders</div>
+                                    <div class="username text-small"><%=usuarioEntrante.getNombre() %></div>
                                     <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
                                 <li><a class="dropdown-item" href="DatosPersonales.jsp">Datos perosnales</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Cerrado de Sesion</a></li>
+                                <li><a class="dropdown-item" href="../CerradoSession.jsp">Cerrado de Sesion</a></li>
                             </ul>
                         </div>
                     </strong>
@@ -95,7 +98,7 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<%=MenuHome %>">Home</a>
+                            <a class="nav-link active" aria-current="page" href="<%=MenuHome%>">Home</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

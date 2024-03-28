@@ -4,14 +4,17 @@
     Author     : ASUS
 --%>
 
+<%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
     response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
     HttpSession sessionObtenida = request.getSession();
+    Usuarios usuarioEntrante = new Usuarios();
     if (sessionObtenida.getAttribute("Egresado") == null) {
         response.sendRedirect("../index.jsp");
     }
+    usuarioEntrante = (Usuarios) sessionObtenida.getAttribute("Egresado");
 %>
 <html>
     <head>
@@ -57,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
-                                    <div class="username">Jessica Sanders</div>
+                                    <div class="usernametext-small"><%=usuarioEntrante.getNombre() %></div>
                                     <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
