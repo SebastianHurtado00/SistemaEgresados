@@ -4,6 +4,9 @@
     Author     : ASUS
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Controladores.TipodocumentoJpaController"%>
+<%@page import="Entidades.Tipodocumento"%>
 <%@page import="Entidades.Usuarios"%>
 <%-- 
     Document   : HomeAdministradores
@@ -15,16 +18,16 @@
 <!DOCTYPE html>
 <html>
     <%
-
+        
         response.setHeader("Cache-Control", "no-Cache,no-store,must-revalidate");
         HttpSession sessionObtenida = request.getSession();
         String MenuHome = "";
         Usuarios usuarioEntrante = new Usuarios();
         if ((sessionObtenida.getAttribute("Admin") != null) || (sessionObtenida.getAttribute("SuperAdmin") != null)) {
-
+            
             Usuarios userAdmin = (Usuarios) sessionObtenida.getAttribute("Admin");
             Usuarios userSuperAdmin = (Usuarios) sessionObtenida.getAttribute("SuperAdmin");
-
+            
             if (userAdmin != null) {
                 MenuHome = "HomeAdministradores.jsp";
                 usuarioEntrante = userAdmin;
@@ -32,7 +35,7 @@
                 MenuHome = "HomeSuperAdmin.jsp";
                 usuarioEntrante = userSuperAdmin;
             }
-
+            
         } else {
             //Si no hay session administrativa se maata la sssion que entre
             HttpSession sessionCerrar = request.getSession(false); // Obtén la sesión sin crear una nueva si no existe.
@@ -40,7 +43,11 @@
                 sessionCerrar.invalidate(); // Invalida la sesión actual
             }
             response.sendRedirect("index.jsp"); // Redirige al índice
+
         }
+        TipodocumentoJpaController controlTipoDoc = new TipodocumentoJpaController();
+        List<Tipodocumento> listaTipoDocumento = controlTipoDoc.findTipodocumentoEntities();
+
     %>
     <head>
 
@@ -128,60 +135,59 @@
         <section style="font-family: monospace">
             <div class="card mx-auto mt-5 mb-5" style="max-width: 800px">
                 <h5 class="card-title text-center mt-2">Datos Personales</h5>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="Num_Cedula" class="form-label">N° Cedula</label>
-                            <input class="form-control" type="number" id="Num_Cedula" max="999999999999" name="name" readonly="">
+                <form action="<%=request.getContextPath()%>/LogicaDatosUsuario" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Num_Cedula" class="form-label">N° Cedula</label>
+                                <input class="form-control" type="number" id="Num_Cedula" max="999999999999" name="Num_Cedula" value="<%=usuarioEntrante.getCedula()%>" readonly="">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Tipo_Doc" class="form-label">Tipo Cedula</label>
+                                <select  name="TipoDoc" class="form-select" id="Tipo_Doc">
+                                    <option value="<%=usuarioEntrante.getTipoDocID().getId()%>" ><%=usuarioEntrante.getTipoDocID().getNombre()%></option>
+                                    <% for (Tipodocumento TipoDoc : listaTipoDocumento) {
+                                            if (usuarioEntrante.getTipoDocID().getId() != TipoDoc.getId()) {
+                                    %>
+                                    <option value="<%=TipoDoc.getId()%>"><%=TipoDoc.getNombre()%></option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="Tipo_Doc" class="form-label">Tipo Cedula</label>
-                            <select class="form-select" id="Tipo_Doc">
-                                <option selected disabled>Seleccione una opción</option>
-                            </select>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="Nombre" class="form-label">Nombre</label>
+                                <input class="form-control" type="text" maxlength="45" id="Nombre" name="Nombre" value="<%=usuarioEntrante.getNombre()%>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Apellidos" class="form-label">Apellidos</label>
+                                <input class="form-control" type="text" maxlength="45" id="Apellidos" name="Apellidos" value="<%=usuarioEntrante.getApellido()%>" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Correo" class="form-label">Correo</label>
+                                <input class="form-control" type="email" maxlength="200" id="Correo" name="Correo" value="<%=usuarioEntrante.getCorreo()%>" required>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="Telefono" class="form-label">Telefono</label>
+                                <input class="form-control" type="tel" max="9999999999" id="Telefono" name="Telefono" value="<%=usuarioEntrante.getTelefono()%>" required>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 col-4 mx-auto mt-4 mb-4">
+                            <button class="btn btn-success" name="BtnModificar" value="Modificar" >Modificar</button>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <label for="Nombre" class="form-label">Nombre</label>
-                            <input class="form-control" type="text" maxlength="45" id="Nombre" name="name" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="Apellidos" class="form-label">Apellidos</label>
-                            <input class="form-control" type="text" maxlength="45" id="Apellidos" name="name" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="Correo" class="form-label">Correo</label>
-                            <input class="form-control" type="email" maxlength="200" id="Correo" name="name" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="Telefono" class="form-label">Telefono</label>
-                            <input class="form-control" type="tel" max="999999999999" id="Telefono" name="name" required>
-                        </div>
-                    </div>
-                    <div class="row mt-3 mx-auto">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password" maxlength="200" id="password" name="name" required>
-                        </div>
-                        <div class="col-md-3"></div>
-                    </div>
-
-                    <div class="d-grid gap-2 col-4 mx-auto mt-4">
-                        <button class="btn btn-success" type="button">Modificar</button>
-                    </div>
-
-                </div>
-
+                </form>
             </div>
         </section>
 
+
     </body>
-    <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D">
+    <footer  style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D">
         <div class="container-fluid">
             <!--Row Principal-->
             <div class="row">
@@ -227,6 +233,49 @@
         </div>
     </footer>
 
+    <%            String res = request.getParameter("respuesta");
+        
+        if (res != null) {
+            switch (res) {
+                case "SinCambios":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upps!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                No se han encontrado Cambios!!
+            </div>
+        </div>
+    </div>
+    <%        
+            break;
+        case "Edicion":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Edicion Exitosa !!
+            </div>
+        </div>
+    </div>
+    <%                        break;
+                default:
+                    break;
+            }
+            
+        }
+
+    %>
 
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -240,7 +289,7 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="../JS/IniciarToast.js"></script>
 </html>
 <script>
                 AOS.init();

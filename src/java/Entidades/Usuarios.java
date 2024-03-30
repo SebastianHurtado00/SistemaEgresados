@@ -7,6 +7,7 @@ package Entidades;
 import com.password4j.Hash;
 import com.password4j.Password;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -163,15 +164,18 @@ public class Usuarios implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuarios)) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         Usuarios other = (Usuarios) object;
-        if ((this.cedula == null && other.cedula != null) || (this.cedula != null && !this.cedula.equals(other.cedula))) {
-            return false;
-        }
-        return true;
+        return Objects.equals(cedula, other.cedula)
+                && Objects.equals(nombre, other.nombre)
+                && Objects.equals(apellido, other.apellido)
+                && Objects.equals(correo, other.correo)
+                && Objects.equals(telefono, other.telefono);
     }
 
     @Override

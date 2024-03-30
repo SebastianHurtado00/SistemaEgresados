@@ -4,6 +4,23 @@
     Author     : ASUS
 --%>
 
+<%@page import="Controladores.EgresadoJpaController"%>
+<%@page import="Entidades.Egresado"%>
+<%@page import="Entidades.Formacion"%>
+<%@page import="Entidades.Ciudad"%>
+<%@page import="Entidades.NivelFormacion"%>
+<%@page import="Entidades.Sede"%>
+<%@page import="Entidades.TipoPoblacion"%>
+<%@page import="Entidades.Sexo"%>
+<%@page import="java.util.List"%>
+<%@page import="Entidades.Tipodocumento"%>
+<%@page import="Controladores.NivelFormacionJpaController"%>
+<%@page import="Controladores.TipoPoblacionJpaController"%>
+<%@page import="Controladores.CiudadJpaController"%>
+<%@page import="Controladores.FormacionJpaController"%>
+<%@page import="Controladores.SexoJpaController"%>
+<%@page import="Controladores.TipodocumentoJpaController"%>
+<%@page import="Controladores.SedeJpaController"%>
 <%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -36,6 +53,23 @@
             }
             response.sendRedirect("index.jsp"); // Redirige al índice
         }
+
+        TipodocumentoJpaController controlTipoDoc = new TipodocumentoJpaController();
+        SexoJpaController controlSexo = new SexoJpaController();
+        SedeJpaController controlSede = new SedeJpaController();
+        FormacionJpaController controlFormacion = new FormacionJpaController();
+        CiudadJpaController controlCiudad = new CiudadJpaController();
+        NivelFormacionJpaController controlNivelFomacion = new NivelFormacionJpaController();
+        TipoPoblacionJpaController controlTipoPoblacion = new TipoPoblacionJpaController();
+
+        List<Tipodocumento> listaTipoDoc = controlTipoDoc.findTipodocumentoEntities();
+        List<Sexo> listaSexo = controlSexo.findSexoEntities();
+        List<TipoPoblacion> listaTipoPoblacion = controlTipoPoblacion.findTipoPoblacionEntities();
+        List<Sede> ListaSedes = controlSede.findSedeEntities();
+        List<Formacion> listaFormacion = controlFormacion.findFormacionEntities();
+        List<Ciudad> listaCiudades = controlCiudad.findCiudadEntities();
+        List<NivelFormacion> listaNivelFormacion = controlNivelFomacion.findNivelFormacionEntities();
+
     %>
 
     <title>Filtrado de Egresados</title>
@@ -82,7 +116,7 @@
                                     </div>
                                 </div>
                                 <div class="notice-content" style="font-family: monospace">
-                                    <div class="username text-small"><%=usuarioEntrante.getNombre() %></div>
+                                    <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
                                     <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
@@ -136,90 +170,134 @@
                     <div class="col-md-4">
                         <img src="../IMG/sexo.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="sexo" class="form-label">Sexo</label>
-                        <select id="sexo" class="form-select mb-3">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <!-- Opciones -->
+                        <select id="sexo" class="form-select mb-3" onchange="filtrarTabla()" >
+                            <option value="" selected  ">Seleccione una opción</option>
+                            <%
+                                for (Sexo sex : listaSexo) {
+                            %>
+                            <option value="<%=sex.getId()%>"><%=sex.getNombre()%></option>
+                            <%                                }
+                            %>
                         </select>
                         <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="sede" class="form-label">Sede</label>
-                        <select id="sede" class="form-select mb-3">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <!-- Opciones -->
+                        <select id="sede" class="form-select mb-3"onchange="filtrarTabla()" >
+                            <option value="" selected >Seleccione una opción</option>
+                            <%
+                                for (Sede sede : ListaSedes) {
+                            %>
+                            <option value="<%=sede.getId()%>"><%=sede.getNombre()%></option>
+                            <%                                }
+                            %>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <img src="../IMG/formacion.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="formacion" class="form-label">Formacion</label>
-                        <select id="formacion" class="form-select mb-3">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <!-- Opciones -->
+                        <select id="formacion" class="form-select mb-3" onchange="filtrarTabla()"> 
+                            <option value="" selected >Seleccione una opción</option>
+                            <%
+                                for (Formacion forma : listaFormacion) {
+                            %>
+                            <option value="<%=forma.getId()%>"><%=forma.getNombre()%></option>
+                            <%                                }
+                            %>
                         </select>
 
                         <img src="../IMG/experiencia.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="Experiencia" class="form-label">Experiencia</label>
-                        <select id="Experiencia" class="form-select mb-3">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <!-- Opciones -->
+                        <select id="Experiencia" class="form-select mb-3"onchange="filtrarTabla()">
+                            <option value="" selected >Seleccione una opción</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <img src="../IMG/labor.webp" alt="alt" width="25px" height="25px"/> 
-                        <label for="Laborando" class="form-label">Laborando</label>
-                        <select id="Laborando" class="form-select mb-3">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <!-- Opciones -->
+                        <label for="Labrando" class="form-label">Laborando</label>
+                        <select id="Laborando" class="form-select mb-3"onchange="filtrarTabla()">
+                            <option value="" selected >Seleccione una opción</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
                         </select>
 
                         <img src="../IMG/edificios.webp" alt="alt" width="25px" height="25px"/> 
                         <label for="Ciudad" class="form-label">Ciudad</label>
-                        <select id="Ciudad" class="form-select mb-3">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <!-- Opciones -->
+                        <select id="Ciudad" class="form-select mb-3" onchange="filtrarTabla()">
+                            <option value="" selected >Seleccione una opción</option>
+                            <%
+                                for (Ciudad ciudad : listaCiudades) {
+                            %>
+                            <option value="<%=ciudad.getId()%>"><%=ciudad.getNombre()%></option>
+                            <%
+                                }
+                            %>
                         </select>
                     </div>
                 </div>
                 <div class="table-responsive" >
                     <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 500px">
-                        <table class="table table-striped-columns" style="height: 500px">
+                        <table id="miTabla" class="table table-striped" style="height: 500px">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">ID Poblacion</th>
-                                    <th scope="col">Nombre Poblacion</th>
-                                    <th scope="col">Configuracion</th>
+                                    <th scope="col">N° Cedula</th>
+                                    <th scope="col">Tipo Documento</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Sexo</th>                             
+                                    <th scope="col">Tipo Poblacion</th>
+                                    <th scope="col">Sede</th>
+                                    <th scope="col">Formacion</th>
+                                    <th scope="col">Ciudad</th>
+                                    <th scope="col" >Correo</th>
+                                    <th scope="col">Contacto</th>
+                                    <th>Experiencia</th>
+                                    <th>¿Trabajando?</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
+                                <%
+                                    EgresadoJpaController controlEgresados = new EgresadoJpaController();
+                                    List<Egresado> listaEgresados = controlEgresados.findEgresadoEntities();
+                                    for (Egresado egresados : listaEgresados) {
 
-                                </tr>
+                                %>
+
                                 <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
+                                    <td><%=egresados.getNumeroCedula()%></td>
+                                    <td><%=egresados.getTipoDocumentoID().getNombre()%></td>
+                                    <td><%=egresados.getNombre()%></td>
+                                    <td><%=egresados.getApellido()%></td>
+                                    <td><%=egresados.getSexoID().getNombre()%></td>
+                                    <td><%=egresados.getTipoPoblacionID().getNombre()%></td>
+                                    <td><%=egresados.getSedeID().getNombre()%></td>
+                                    <td><%=egresados.getFormacionID().getNombre()%></td>
+                                    <td><%=egresados.getCiudadID().getNombre() %></td>
+                                    <td><%=egresados.getCorreo()%></td>
+                                    <td><%=egresados.getNumeroTelefono()%></td>
+                                    <td>
+                                        <% if (egresados.getExperiencia()) { %>
+                                        Sí
+                                        <% } else { %>
+                                        No
+                                        <% }%>
+                                    </td>
+                                    <td>
+                                        <% if (egresados.getTrabajando()) { %>
+                                        Sí
+                                        <% } else { %>
+                                        No
+                                        <% } %>
+                                    </td>
+                                    <td><i class="fa-solid fa-gear fa-lg mx-5"type="button" data-bs-toggle="modal"
+                                           data-bs-target="#ModalModificacion" data-info = '{
+                                           ">"
+                                           }'></i></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
+
+                                <%                                    }
+                                %>
                             </tbody>
                         </table>
                     </div>
@@ -338,5 +416,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../JS/ReconocimientoVoz.js"></script>
     <script src="../JS/FiltradoTablas.js"></script>
+    <script src="../JS/FiltrarTablaEgresados.js"></script>
 
 </html>

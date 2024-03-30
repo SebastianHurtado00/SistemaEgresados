@@ -36,8 +36,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ASUS
  */
-@WebServlet(name = "RegistroEgresados", urlPatterns = {"/RegistroEgresados"})
-public class RegistroEgresados extends HttpServlet {
+@WebServlet(name = "ModificacionEgresado", urlPatterns = {"/ModificacionEgresado"})
+public class ModificacionEgresado extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,19 +53,20 @@ public class RegistroEgresados extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String btn = request.getParameter("BtnEgresados");
         PrintWriter res = response.getWriter();
+
         switch (btn) {
-            case "RegistrarEgresados":
-                // res.print("Hola");
-                GuardadarDatosEgresado(request, response);
+            case "Modificar":
+                //res.print("Modifaicar");
+                modficacionEgresado(request, response);
                 break;
             default:
-                throw new AssertionError();
+                break;
         }
+
     }
 
-    public void GuardadarDatosEgresado(HttpServletRequest request, HttpServletResponse response)
+    public void modficacionEgresado(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         //Imstamciamos entidades necesarias
         EgresadoJpaController controlEgresados = new EgresadoJpaController();
         TipodocumentoJpaController controlTipoDoc = new TipodocumentoJpaController();
@@ -76,9 +77,9 @@ public class RegistroEgresados extends HttpServlet {
         NivelFormacionJpaController controlNivelFomacion = new NivelFormacionJpaController();
         TipoPoblacionJpaController controlTipoPoblacion = new TipoPoblacionJpaController();
         UsuariosJpaController controlUsuarios = new UsuariosJpaController();
-        Egresado egresadoValidar = new Egresado();
-        Egresado egresadoGuardar = new Egresado();
-        Usuarios usurioEgresado = new Usuarios();
+        Egresado egresadoLlegado = new Egresado();
+        Egresado egresadoModificar = new Egresado();
+        Usuarios usuarioModificar = new Usuarios();
 
         //Tomammos datos
         Long IdEgresado = Long.parseLong(request.getParameter("numeroDocumento"));
@@ -128,58 +129,59 @@ public class RegistroEgresados extends HttpServlet {
         String checkboxTrabajando = request.getParameter("trabajando");
         boolean checkBoxTraba = checkboxTrabajando != null && checkboxTrabajando.equals("1");
 
-        //Verificamos que Id no se repita
-        egresadoValidar = controlEgresados.findEgresado(IdEgresado);
+        //Validamos que hayan cambios
+        egresadoLlegado = controlEgresados.findEgresado(IdEgresado);
+        egresadoModificar.setNumeroCedula(IdEgresado);
+        egresadoModificar.setTipoDocumentoID(TipoDocSeleccionado);
+        egresadoModificar.setNombre(nombreEgresado);
+        egresadoModificar.setApellido(apellidos);
+        egresadoModificar.setSexoID(SexpSeleccionado);
+        egresadoModificar.setSedeID(sedeSeleccionada);
+        egresadoModificar.setFormacionID(formacionSeleccionada);
+        egresadoModificar.setNivelFormacionID(NivelFormacionSeleccionado);
+        egresadoModificar.setNumeroCertificados(NumeroCertificados);
+        egresadoModificar.setCorreo(correoElectronico);
+        egresadoModificar.setTipoPoblacionID(poblacionSeleccionada);
+        egresadoModificar.setNumeroTelefono(numeroContacto);
+        egresadoModificar.setCiudadID(ciudadSeleccionada);
+        egresadoModificar.setDireccionResidencia(Direccion);
+        egresadoModificar.setCadenaFormacion(checkBoxFormacion);
+        egresadoModificar.setFormacionCursada(FormacionCursada);
+        egresadoModificar.setCadenaUniversitaria(checkBoxUniversitaria);
+        egresadoModificar.setNombreUniversidad(NombreUni);
+        egresadoModificar.setNombreCarrera(NombreCarrera);
+
+        egresadoModificar.setExperiencia(checkBoxExperiencia);
+        egresadoModificar.setDescripcionExperiencia(ExpDescripcion);
+        egresadoModificar.setTrabajando(checkBoxTraba);
+
         String mensajeUrl;
-        if (egresadoValidar != null) {
-            //  Id Ya existe
-            mensajeUrl = "Existente";
-            response.sendRedirect("Views/RegistrosEgresados.jsp?respuesta=" + mensajeUrl);
+        if (egresadoLlegado.equals(egresadoModificar)) {
+            //No hubo cambios
+            mensajeUrl = "SinCambios";
+            response.sendRedirect("Views/HomeEgresados.jsp?respuesta=" + mensajeUrl);
+
         } else {
-            //Procedemos al guardado
-            egresadoGuardar.setNumeroCedula(IdEgresado);
-            egresadoGuardar.setTipoDocumentoID(TipoDocSeleccionado);
-            egresadoGuardar.setNombre(nombreEgresado);
-            egresadoGuardar.setApellido(apellidos);
-            egresadoGuardar.setSexoID(SexpSeleccionado);
-            egresadoGuardar.setSedeID(sedeSeleccionada);
-            egresadoGuardar.setFormacionID(formacionSeleccionada);
-            egresadoGuardar.setNivelFormacionID(NivelFormacionSeleccionado);
-            egresadoGuardar.setNumeroCertificados(NumeroCertificados);
-            egresadoGuardar.setCorreo(correoElectronico);
-            egresadoGuardar.setTipoPoblacionID(poblacionSeleccionada);
-            egresadoGuardar.setNumeroTelefono(numeroContacto);
-            egresadoGuardar.setCiudadID(ciudadSeleccionada);
-            egresadoGuardar.setDireccionResidencia(Direccion);
-            egresadoGuardar.setCadenaFormacion(checkBoxFormacion);
-            egresadoGuardar.setFormacionCursada(FormacionCursada);
-            egresadoGuardar.setCadenaUniversitaria(checkBoxUniversitaria);
-            egresadoGuardar.setNombreUniversidad(NombreUni);
-            egresadoGuardar.setNombreCarrera(NombreCarrera);
-
-            egresadoGuardar.setExperiencia(checkBoxExperiencia);
-            egresadoGuardar.setDescripcionExperiencia(ExpDescripcion);
-            egresadoGuardar.setTrabajando(checkBoxTraba);
-
             try {
-                controlEgresados.create(egresadoGuardar);
-                //Falta el guardado a la Tb usuarios
-                String passwordEncriptada = usurioEgresado.EncryptarClave(IdEgresadoStr);
+                //Modificaion en datos de la Tb usuario
+                //Encontramos usuario
+                usuarioModificar = controlUsuarios.findUsuarios(IdEgresadoU);
+                //Le seteamos los datos requeridos
+                usuarioModificar.setCedula(usuarioModificar.getCedula());
+                usuarioModificar.setNombre(nombreEgresado);
+                usuarioModificar.setApellido(apellidos);
+                usuarioModificar.setCorreo(correoElectronico);
+                usuarioModificar.setPassword(usuarioModificar.getPassword());
+                usuarioModificar.setRol(usuarioModificar.getRol());
+                usuarioModificar.setTelefono(numeroContacto);
+                usuarioModificar.setTipoDocID(TipoDocSeleccionado);
+                controlUsuarios.edit(usuarioModificar);
 
-                usurioEgresado.setCedula(IdEgresadoU);
-                usurioEgresado.setTipoDocID(TipoDocSeleccionado);
-                usurioEgresado.setNombre(nombreEgresado);
-                usurioEgresado.setApellido(apellidos);
-                usurioEgresado.setTelefono(numeroContacto);
-                usurioEgresado.setCorreo(correoElectronico);
-                usurioEgresado.setRol(2);
-                usurioEgresado.setPassword(passwordEncriptada);
-                controlUsuarios.create(usurioEgresado);
-
-                mensajeUrl = "RegstroExitoso";
-                response.sendRedirect("Views/RegistrosEgresados.jsp?respuesta=" + mensajeUrl);
+                controlEgresados.edit(egresadoModificar);
+                mensajeUrl = "ModificacionExitosa";
+                response.sendRedirect("Views/HomeEgresados.jsp?respuesta=" + mensajeUrl);
             } catch (Exception ex) {
-                Logger.getLogger(RegistroEgresados.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ModificacionEgresado.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

@@ -4,6 +4,24 @@
     Author     : ASUS
 --%>
 
+<%@page import="javax.persistence.Id"%>
+<%@page import="Controladores.EgresadoJpaController"%>
+<%@page import="Entidades.Egresado"%>
+<%@page import="Entidades.NivelFormacion"%>
+<%@page import="Entidades.Ciudad"%>
+<%@page import="Entidades.Formacion"%>
+<%@page import="Entidades.Sede"%>
+<%@page import="Entidades.TipoPoblacion"%>
+<%@page import="Entidades.Sexo"%>
+<%@page import="java.util.List"%>
+<%@page import="Entidades.Tipodocumento"%>
+<%@page import="Controladores.TipoPoblacionJpaController"%>
+<%@page import="Controladores.NivelFormacionJpaController"%>
+<%@page import="Controladores.CiudadJpaController"%>
+<%@page import="Controladores.FormacionJpaController"%>
+<%@page import="Controladores.SedeJpaController"%>
+<%@page import="Controladores.SexoJpaController"%>
+<%@page import="Controladores.TipodocumentoJpaController"%>
 <%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,6 +33,29 @@
         response.sendRedirect("../index.jsp");
     }
     usuarioEntrante = (Usuarios) sessionObtenida.getAttribute("Egresado");
+
+    TipodocumentoJpaController controlTipoDoc = new TipodocumentoJpaController();
+    SexoJpaController controlSexo = new SexoJpaController();
+    SedeJpaController controlSede = new SedeJpaController();
+    FormacionJpaController controlFormacion = new FormacionJpaController();
+    CiudadJpaController controlCiudad = new CiudadJpaController();
+    NivelFormacionJpaController controlNivelFomacion = new NivelFormacionJpaController();
+    TipoPoblacionJpaController controlTipoPoblacion = new TipoPoblacionJpaController();
+
+    EgresadoJpaController controlEgrasado = new EgresadoJpaController();
+    Integer IdEgrsado = usuarioEntrante.getCedula();
+    String IdStr = String.valueOf(IdEgrsado);
+    Long IdLong = Long.parseLong(IdStr);
+
+    Egresado EgresadoEnonctrado = controlEgrasado.findEgresado(IdLong);
+
+    List<Tipodocumento> listaTipoDoc = controlTipoDoc.findTipodocumentoEntities();
+    List<Sexo> listaSexo = controlSexo.findSexoEntities();
+    List<TipoPoblacion> listaTipoPoblacion = controlTipoPoblacion.findTipoPoblacionEntities();
+    List<Sede> ListaSedes = controlSede.findSedeEntities();
+    List<Formacion> listaFormacion = controlFormacion.findFormacionEntities();
+    List<Ciudad> listaCiudades = controlCiudad.findCiudadEntities();
+    List<NivelFormacion> listaNivelFormacion = controlNivelFomacion.findNivelFormacionEntities();
 %>
 <html>
     <head>
@@ -59,9 +100,9 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="notice-content" style="font-family: monospace">
-                                    <div class="usernametext-small"><%=usuarioEntrante.getNombre() %></div>
-                                    <div class="text-center text-small text-gray">Admin</div>
+                                <div class="notice-content " style="font-family: monospace">
+                                    <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
+                                    <div class="text-center text-small text-gray">Egresado</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -84,45 +125,70 @@
 
     <body style="background: #F1F1F1">
         <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
-            <h5 class="card-title text-center mt-3" ><img src="../IMG/graduado.webp" alt="alt" width="50px" height="50px"/>Registros de egresados</h5>
+            <h5 class="card-title text-center mt-3" ><img src="../IMG/graduado.webp" alt="alt" width="50px" height="50px"/>Datos de egresado</h5>
             <div class="card-body">
-                <form id="multiPageForm">
+                <form action="<%=request.getContextPath()%>/ModificacionEgresado" method="post">
                     <!--Seccion de datos Personales -->
                     <div class="row">
                         <h5 class="card-title mb-3">Informacion Personal</h5>
                         <div class="col-md-6">
                             <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                             <label for="numeroDocumento" class="form-label">N° Documento</label>
-                            <input type="text" id="numeroDocumento" class="form-control mb-3" required max="99999999999">
+                            <input type="text" name="numeroDocumento" id="numeroDocumento" class="form-control mb-3"value="<%=EgresadoEnonctrado.getNumeroCedula()%>" readonly max="99999999999">
 
                             <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="nombres" class="form-label">Nombres</label>
-                            <input type="text" id="nombres" class="form-control mb-3" required maxlength="45">
+                            <input type="text" value="<%=EgresadoEnonctrado.getNombre()%>" name="nombres" id="nombres" class="form-control mb-3" required maxlength="45">
 
                             <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" id="apellidos" class="form-control mb-3" required maxlength="45">
+                            <input type="text" value="<%=EgresadoEnonctrado.getApellido()%>"  id="apellidos"name="apellidos" class="form-control mb-3" required maxlength="45">
                         </div>
 
                         <div class="col-md-6">
                             <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
-                            <select id="tipoDocumento" class="form-select mb-3" required>
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <!-- Opciones -->
+                            <select name="tipoDocumento" id="tipoDocumento" class="form-select mb-3" required>
+                                <option value="<%=EgresadoEnonctrado.getTipoDocumentoID().getId()%>" ><%=EgresadoEnonctrado.getTipoDocumentoID().getNombre()%></option>
+                                <% for (Tipodocumento TipoDoc : listaTipoDoc) {
+                                        if (EgresadoEnonctrado.getTipoDocumentoID().getId() != TipoDoc.getId()) {
+                                %>
+                                <option value="<%=TipoDoc.getId()%>"><%=TipoDoc.getNombre()%></option>
+                                <%
+                                        }
+                                    }
+                                %>
                             </select>
                             <img src="../IMG/sexo.webp" alt="alt" width="30px" height="30px"/>
                             <label for="sexo" class="form-label">Sexo</label>
-                            <select id="sexo" class="form-select mb-3" required>
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <!-- Opciones -->
+                            <select  name="sexo" id="sexo" class="form-select mb-3" required>
+                                <option value="<%=EgresadoEnonctrado.getSexoID().getId() %>" selected ><%=EgresadoEnonctrado.getSexoID().getNombre()%></option>
+                                <%
+                                    for (Sexo sex : listaSexo) {
+                                        if (EgresadoEnonctrado.getSexoID().getId() != sex.getId()) {
+                                %>
+                                <option value="<%=sex.getId()%>"><%=sex.getNombre()%></option>
+                                <%
+                                        }
+                                    }
+                                %>
                             </select>
 
                             <img src="../IMG/personas.webp" alt="alt" width="30px" height="30px"/>
                             <label for="tipoPoblacion" class="form-label">Tipo de Población</label>
-                            <select id="tipoPoblacion" class="form-select mb-3" required>
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <!-- Opciones -->
+                            <select name="tipoPoblacion" id="tipoPoblacion" class="form-select mb-3" required>
+                                <option value="<%=EgresadoEnonctrado.getTipoPoblacionID().getId()%>" selected><%=EgresadoEnonctrado.getTipoPoblacionID().getNombre()%></option>
+                                <%
+                                    for (TipoPoblacion TipoPoblacion : listaTipoPoblacion) {
+                                        if (EgresadoEnonctrado.getTipoPoblacionID().getId() != TipoPoblacion.getId()) {
+
+
+                                %>
+                                <option value="<%=TipoPoblacion.getId()%>"><%=TipoPoblacion.getNombre()%></option>
+                                <%
+                                        }
+                                    }
+                                %>
                             </select>
                         </div>
                     </div>
@@ -131,25 +197,33 @@
                         <div class="col-md-6">
                             <img src="../IMG/edificios.webp" alt="alt" width="30px" height="30px"/>
                             <label for="ciudad" class="form-label">Ciudad</label>
-                            <select id="ciudad" class="form-select mb-3" required>
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <!-- Opciones -->
+                            <select name="ciudad" id="ciudad" class="form-select mb-3" required>
+                                <option value="<%=EgresadoEnonctrado.getCiudadID().getId()%>" selected><%=EgresadoEnonctrado.getCiudadID().getNombre()%></option>
+                                <%
+                                    for (Ciudad ciudad : listaCiudades) {
+                                        if (EgresadoEnonctrado.getCiudadID().getId() != ciudad.getId()) {
+                                %>
+                                <option value="<%=ciudad.getId()%>"><%=ciudad.getNombre()%></option>
+                                <%
+                                        }
+                                    }
+                                %>
                             </select>
 
                             <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="direccion" class="form-label">Dirección</label>
-                            <input type="text" id="direccion" class="form-control mb-3" maxlength="100" placeholder="Opcional">
+                            <input name="direccion" value="<%=EgresadoEnonctrado.getDireccionResidencia()%>" type="text" id="direccion" class="form-control mb-3" maxlength="100" placeholder="Opcional">
                         </div>
 
                         <div class="col-md-6">
                             <img src="../IMG/marcador-de-posicion.webp" alt="alt" width="30px" height="30px"/>
 
                             <label for="numCertificados" class="form-label">N° de Certificados</label>
-                            <input type="number" id="numCertificados" class="form-control mb-3" max="99999999999"" placeholder="Opcional">
+                            <input  name="numCertificados" type="number" id="numCertificados" value="<%=EgresadoEnonctrado.getNumeroCertificados()%>" class="form-control mb-3" max="99999999999"" placeholder="Opcional">
 
                             <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
                             <label for="correo" class="form-label">Correo</label>
-                            <input type="email" id="correo" class="form-control mb-3" maxlength="45">
+                            <input name="correo" type="email" id="correo" class="form-control mb-3"  value="<%=EgresadoEnonctrado.getCorreo()%>" maxlength="45">
                         </div>
 
                         <div class="row">
@@ -158,7 +232,7 @@
                             <div class = "col-md-6">
                                 <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                                 <label for="numContacto" class="form-label mx-auto">Número de Contacto</label>
-                                <input type="tel" id="numContacto" class="form-control mb-3">
+                                <input name="numContacto" type="tel" id="numContacto"value="<%=EgresadoEnonctrado.getNumeroTelefono()%>" class="form-control mb-3">
                             </div>
                             <div class = "col-md-3">
                             </div>
@@ -172,9 +246,17 @@
                         <div class="col-md-4">
                             <img src="../IMG/SedeFormacion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="sede" class="form-label">Sede</label>
-                            <select id="sede" class="form-select mb-3">
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <!-- Opciones -->
+                            <select name="sede" id="sede" class="form-select mb-3">
+                                <option value="<%=EgresadoEnonctrado.getSedeID().getId() %>" selected ><%=EgresadoEnonctrado.getSedeID().getNombre()%></option>
+                                <%
+                                    for (Sede sede : ListaSedes) {
+                                        if (EgresadoEnonctrado.getSedeID().getId() != sede.getId()) {
+                                %>
+                                <option value="<%=sede.getId()%>"><%=sede.getNombre()%></option>
+                                <%
+                                        }
+                                    }
+                                %>
                             </select>
 
                             <!-- Pregunta y check Box sobre cadena de formacion -->
@@ -184,19 +266,18 @@
                                 <br>
                                 <!-- Checkbox "Sí" -->
                                 <div class="form-check form-check-inline mx-4">
-                                    <input class="form-check-input" type="checkbox" id="siCheckbox" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
+                                    <input name="CadenaFormacion" class="form-check-input" type="checkbox" id="siCheckbox" <% if (EgresadoEnonctrado.getCadenaFormacion()) { %> checked <% } %> onchange="mostrarOcultarInput(this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox'), validarCheckboxes();">
                                     <label class="form-check-label" for="siCheckbox">Sí</label>
                                 </div>
 
                                 <!-- Checkbox "No" -->
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="noCheckbox" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox')">
+                                    <input name="CadenaFormacion" class="form-check-input" type="checkbox" id="noCheckbox" <% if (!EgresadoEnonctrado.getCadenaFormacion()) { %> checked <% }%> onchange="mostrarOcultarInput(!this.checked, 'miInputContainer', 'siCheckbox', 'noCheckbox'), validarCheckboxes();">
                                     <label class="form-check-label" for="noCheckbox">No</label>
                                 </div>
-
                                 <!-- Contenedor del input -->
                                 <div id="miInputContainer" style="display: none; margin-top: 10px;">
-                                    <input class="form-control mb-3" type="text" id="miInput" placeholder="Formacion Cursada">
+                                    <input name="FormacionCursada" class="form-control mb-3" type="text" id="miInput" placeholder="Formacion Cursada">
                                 </div>
                             </div>
 
@@ -205,13 +286,20 @@
                         <div class="col-md-4">
                             <img src="../IMG/formacion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="formacion" class="form-label">Formación</label>
-                            <select id="formacion" class="form-select mb-3">
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <!-- Opciones -->
+                            <select name="formacion" id="formacion" class="form-select mb-3">
+                                <option value="<%=EgresadoEnonctrado.getFormacionID().getId()%>" selected ><%=EgresadoEnonctrado.getFormacionID().getNombre()%></option>
+                                <%
+                                    for (Formacion formacion : listaFormacion) {
+                                        if (EgresadoEnonctrado.getFormacionID().getId() != formacion.getId()) {
+
+
+                                %>
+                                <option value="<%=formacion.getId()%>"><%=formacion.getNombre()%></option>
+                                <%
+                                        }
+                                    }
+                                %>
                             </select>
-
-
-
                             <!-- Pregunta y check Box sobre Experiencia -->
                             <div >
                                 <!-- Pregunta -->
@@ -219,19 +307,19 @@
                                 <br>
                                 <!-- Checkbox "Sí" -->
                                 <div class="form-check form-check-inline mx-4">
-                                    <input class="form-check-input" type="checkbox" id="siCheckboxExp" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
+                                    <input name="Experiencia" class="form-check-input" type="checkbox" id="siCheckboxExp" <% if (EgresadoEnonctrado.getExperiencia()) { %> checked <% } %> onchange="mostrarOcultarInput(this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp'), validarCheckboxes()">
                                     <label class="form-check-label" for="siCheckbox">Sí</label>
                                 </div>
 
                                 <!-- Checkbox "No" -->
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="noCheckboxExp" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp')">
+                                    <input name="Experiencia" class="form-check-input" type="checkbox" id="noCheckboxExp" <% if (!EgresadoEnonctrado.getExperiencia()) { %> checked <% }%> onchange="mostrarOcultarInput(!this.checked, 'miInputContainerExp', 'siCheckboxExp', 'noCheckboxExp'), validarCheckboxes()">
                                     <label class="form-check-label" for="noCheckbox">No</label>
                                 </div>
 
                                 <!-- Contenedor del input -->
                                 <div id="miInputContainerExp" style="display: none; margin-top: 10px;">
-                                    <textarea id="" name="name" rows="5" cols="" class="form-control" placeholder="Describa su experiencia maximo(300 caracteres)" maxlength="300"></textarea>
+                                    <textarea id="" name="ExperienciaDescrip" rows="5" cols="" class="form-control" placeholder="Describa su experiencia maximo(300 caracteres)" maxlength="300"></textarea>
 
                                 </div>
                             </div>
@@ -240,9 +328,19 @@
                         <div class="col-md-4">
                             <img src="../IMG/crecimiento.webp" alt="alt" width="30px" height="30px"/>
                             <label for="nivelFormacion" class="form-label">Nivel de Formación</label>
-                            <select id="nivelFormacion" class="form-select mb-3">
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <!-- Opciones -->
+                            <select name="nivelFormacion" id="nivelFormacion" class="form-select mb-3">
+                                <option value="<%=EgresadoEnonctrado.getNivelFormacionID().getId()%>" selected><%=EgresadoEnonctrado.getNivelFormacionID().getNombre()%></option>
+                                <%
+                                    for (NivelFormacion NivelFormacion : listaNivelFormacion) {
+                                        if (EgresadoEnonctrado.getNivelFormacionID().getId() != NivelFormacion.getId()) {
+
+
+                                %>
+                                <option value="<%=NivelFormacion.getId()%>"><%=NivelFormacion.getNombre()%></option>
+                                <%
+                                        }
+                                    }
+                                %>
                             </select>
 
                             <!-- Pregunta y check Box sobre Carrera Universitaria -->
@@ -252,27 +350,49 @@
                                 <br>
                                 <!-- Checkbox "Sí" -->
                                 <div class="form-check form-check-inline mx-4">
-                                    <input class="form-check-input" type="checkbox" id="siCheckboxUni" value="1" onchange="mostrarOcultarInput(this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
-                                    <label class="form-check-label" for="siCheckbox">Sí</label>
+                                    <input name="CarreraUniversitaria" class="form-check-input" type="checkbox" id="siCheckboxUni" <% if (EgresadoEnonctrado.getCadenaUniversitaria()) { %> checked <% }%> value="<%=EgresadoEnonctrado.getCadenaUniversitaria()%>" onchange="mostrarOcultarInput(this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni'), validarCheckboxes()">
+                                    <label class="form-check-label" for="siCheckboxUni">Sí</label>
                                 </div>
 
                                 <!-- Checkbox "No" -->
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="noCheckboxUni" value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni')">
-                                    <label class="form-check-label" for="noCheckbox">No</label>
+                                    <input name="CarreraUniversitaria" class="form-check-input" type="checkbox" id="noCheckboxUni" <% if (!EgresadoEnonctrado.getCadenaUniversitaria()) { %> checked <% }%> value="0" onchange="mostrarOcultarInput(!this.checked, 'miInputContainerUni', 'siCheckboxUni', 'noCheckboxUni'), validarCheckboxes()">
+                                    <label class="form-check-label" for="noCheckboxUni">No</label>
                                 </div>
 
                                 <!-- Contenedor del input -->
                                 <div id="miInputContainerUni" style="display: none; margin-top: 10px;">
-                                    <input class="form-control mb-3" type="text" maxlength="100" id="miInput" placeholder="Nombre Univerisad">
-                                    <input class="form-control mb-3" type="text" maxlength="100" id="miInput" placeholder="Nombre Carrera">
+                                    <input class="form-control mb-3" type="text" maxlength="100" id="miInput" name="NombreUni" placeholder="Nombre Univerisad">
+                                    <input class="form-control mb-3" type="text" maxlength="100" id="miInput" name="NombreCarrera" placeholder="Nombre Carrera">
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <!-- Pregunta y check Box su estdo de trabajo -->
+                        <div class="d-flex justify-content-center" >
+                            <!-- Pregunta -->
+                            <label class="form-label mx-2">¿Se encuntra trabajando actualmente?</label>
+                            <br>
+                            <!-- Checkbox "Sí" -->
+                            <div class="form-check form-check-inline mx-4">
+                                <input class="form-check-input" type="checkbox" name="trabajando" id="siCheckboxTraba" value="1" <% if (EgresadoEnonctrado.getTrabajando()) { %> checked <% } %> onchange="validarCheckboxes(); uncheckCheckbox('noCheckboxTraba'); uncheckCheckbox('noCheckboxTraba')">
+                                <label class="form-check-label" for="siCheckboxTraba">Sí</label>
+                            </div>
+
+                            <!-- Checkbox "No" -->
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="noCheckboxTraba" name="trabajando" value="0" <% if (!EgresadoEnonctrado.getTrabajando()) { %> checked <% }%> onchange="validarCheckboxes();
+                                        uncheckCheckbox('siCheckboxTraba');
+                                        uncheckCheckbox('siCheckboxTraba\n\
+')">
+                                <label class="form-check-label" for="noCheckboxTraba">No</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-grid mx-auto"> 
-                        <button class="btn btn-success mx-auto">Modificar</button>
+                        <button value="Modificar" name="BtnEgresados" class="btn btn-success mx-auto" >Modificar</button>
 
                     </div>
 
@@ -327,7 +447,49 @@
             </div>
         </div>
     </footer>
+    <%            String res = request.getParameter("respuesta");
 
+        if (res != null) {
+            switch (res) {
+                case "SinCambios":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upps!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                No se encontraron Cambios!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "ModificacionExitosa":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Modificacion Exitosa!!
+            </div>
+        </div>
+    </div>
+    <%                        break;
+                default:
+                    break;
+            }
+
+        }
+
+    %>
 
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -342,5 +504,34 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../JS/LogicaCheakBox.js"></script>
+    <script src="../JS/IniciarToast.js"></script>
 </html>
 
+<script>
+                                    function validarCheckboxes() {
+                                        var siCheckboxExp = document.getElementById("siCheckboxExp");
+                                        var noCheckboxExp = document.getElementById("noCheckboxExp");
+                                        var siCheckboxUni = document.getElementById("siCheckboxUni");
+                                        var noCheckboxUni = document.getElementById("noCheckboxUni");
+                                        var siCheckboxCadena = document.getElementById("siCheckbox");
+                                        var noCheckboxCadena = document.getElementById("noCheckbox");
+                                        var siCheckboxTraba = document.getElementById("siCheckboxTraba");
+                                        var noCheckboxTraba = document.getElementById("noCheckboxTraba");
+                                        var submitButton = document.querySelector("[name='BtnEgresados']");
+
+                                        // Verificar si al menos uno de los checkboxes de cada grupo está seleccionado
+                                        var experienciaLaboralSeleccionada = siCheckboxExp.checked || noCheckboxExp.checked;
+                                        var carreraUniversitariaSeleccionada = siCheckboxUni.checked || noCheckboxUni.checked;
+                                        var cadenaFormacionSeleccionada = siCheckboxCadena.checked || noCheckboxCadena.checked;
+                                        var trabajandoSeleccionado = siCheckboxTraba.checked || noCheckboxTraba.checked;
+
+                                        // Habilitar el botón de enviar si al menos uno de los checkboxes de cada grupo está seleccionado
+                                        submitButton.disabled = !(experienciaLaboralSeleccionada && carreraUniversitariaSeleccionada && cadenaFormacionSeleccionada && trabajandoSeleccionado);
+                                    }
+</script>
+<script>
+    function uncheckCheckbox(checkboxId) {
+        // Desmarca el otro checkbox
+        document.getElementById(checkboxId).checked = false;
+    }
+</script>

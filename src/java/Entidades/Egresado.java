@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -303,20 +304,40 @@ public class Egresado implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Egresado)) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        Egresado other = (Egresado) object;
-        if ((this.numeroCedula == null && other.numeroCedula != null) || (this.numeroCedula != null && !this.numeroCedula.equals(other.numeroCedula))) {
-            return false;
-        }
-        return true;
+        Egresado egresado = (Egresado) object;
+        return numeroCedula.equals(egresado.numeroCedula)
+                && Objects.equals(nombre, egresado.nombre)
+                && Objects.equals(apellido, egresado.apellido)
+                && Objects.equals(numeroCertificados, egresado.numeroCertificados)
+                && Objects.equals(correo, egresado.correo)
+                && numeroTelefono == egresado.numeroTelefono
+                && Objects.equals(direccionResidencia, egresado.direccionResidencia)
+                && Objects.equals(cadenaFormacion, egresado.cadenaFormacion)
+                && Objects.equals(formacionCursada, egresado.formacionCursada)
+                && Objects.equals(cadenaUniversitaria, egresado.cadenaUniversitaria)
+                && Objects.equals(nombreUniversidad, egresado.nombreUniversidad)
+                && Objects.equals(nombreCarrera, egresado.nombreCarrera)
+                && Objects.equals(experiencia, egresado.experiencia)
+                && Objects.equals(descripcionExperiencia, egresado.descripcionExperiencia)
+                && Objects.equals(trabajando, egresado.trabajando)
+                && Objects.equals(ciudadID, egresado.ciudadID)
+                && Objects.equals(formacionID, egresado.formacionID)
+                && Objects.equals(nivelFormacionID, egresado.nivelFormacionID)
+                && Objects.equals(sedeID, egresado.sedeID)
+                && Objects.equals(sexoID, egresado.sexoID)
+                && Objects.equals(tipoPoblacionID, egresado.tipoPoblacionID)
+                && Objects.equals(tipoDocumentoID, egresado.tipoDocumentoID);
     }
 
     @Override
     public String toString() {
         return "Entidades.Egresado[ numeroCedula=" + numeroCedula + " ]";
     }
-    
+
 }
