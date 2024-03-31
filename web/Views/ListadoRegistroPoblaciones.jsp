@@ -137,7 +137,7 @@
                             data-bs-target="#ModalRegistro"><a style="color: white ; text-decoration: none">Regitrar Poblacion</a></button>
                 </div>
                 <div class="table-responsive" >
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 500px">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 300px">
                         <table class="table table-striped">
                             <thead>
                                 <tr>

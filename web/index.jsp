@@ -39,7 +39,7 @@
                         </span>
 
                         <div class="wrap-input100 validate-input mt-3 mb-4">
-                            <input name="CC" class="input100" type="number" maxlength="99999999999" name="" placeholder="Usuario">
+                            <input name="CC" class="input100" type="number" max="9999999999" name="" placeholder="Usuario">
                         </div>
                         <div class="wrap-input100 validate-input mb-4">
                             <input name="contrasenha" class="input100" type="password" maxlength="200" name="pass" placeholder="Password">                        

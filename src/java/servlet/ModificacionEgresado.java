@@ -13,6 +13,7 @@ import Controladores.SexoJpaController;
 import Controladores.TipoPoblacionJpaController;
 import Controladores.TipodocumentoJpaController;
 import Controladores.UsuariosJpaController;
+import Controladores.exceptions.NonexistentEntityException;
 import Entidades.Ciudad;
 import Entidades.Egresado;
 import Entidades.Formacion;
@@ -58,6 +59,13 @@ public class ModificacionEgresado extends HttpServlet {
             case "Modificar":
                 //res.print("Modifaicar");
                 modficacionEgresado(request, response);
+                break;
+            case "ModificarAdmin":
+                modificacionEgresadoAdmin(request, response);
+                break;
+            case "eliminar":
+                //  res.print("Eliminar");
+                eliminarEgresado(request, response);
                 break;
             default:
                 break;
@@ -184,6 +192,98 @@ public class ModificacionEgresado extends HttpServlet {
                 Logger.getLogger(ModificacionEgresado.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        }
+
+    }
+
+    public void modificacionEgresadoAdmin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //
+        EgresadoJpaController controlEgresado = new EgresadoJpaController();
+        TipodocumentoJpaController controlTipoDoc = new TipodocumentoJpaController();
+        SexoJpaController controlSexo = new SexoJpaController();
+        UsuariosJpaController controlUsuario = new UsuariosJpaController();
+        Usuarios usuarioModificar = new Usuarios();
+        Egresado egresadoModal = new Egresado();
+        Egresado egresadoModificar = new Egresado();
+
+        Long IdEgresado = Long.parseLong(request.getParameter("numeroDocumentoModal"));
+        int IdEgresadoU = Integer.parseInt(request.getParameter("numeroDocumentoModal"));
+        String IdEgresadoStr = request.getParameter("numeroDocumentoModal");
+        String nombreEgresado = request.getParameter("nombresModal");
+        String apellidos = request.getParameter("apellidos");
+        String correoElectronico = request.getParameter("correoModal");
+        Long numeroContacto = Long.parseLong(request.getParameter("telefonoModal"));
+
+        int IdTipoDocEncontrado = Integer.parseInt(request.getParameter("tipoDocumentoModal"));
+        int IdSexoEncontrado = Integer.parseInt(request.getParameter("sexoModal"));
+
+        Tipodocumento TipoDocSeleccionado = controlTipoDoc.findTipodocumento(IdTipoDocEncontrado);
+        Sexo SexpSeleccionado = controlSexo.findSexo(IdSexoEncontrado);
+
+        //Validamos que existan cambios
+        egresadoModal = controlEgresado.findEgresado(IdEgresado);
+        egresadoModificar = controlEgresado.findEgresado(IdEgresado);
+        egresadoModificar.setNombre(nombreEgresado);
+        egresadoModificar.setApellido(apellidos);
+        egresadoModificar.setCorreo(correoElectronico);
+        egresadoModificar.setNumeroTelefono(numeroContacto);
+        egresadoModificar.setTipoDocumentoID(TipoDocSeleccionado);
+        egresadoModificar.setSexoID(SexpSeleccionado);
+
+        String mensajeUrl;
+        PrintWriter res = response.getWriter();
+        if (egresadoModal.equals(egresadoModificar)) {
+            //res.print("Iguales");
+            mensajeUrl = "SinCambios";
+            response.sendRedirect("Views/FiltradoEgresados.jsp?respuesta=" + mensajeUrl);
+        } else {
+            try {
+                // res.print("Diferentes");
+                //Realizamos un guardado doble
+                usuarioModificar = controlUsuario.findUsuarios(IdEgresadoU);
+                //Le seteamos los datos requeridos
+                usuarioModificar.setNombre(nombreEgresado);
+                usuarioModificar.setApellido(apellidos);
+                usuarioModificar.setCorreo(correoElectronico);
+                usuarioModificar.setPassword(usuarioModificar.getPassword());
+                usuarioModificar.setRol(usuarioModificar.getRol());
+                usuarioModificar.setTelefono(numeroContacto);
+                usuarioModificar.setTipoDocID(TipoDocSeleccionado);
+                controlUsuario.edit(usuarioModificar);
+                controlEgresado.edit(egresadoModificar);
+
+                mensajeUrl = "ModificacionExitosa";
+                response.sendRedirect("Views/FiltradoEgresados.jsp?respuesta=" + mensajeUrl);
+            } catch (Exception ex) {
+                Logger.getLogger(ModificacionEgresado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
+    public void eliminarEgresado(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        EgresadoJpaController controlEgrsado = new EgresadoJpaController();
+        UsuariosJpaController contrUsuarios = new UsuariosJpaController();
+      
+        Usuarios usuarioEliminar = new Usuarios();
+        Egresado egresadoEliminar = new Egresado();
+
+        int ID_Eliminar = Integer.parseInt(request.getParameter("ID"));
+        Long ID_Eliminar_Long = Long.parseLong(request.getParameter("ID"));
+
+        String mensajeUrl;
+
+        try {
+            //Procedemos al eliminado en ambas tablas
+            contrUsuarios.destroy(ID_Eliminar);
+            controlEgrsado.destroy(ID_Eliminar_Long);
+            mensajeUrl = "EliminacionExitosa";
+            response.sendRedirect("Views/FiltradoEgresados.jsp?respuesta=" + mensajeUrl);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ModificacionEgresado.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

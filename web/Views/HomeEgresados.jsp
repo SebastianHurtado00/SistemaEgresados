@@ -138,11 +138,11 @@
 
                             <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="nombres" class="form-label">Nombres</label>
-                            <input type="text" value="<%=EgresadoEnonctrado.getNombre()%>" name="nombres" id="nombres" class="form-control mb-3" required maxlength="45">
+                            <input type="text" value="<%=EgresadoEnonctrado.getNombre()%>" name="nombres" id="nombres" class="form-control mb-3" readonly maxlength="45">
 
                             <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" value="<%=EgresadoEnonctrado.getApellido()%>"  id="apellidos"name="apellidos" class="form-control mb-3" required maxlength="45">
+                            <input type="text" value="<%=EgresadoEnonctrado.getApellido()%>"  id="apellidos"name="apellidos" class="form-control mb-3" readonly maxlength="45">
                         </div>
 
                         <div class="col-md-6">
@@ -162,7 +162,7 @@
                             <img src="../IMG/sexo.webp" alt="alt" width="30px" height="30px"/>
                             <label for="sexo" class="form-label">Sexo</label>
                             <select  name="sexo" id="sexo" class="form-select mb-3" required>
-                                <option value="<%=EgresadoEnonctrado.getSexoID().getId() %>" selected ><%=EgresadoEnonctrado.getSexoID().getNombre()%></option>
+                                <option  value="<%=EgresadoEnonctrado.getSexoID().getId() %>" selected ><%=EgresadoEnonctrado.getSexoID().getNombre()%></option>
                                 <%
                                     for (Sexo sex : listaSexo) {
                                         if (EgresadoEnonctrado.getSexoID().getId() != sex.getId()) {

@@ -96,6 +96,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" id="paginaActual" href="RegistrosEgresados.jsp">Registro Egresados</a>
                                 <a class="dropdown-item" href="RestablecimientoContrasehaEgresados.jsp">Reestablecer contraseña de Egresados</a>
+                                <a class="dropdown-item" href="../Views/FiltradoEgresados.jsp">Filtrado Egresados</a>
                                 <a class="dropdown-item" href="ListadoRegistroPoblaciones.jsp">Listado y Registro de Poblaciones</a>
                                 <a class="dropdown-item" href="ListadoRegistroCiudades.jsp">Listado y Registro de  ciudades</a>
                                 <a class="dropdown-item" href="ListadoRegistroFormacionesSedes.jsp">Lisatdo y Registros de Formaciones y sedes</a>
@@ -112,6 +113,8 @@
                                 <a class="dropdown-item" href="ListadoAdministradores.jsp">Listado de administradores</a>
                             </div>
                         </li>
+
+
                     </ul>
                 </div>
             </div>

@@ -236,8 +236,8 @@
                     </div>
                 </div>
                 <div class="table-responsive" >
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 500px">
-                        <table id="miTabla" class="table table-striped" style="height: 500px">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar p-2">
+                        <table id="miTabla" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">N° Cedula</th>
@@ -253,6 +253,7 @@
                                     <th scope="col">Contacto</th>
                                     <th>Experiencia</th>
                                     <th>¿Trabajando?</th>
+                                    <th>Configuracion</th>
 
                                 </tr>
                             </thead>
@@ -273,7 +274,7 @@
                                     <td><%=egresados.getTipoPoblacionID().getNombre()%></td>
                                     <td><%=egresados.getSedeID().getNombre()%></td>
                                     <td><%=egresados.getFormacionID().getNombre()%></td>
-                                    <td><%=egresados.getCiudadID().getNombre() %></td>
+                                    <td><%=egresados.getCiudadID().getNombre()%></td>
                                     <td><%=egresados.getCorreo()%></td>
                                     <td><%=egresados.getNumeroTelefono()%></td>
                                     <td>
@@ -288,11 +289,17 @@
                                         Sí
                                         <% } else { %>
                                         No
-                                        <% } %>
+                                        <% }%>
                                     </td>
-                                    <td><i class="fa-solid fa-gear fa-lg mx-5"type="button" data-bs-toggle="modal"
+                                    <td><i class="fa-solid fa-gear fa-lg mx-5" type="button" data-bs-toggle="modal"
                                            data-bs-target="#ModalModificacion" data-info = '{
-                                           ">"
+                                           "Cedula" : "<%=egresados.getNumeroCedula()%>",
+                                           "nombre" : "<%=egresados.getNombre()%>",
+                                           "apellido" : "<%=egresados.getApellido()%>",
+                                           "tipoDocumento" : "<%=egresados.getTipoDocumentoID().getId()%>",
+                                           "sexo" : "<%=egresados.getSexoID().getId()%>",
+                                           "correo" : "<%=egresados.getCorreo()%>",
+                                           "telefono" : "<%=egresados.getNumeroTelefono()%>"
                                            }'></i></td>
                                 </tr>
 
@@ -303,8 +310,85 @@
                     </div>
                 </div>
 
+                <!-- Modal -->
+                <div class="modal fade" id="ModalModificacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <form action="<%=request.getContextPath()%>/ModificacionEgresado" method="">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modificacion Datos Basicos</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
+                                            <label for="numeroDocumento" class="form-label">N° Documento</label>
+                                            <input type="text" name="numeroDocumentoModal" id="numeroDocumentoModal" class="form-control mb-3" readonly max="99999999999">
+
+                                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
+                                            <label for="nombres" class="form-label">Nombres</label>
+                                            <input type="text" name="nombresModal" id="nombresModal" class="form-control mb-3" maxlength="45">
+
+                                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
+                                            <label for="apellidos" class="form-label">Apellidos</label>
+                                            <input type="text"  id="apellidos"name="apellidos" class="form-control mb-3" readonly maxlength="45">
+
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
+                                            <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+                                            <select name="tipoDocumentoModal" id="tipoDocumentoModal" class="form-select mb-3" required>
+                                                <% for (Tipodocumento TipoDoc : listaTipoDoc) {
+
+                                                %>
+                                                <option value="<%=TipoDoc.getId()%>"><%=TipoDoc.getNombre()%></option>
+                                                <%
+
+                                                    }
+                                                %>
+                                            </select>
+
+                                            <img src="../IMG/sexo.webp" alt="alt" width="30px" height="30px"/>
+                                            <label for="sexo" class="form-label">Sexo</label>
+                                            <select  name="sexoModal" id="sexoModal" class="form-select mb-3" required>
+                                                <%
+                                                    for (Sexo sex : listaSexo) {
+
+                                                %>
+                                                <option value="<%=sex.getId()%>"><%=sex.getNombre()%></option>
+                                                <%
+
+                                                    }
+                                                %>
+                                            </select>
+
+                                            <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
+                                            <label for="telefonoModal" class="form-label">Telefono</label>
+                                            <input name="telefonoModal" type="number" id="telefonoModal" class="form-control mb-3" >
+                                        </div>
+
+                                        <div class="mx-auto">
+                                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
+                                            <label for="correoModal" class="form-label">Correo</label>
+                                            <input name="correoModal" type="email" id="correoModal" class="form-control mb-3"  maxlength="45">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button  name="BtnEgresados" value="eliminar" type="button" class="btn btn-danger" onclick="eliminar()">Eliminar</button>
+                                    <button name="BtnEgresados" value="ModificarAdmin" class="btn btn-warning">Modificar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end justify-content-sm-end mt-2 " style="margin-right: 2%">
-                    <button  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button class="correos" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <div class="svg-wrapper-1">
                             <div class="svg-wrapper">
                                 <svg
@@ -401,7 +485,65 @@
             </div>
         </div>
     </footer>
+    <%            String res = request.getParameter("respuesta");
 
+        if (res != null) {
+            switch (res) {
+                case "SinCambios":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upps!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                No se encontraron Cambios!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "ModificacionExitosa":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Modificacion Exitosa!!
+            </div>
+        </div>
+    </div>
+    <%                        break;
+        case "EliminacionExitosa":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Eliminacion Exitosa!!
+            </div>
+        </div>
+    </div>
+    <%
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+    %>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -417,5 +559,64 @@
     <script src="../JS/ReconocimientoVoz.js"></script>
     <script src="../JS/FiltradoTablas.js"></script>
     <script src="../JS/FiltrarTablaEgresados.js"></script>
+    <script src="../JS/IniciarToast.js"></script>
 
 </html>
+<script>
+
+                                        function eliminar() {
+                                            Swal.fire({
+                                                title: "Desea eliminar",
+                                                text: "¿Está seguro de eliminar este Egresado?",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Si, Eliminar!"
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    // Obtener el ID del documento
+                                                    var documentoID = document.getElementById("numeroDocumentoModal").value;
+                                                    // Redirigir automáticamente a la página de eliminación con el ID del documento
+                                                    window.location.href = "../ModificacionEgresado?ID=" + documentoID + "&BtnEgresados=eliminar";
+                                                }
+                                            });
+                                        }
+
+
+</script>
+
+<script>
+// DOMContentLoaded Este evento se dispara cuando el documento HTML ha sido completamente cargado y analizado.
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // Selecciona todos los botones "Editar" que tienen ciertos atributos específicos.
+        var editarButtons = document.querySelectorAll('i[data-bs-target="#ModalModificacion"][data-info*="Cedula"]');
+
+        //Creamos un metodo que llenara nuestro ventana emergente con la informacion del votante
+        function llenarModal(data) {
+            // Llena los campos del modal con los datos del votante
+            document.getElementById("numeroDocumentoModal").value = data.Cedula;
+            document.getElementById("nombresModal").value = data.nombre;
+            document.getElementById("apellidos").value = data.apellido;
+            document.getElementById("tipoDocumentoModal").value = data.tipoDocumento;
+            document.getElementById("sexoModal").value = data.sexo;
+            document.getElementById("telefonoModal").value = data.telefono;
+            document.getElementById("correoModal").value = data.correo;
+        }
+
+        // Itera sobre cada botón "Editar".
+        editarButtons.forEach(function (button) {
+            // Agrega un evento de clic a cada botón "Editar".
+            button.addEventListener("click", function () {
+                // Obtiene la información del votante desde el atributo "data-info" en formato JSON.
+                //RECORDAR JS sabe la data-info porque este esta realizando el evento en cada boton editar y obtendra la info del boton al que se le de click
+                // this.getAttribute("data-info") = De este boton al que se le dio click dame su data-info
+                var data = JSON.parse(this.getAttribute("data-info"));
+                //Con la data recibida del boton se llena el modal con su metodo
+                llenarModal(data);
+            });
+        });
+    });
+
+</script>
