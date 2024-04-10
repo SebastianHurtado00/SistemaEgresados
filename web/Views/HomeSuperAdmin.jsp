@@ -114,6 +114,10 @@
                             </div>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="FiltradoEgresados.jsp">Filtrados de Egresados</a>
+                        </li>
+
 
                     </ul>
                 </div>
@@ -183,6 +187,53 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    <%
+        //Validacion de para que la contraseña no sea igual a la cedula
+        String DocStr = String.valueOf(usuarioEntrante.getCedula());
+        if (usuarioEntrante.DencryptarClave(usuarioEntrante.getPassword(), DocStr)) {
+    %>
+    <script>
+
+        $(document).ready(function () {
+            $('#ModalCambio').modal('show');
+        });
+    </script>
+
+    <%
+        }
+
+    %>
+    <!-- Modal cambio de contraseña -->
+    <div class="modal" id="ModalCambio" tabindex="-1" data-bs-backdrop="static">
+        <form action="<%=request.getContextPath()%>/RestablecimientosContrase_as" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Por seguridad su contraseña la debe actualizar</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <img src="../IMG/id-facial.webp" class="mb-1" alt="alt" width="30px" height="30px"/>
+                            <label for="numeroDocumento" class="form-label">N° Documento</label>
+                            <input type="text" name="numeroDocumentoCambio" id="numeroDocumentoCambio" value="<%=usuarioEntrante.getCedula()%>" class="form-control mb-3" readonly max="99999999999">
+
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="PasswordNueva" class="form-label">Contraseña nueva</label>
+                            <input type="password" name="PasswordNueva" id="PasswordNueva" class="form-control mb-3" maxlength="50" required="">
+
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="ConfirmacionPassword" class="form-label">Confirmacion de contraseña</label>
+                            <input type="password" id="ConfirmacionPassword" name="ConfirmacionPassword" class="form-control mb-3" maxlength="50" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button value="RestablcerPasswordHome" name="BtnRestablecer" class="btn btn-success">Cambiar contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
     <!-- Registro SuperAdministradores -->
@@ -445,7 +496,7 @@
 </html>
 
 <script>
-                AOS.init();
+        AOS.init();
 </script>
 
 <%    }%>

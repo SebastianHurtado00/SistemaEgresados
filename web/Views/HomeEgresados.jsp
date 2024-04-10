@@ -122,6 +122,52 @@
             </div>
         </nav>
     </header>
+    <%
+        //Validacion de para que la contraseña no sea igual a la cedula
+        String DocStr = String.valueOf(usuarioEntrante.getCedula());
+        if (usuarioEntrante.DencryptarClave(usuarioEntrante.getPassword(), DocStr)) {
+    %>
+    <script>
+
+        $(document).ready(function () {
+            $('#ModalCambio').modal('show');
+        });
+    </script>
+
+    <%
+        }
+
+    %>
+    <!-- Modal cambio de contraseña -->
+    <div class="modal" id="ModalCambio" tabindex="-1" data-bs-backdrop="static">
+        <form action="<%=request.getContextPath()%>/RestablecimientosContrase_as" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Por seguridad su contraseña la debe actualizar</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <img src="../IMG/id-facial.webp" class="mb-1" alt="alt" width="30px" height="30px"/>
+                            <label for="numeroDocumento" class="form-label">N° Documento</label>
+                            <input type="text" name="numeroDocumentoCambio" id="numeroDocumentoCambio" value="<%=EgresadoEnonctrado.getNumeroCedula()%>" class="form-control mb-3" readonly max="99999999999">
+
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="PasswordNueva" class="form-label">Contraseña nueva</label>
+                            <input type="password" name="PasswordNueva" id="PasswordNueva" class="form-control mb-3" maxlength="50" required="">
+
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="ConfirmacionPassword" class="form-label">Confirmacion de contraseña</label>
+                            <input type="password" id="ConfirmacionPassword" name="ConfirmacionPassword" class="form-control mb-3" maxlength="50" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button value="RestablcerPasswordHome" name="BtnRestablecer" class="btn btn-success">Cambiar contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <body style="background: #F1F1F1">
         <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
@@ -134,7 +180,7 @@
                         <div class="col-md-6">
                             <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
                             <label for="numeroDocumento" class="form-label">N° Documento</label>
-                            <input type="text" name="numeroDocumento" id="numeroDocumento" class="form-control mb-3"value="<%=EgresadoEnonctrado.getNumeroCedula()%>" readonly max="99999999999">
+                            <input type="number" name="numeroDocumento" id="numeroDocumento" class="form-control mb-3"value="<%=EgresadoEnonctrado.getNumeroCedula()%>" readonly max="99999999999">
 
                             <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
                             <label for="nombres" class="form-label">Nombres</label>
@@ -162,7 +208,7 @@
                             <img src="../IMG/sexo.webp" alt="alt" width="30px" height="30px"/>
                             <label for="sexo" class="form-label">Sexo</label>
                             <select  name="sexo" id="sexo" class="form-select mb-3" required>
-                                <option  value="<%=EgresadoEnonctrado.getSexoID().getId() %>" selected ><%=EgresadoEnonctrado.getSexoID().getNombre()%></option>
+                                <option  value="<%=EgresadoEnonctrado.getSexoID().getId()%>" selected ><%=EgresadoEnonctrado.getSexoID().getNombre()%></option>
                                 <%
                                     for (Sexo sex : listaSexo) {
                                         if (EgresadoEnonctrado.getSexoID().getId() != sex.getId()) {
@@ -247,7 +293,7 @@
                             <img src="../IMG/SedeFormacion.webp" alt="alt" width="30px" height="30px"/>
                             <label for="sede" class="form-label">Sede</label>
                             <select name="sede" id="sede" class="form-select mb-3">
-                                <option value="<%=EgresadoEnonctrado.getSedeID().getId() %>" selected ><%=EgresadoEnonctrado.getSedeID().getNombre()%></option>
+                                <option value="<%=EgresadoEnonctrado.getSedeID().getId()%>" selected ><%=EgresadoEnonctrado.getSedeID().getNombre()%></option>
                                 <%
                                     for (Sede sede : ListaSedes) {
                                         if (EgresadoEnonctrado.getSedeID().getId() != sede.getId()) {
@@ -483,6 +529,24 @@
         </div>
     </div>
     <%                        break;
+
+        case "ContrasenhaNoiguales":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">upps!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Confirmacion no valida!!
+            </div>
+        </div>
+    </div>
+
+    <%
+                    break;
                 default:
                     break;
             }

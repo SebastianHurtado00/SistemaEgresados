@@ -4,6 +4,11 @@
     Author     
 --%>
 
+<%@page import="Controladores.TipodocumentoJpaController"%>
+<%@page import="Entidades.Tipodocumento"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Controladores.UsuariosJpaController"%>
 <%@page import="Entidades.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,14 +23,16 @@
         } else {
 
             usuarioEntrante = (Usuarios) sessionObtenida.getAttribute("SuperAdmin");
-
+            TipodocumentoJpaController controlTipoDocs = new TipodocumentoJpaController();
+            List<Tipodocumento> ListaTiposDocs = controlTipoDocs.findTipodocumentoEntities();
+            List<Tipodocumento> ListaTiposDocs2 = controlTipoDocs.findTipodocumentoEntities();
     %>
-    <title>Listado de administradires</title>
+    <title>Listado de administradores</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS v5.2.1 -->
-    <link rel="shortcut icon" href="" type="image/x-icon">
+    <link rel="shortcut icon" href="../IMG/atencion-al-cliente.webp" type="image/x-icon">
     <link rel="stylesheet" href="../CSS/HomeAdministrador.css"/>
     <link rel="stylesheet" href="../CSS/Footer.css"/>
     <link rel="stylesheet" href="../CSS/UsuarioConectado.css"/>
@@ -34,6 +41,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://kit.fontawesome.com/0702706600.js" crossorigin="anonymous"></script>
     <script src="../JS/ReconocimientoVoz.js"></script>
+    <script src="https://kit.fontawesome.com/0702706600.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -104,6 +112,10 @@
                             <a class="dropdown-item" href="ListadoAdministradores.jsp">Listado de administradores</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="FiltradoEgresados.jsp">Filtrados de Egresados</a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -112,137 +124,141 @@
 
 
 </header>
-
 <!--Modales-->
 <!-- Registro Administradores -->
 <div class="modal fade" id="RegistroAdministradores" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: monospace">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de administradores</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="CCadmin" class="form-label">Cedula</label>
-                        <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
-
-                        <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="NombreAdmin" class="form-label">Nombre</label>
-                        <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
-
-                        <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="emailAdmin" class="form-label">email</label>
-                        <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
-
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
-                        <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
-                        <select id="TipoDocAdmin" class="form-select mb-2">
-                            <option value="value" selected disabled>Seleccione una opción</option>
-                        </select>
-
-                        <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="ApellidoAdmin" class="form-label">Apellido</label>
-                        <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
-
-                        <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="TelefonoAdmin" class="form-label">Telefono</label>
-                        <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
-                    </div>
+        <form action="<%=request.getContextPath()%>/CrudAdministradores" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de administradores</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="CCadmin" class="form-label">Cedula</label>
+                            <input  class="form-control mb-2" id="CCadmin" type="number" name="CedulaAdmin" max="999999999999" required>
+
+                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="NombreAdmin" class="form-label">Nombre</label>
+                            <input  class="form-control mb-2" id="NombreAdmin" type="text" name="NombreAdmin" maxlength="45" required>
+
+                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="emailAdmin" class="form-label">email</label>
+                            <input  class="form-control mb-2" id="emailAdmin" type="email" name="EmailAdmin" maxlength="200" required>
 
                         </div>
-                        <div class="col-md-6">
-                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="PasswordAdmin" class="form-label">Password</label>
-                            <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
+                            <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
+                            <select id="TipoDocAdmin" name="TipodocumentAdmin" class="form-select mb-2" required>
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                <%
 
+                                    for (Tipodocumento tipoDoc : ListaTiposDocs) {
+                                        out.print("<option value ='" + tipoDoc.getId() + "'> ");
+                                        out.print(tipoDoc.getNombre());
+                                        out.print("</option>");
+                                    }
+                                %>
+                            </select>
+
+                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="ApellidoAdmin" class="form-label">Apellido</label>
+                            <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="ApellidoAdmin" maxlength="45" required>
+
+                            <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="TelefonoAdmin" class="form-label">Telefono</label>
+                            <input  class="form-control mb-2" id="TelefonoAdmin" type="number" name="TelefonoAdmin" max="999999999999" required>
                         </div>
+
+
                     </div>
-
+                </div>
+                <div class="modal-footer">
+                    <button type="" name="BtnAdmin" value="BtnGuardarAdmin" class="btn btn-success">Registrar</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Registrar</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
 <!-- Registro SuperAdministradores -->
 <div class="modal fade" id="RegistroSuperAdministradores" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: monospace">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de Super Administradores</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="CCadmin" class="form-label">Cedula</label>
-                        <input  class="form-control mb-2" id="CCadmin" type="number" name="name" max="999999999999">
-
-                        <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="NombreAdmin" class="form-label">Nombre</label>
-                        <input  class="form-control mb-2" id="NombreAdmin" type="text" name="name" maxlength="45">
-
-                        <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="emailAdmin" class="form-label">email</label>
-                        <input  class="form-control mb-2" id="emailAdmin" type="text" name="name" maxlength="200">
-
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px"/>
-                        <label class="form-label" for="TipoDocAdmin">Tipo Documento</label>
-                        <select id="TipoDocAdmin" class="form-select mb-2">
-                            <option value="value" selected disabled>Seleccione una opción</option>
-                        </select>
-
-                        <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="ApellidoAdmin" class="form-label">Apellido</label>
-                        <input  class="form-control mb-2" id="ApellidoAdmin" type="text" name="name" maxlength="45">
-
-                        <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
-                        <label for="TelefonoAdmin" class="form-label">Telefono</label>
-                        <input  class="form-control mb-2" id="TelefonoAdmin" type="tel" name="name" max="999999999999">
-                    </div>
+        <form action="<%=request.getContextPath()%>/RegistroTemporalSuperAdmin" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de Super Administradores</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/id-facial.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="CCsuper" class="form-label">Cedula</label>
+                            <input  class="form-control mb-2" id="CCsuper" type="number" name="CedulaSuper" max="999999999999" required>
+
+                            <img src="../IMG/nombre.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="NombreSuper" class="form-label">Nombre</label>
+                            <input  class="form-control mb-2" id="NombreSuper" type="text" name="NombreSuper" maxlength="45" required>
+
+                            <img src="../IMG/gmail.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="emailSuper" class="form-label">email</label>
+                            <input  class="form-control mb-2" id="emailSuper" type="text" name="emailSuper" maxlength="200" required>
 
                         </div>
-                        <div class="col-md-6">
-                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
-                            <label for="PasswordAdmin" class="form-label">Password</label>
-                            <input  class="form-control mb-2" id="PasswordAdmin" type="password" name="name" maxlength="15">
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6 col-sm-12">
+                            <img src="../IMG/tarjeta-de-identificacion.webp" alt="alt" width="30px" height="30px" />
+                            <label class="form-label" for="TipoDocSuper">Tipo Documento</label>
+                            <select id="TipoDocSuper" name="TipoDocSuper" class="form-select mb-2" required="">
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                <%
+                                    for (Tipodocumento tipoDoc : ListaTiposDocs2) {
+                                        out.print("<option value ='" + tipoDoc.getId() + "'> ");
+                                        out.print(tipoDoc.getNombre());
+                                        out.print("</option>");
+                                    }
+                                %>
+                            </select>
 
+                            <img src="../IMG/etiqueta-de-nombre.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="ApellidoAdmin" class="form-label">Apellido</label>
+                            <input  class="form-control mb-2" id="ApellidoSuper" type="text" name="ApellidoSuper" maxlength="45" required>
+
+                            <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="TelefonoSuper" class="form-label">Telefono</label>
+                            <input  class="form-control mb-2" id="TelefonoSuper" type="number" name="TelefonoSuper" max="999999999999" required>
                         </div>
+
+
                     </div>
-
+                </div>
+                <div class="modal-footer">
+                    <button value="GuardarSuper" name="BtnSuperAdmin" class="btn btn-success">Registrar</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Registrar</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
-
 <body style="background: #F1F1F1;">
     <section>
+        <%
+            UsuariosJpaController controlUsuarios = new UsuariosJpaController();
+            List<Usuarios> ListaUsuarios = controlUsuarios.findUsuariosEntities();
+            List<Usuarios> ListaAdministradores = new ArrayList<>();
+            for (int i = 0; i < ListaUsuarios.size(); i++) {
+                if (ListaUsuarios.get(i).getRol() == 0) {
+                    ListaAdministradores.add(ListaUsuarios.get(i));
+                }
+            }
 
-        <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
+
+        %>
+        <div class="card mb-5 mt-3 mx-auto" style="max-width: 1000px ; min-width: 200px; font-family: monospace">
             <h5 class="card-title text-center mt-3"><img src="../IMG/controlar.png" alt="alt" width="50px" height="50px"/> Registros de Administradores</h5>
             <div class="card-body">
                 <div class="input-group mb-3 mt-2 p-2">
@@ -252,59 +268,114 @@
                 </div>
                 <div class="table-responsive" >
                     <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 500px">
-                        <table class="table table-striped-columns" style="height: 500px">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">ID Poblacion</th>
-                                    <th scope="col">Nombre Poblacion</th>
-                                    <th scope="col">Configuracion</th>
+
+                                    <th scope="col">ID Administrador</th>
+                                    <th>Tipo Documento</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Correo</th>
+                                    <th>Telefono</th>
+                                    <th>Configuracion</th>
 
                                 </tr>
                             </thead>
                             <tbody>
+                                <%                                    for (Usuarios admin : ListaAdministradores) {
+                                %>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
+                                    <th><%=admin.getCedula()%></th>
+                                    <td><%=admin.getTipoDocID().getNombre()%></td>
+                                    <td><%=admin.getNombre()%></td>
+                                    <td><%=admin.getApellido()%></td>
+                                    <td><%=admin.getCorreo()%></td>
+                                    <td><%=admin.getTelefono()%></td>
+                                    <td><i class="fa-solid fa-gear fa-lg mx-5"type="button" data-bs-toggle="modal"
+                                           data-bs-target="#ModalModificacion" data-info = '{
+                                           "TipoDoc" : "<%=admin.getTipoDocID().getId()%>" ,
+                                           "Cedula" : "<%=admin.getCedula()%>",
+                                           "Nombre" : "<%=admin.getNombre()%>",
+                                           "Apellido" : "<%=admin.getApellido()%>",
+                                           "correo" : "<%=admin.getCorreo()%>" ,
+                                           "telefono" : "<%=admin.getTelefono()%>" 
+                                           }'></i></td>
 
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr> <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                </tr>
+                                <%                                    }
+                                %>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </section>
 
+    <!-- Modal -->
+    <div class="modal fade" id="ModalModificacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family: monospace">
+        <div class="modal-dialog modal-dialog-centered">
+            <form action="<%=request.getContextPath()%>/CrudAdministradores" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Datos Administradores</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Num_Cedula" class="form-label">N° Cedula</label>
+                                <input class="form-control" type="number" id="Num_Cedula" max="999999999999" name="Num_Cedula" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Tipo_Doc" class="form-label">Tipo Cedula</label>
+                                <select name="TipoDoc" class="form-select" id="Tipo_Doc">
+
+                                    <%
+                                        TipodocumentoJpaController controlTipoDoc = new TipodocumentoJpaController();
+                                        List<Tipodocumento> listaTipoDocumento = controlTipoDoc.findTipodocumentoEntities();
+                                        for (Tipodocumento TipoDoc : listaTipoDocumento) {
+
+                                    %>
+                                    <option value="<%=TipoDoc.getId()%>"><%=TipoDoc.getNombre()%></option>
+                                    <%
+
+                                        }
+                                    %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="Nombre" class="form-label">Nombre</label>
+                                <input class="form-control" type="text" maxlength="45" id="Nombre" name="Nombre" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Apellidos" class="form-label">Apellidos</label>
+                                <input class="form-control" type="text" maxlength="45" id="Apellidos" name="Apellidos"  required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Correo" class="form-label">Correo</label>
+                                <input class="form-control" type="email" maxlength="200" id="Correo" name="Correo" required>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="Telefono" class="form-label">Telefono</label>
+                                <input class="form-control" type="tel" max="9999999999" id="Telefono" name="Telefono" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" name="BtnAdmin" type="button" onclick="eliminar()"> Eliminar</button>
+                        <button class="btn btn-warning" name="BtnAdmin" value="BtnModificarAdmin"> Modificar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
 </body>
@@ -356,6 +427,117 @@
 
 
 
+<%            String res = request.getParameter("respuesta");
+
+    if (res != null) {
+        switch (res) {
+            case "Modifiacado":
+%>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header  text-white" style="background: #35C35D">
+            <strong class="me-auto ">Exito!!</strong>
+            <small>Ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Modificacion exitosa!!
+        </div>
+    </div>
+</div>
+<%
+        break;
+    case "SinCambios":
+
+%>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header  text-white" style="background: #35C35D">
+            <strong class="me-auto ">Upss!!</strong>
+            <small>Ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            No se han encontrado cambios!!
+        </div>
+    </div>
+</div>
+<%                        break;
+    case "eliminado":
+%>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header  text-white" style="background: #35C35D">
+            <strong class="me-auto ">Upss!!</strong>
+            <small>Ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Eliminado exitoso!!
+        </div>
+    </div>
+</div>
+
+<%
+        break;
+
+    case "AdminGuaradado":
+%>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header  text-white" style="background: #35C35D">
+            <strong class="me-auto ">Exito!!</strong>
+            <small>Ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Administrador guardado correctamente!!
+        </div>
+    </div>
+</div>
+<%
+        break;
+    case "CCRegistrada":
+
+%>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header  text-white" style="background: #35C35D">
+            <strong class="me-auto ">Upss!!</strong>
+            <small>Ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Cedula ya registrada
+        </div>
+    </div>
+</div>
+<%                    break;
+    case "ExitoSuperAdmin":
+%>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header  text-white" style="background: #35C35D">
+            <strong class="me-auto ">Exito!!</strong>
+            <small>Ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Super Admin registrado correctamente!!
+        </div>
+    </div>
+</div>
+<%
+                break;
+            default:
+                break;
+        }
+
+    }
+
+%>
+
+
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -368,7 +550,62 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/FiltradoTablas.js"></script>
+<script src="../JS/IniciarToast.js"></script>
 
-<%
-    }
+<script>
+
+                            function eliminar() {
+                                Swal.fire({
+                                    title: "Desea eliminar",
+                                    text: "¿Está seguro de eliminar este administrador?",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Si, Eliminar!"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Obtener el ID del documento
+                                        var documentoID = document.getElementById("Num_Cedula").value;
+                                        // Redirigir automáticamente a la página de eliminación con el ID del documento
+                                        window.location.href = "../CrudAdministradores?ID=" + documentoID + "&BtnAdmin=BtnEliminarAdmin";
+                                    }
+                                });
+                            }
+
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // Selecciona todos los botones "Editar" que tienen ciertos atributos específicos.
+        var editarButtons = document.querySelectorAll('i[data-bs-target="#ModalModificacion"][data-info*="TipoDoc"]');
+
+        // Método que llenará nuestro ventana emergente con la información del votante
+        function llenarModal(data) {
+            // Llena los campos del modal con los datos del votante
+            document.getElementById("Num_Cedula").value = data.Cedula;
+            document.getElementById("Tipo_Doc").value = data.TipoDoc;
+            document.getElementById("Nombre").value = data.Nombre;
+            document.getElementById("Apellidos").value = data.Apellido;
+            document.getElementById("Correo").value = data.correo;
+            document.getElementById("Telefono").value = data.telefono;
+        }
+
+        // Itera sobre cada botón "Editar".
+        editarButtons.forEach(function (button) {
+            // Agrega un evento de clic a cada botón "Editar".
+            button.addEventListener("click", function () {
+                // Obtiene la información del votante desde el atributo "data-info" en formato JSON.
+                // this.getAttribute("data-info") = De este boton al que se le dio click dame su data-info
+                var data = JSON.parse(this.getAttribute("data-info"));
+                // Con la data recibida del botón se llena el modal con su método
+                llenarModal(data);
+            });
+        });
+    });
+</script>
+
+
+<%    }
 %>

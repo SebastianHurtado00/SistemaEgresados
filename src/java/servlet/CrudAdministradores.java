@@ -7,6 +7,7 @@ package servlet;
 import Controladores.TipoPoblacionJpaController;
 import Controladores.TipodocumentoJpaController;
 import Controladores.UsuariosJpaController;
+import Controladores.exceptions.NonexistentEntityException;
 import Entidades.Tipodocumento;
 import Entidades.Usuarios;
 import java.io.IOException;
@@ -46,8 +47,16 @@ public class CrudAdministradores extends HttpServlet {
                 // res.print("Guardado de admin");
                 RegistroAdmin(request, response);
                 break;
+            case "BtnEliminarAdmin":
+                // res.print("Eliminado de admin");
+                EliminarAdmin(request, response);
+                break;
+            case "BtnModificarAdmin":
+                // res.print("Modificacion de admin");
+                modificarAdmin(request, response);
+                break;
             default:
-                throw new AssertionError();
+                break;
         }
     }
 
@@ -87,14 +96,108 @@ public class CrudAdministradores extends HttpServlet {
             try {
                 controlUsuarios.create(AdminGuardar);
                 MensajeUrl = "AdminGuaradado";
-                response.sendRedirect("Views/HomeSuperAdmin.jsp?respuesta=" + MensajeUrl);
+                String urlDeRetorno = request.getHeader("referer");
+                // Redirigimos a la página JSP que llamó al servlet
+
+// Verifica si la URL ya contiene un parámetro de respuesta
+                if (urlDeRetorno.contains("respuesta=")) {
+                    // Elimina el parámetro de respuesta existente de la URL
+                    urlDeRetorno = urlDeRetorno.replaceAll("[?&]respuesta=.*?(?:&|$)", "");
+                }
+
+// Ahora agrega el nuevo parámetro de respuesta
+                if (urlDeRetorno.contains("?")) {
+                    // La URL ya tiene una cadena de consulta, agrega el parámetro adecuadamente
+                    response.sendRedirect(urlDeRetorno + "&respuesta=" + MensajeUrl);
+                } else {
+                    // La URL no tiene una cadena de consulta, agrega el parámetro con "?"
+                    response.sendRedirect(urlDeRetorno + "?respuesta=" + MensajeUrl);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(CrudAdministradores.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } else {
             MensajeUrl = "CCRegistrada";
-            response.sendRedirect("Views/HomeSuperAdmin.jsp?respuesta=" + MensajeUrl);
+            String urlDeRetorno = request.getHeader("referer");
+// Verifica si la URL ya contiene un parámetro de respuesta
+            if (urlDeRetorno.contains("respuesta=")) {
+                // Elimina el parámetro de respuesta existente de la URL
+                urlDeRetorno = urlDeRetorno.replaceAll("[?&]respuesta=.*?(?:&|$)", "");
+            }
+
+// Ahora agrega el nuevo parámetro de respuesta
+            if (urlDeRetorno.contains("?")) {
+                // La URL ya tiene una cadena de consulta, agrega el parámetro adecuadamente
+                response.sendRedirect(urlDeRetorno + "&respuesta=" + MensajeUrl);
+            } else {
+                // La URL no tiene una cadena de consulta, agrega el parámetro con "?"
+                response.sendRedirect(urlDeRetorno + "?respuesta=" + MensajeUrl);
+            }
+        }
+
+    }
+
+    public void modificarAdmin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //Instanciamos controladores
+        TipodocumentoJpaController controlTipoDocumento = new TipodocumentoJpaController();
+        UsuariosJpaController controlUsuarios = new UsuariosJpaController();
+        Usuarios usuarioModificar = new Usuarios();
+        Usuarios usuariosValidar = new Usuarios();
+
+        // Obtenemos datos
+        int cedula = Integer.parseInt(request.getParameter("Num_Cedula"));
+        int IdTipoDoc = Integer.parseInt(request.getParameter("TipoDoc"));
+        String nombre = request.getParameter("Nombre");
+        String apellido = request.getParameter("Apellidos");
+        String correro = request.getParameter("Correo");
+        Long telefono = Long.parseLong(request.getParameter("Telefono"));
+
+        Tipodocumento tipoDocumentoSeleccionado = controlTipoDocumento.findTipodocumento(IdTipoDoc);
+
+        usuariosValidar = controlUsuarios.findUsuarios(cedula);
+
+        usuarioModificar.setCedula(cedula);
+        usuarioModificar.setNombre(nombre);
+        usuarioModificar.setApellido(apellido);
+        usuarioModificar.setCorreo(correro);
+        usuarioModificar.setTelefono(telefono);
+        usuarioModificar.setTipoDocID(tipoDocumentoSeleccionado);
+        usuarioModificar.setRol(usuarioModificar.getRol());
+        usuarioModificar.setPassword(usuariosValidar.getPassword());
+        PrintWriter res = response.getWriter();
+        String mensajeUrl;
+        if (usuariosValidar.equals(usuarioModificar)) {
+            //Iguales 
+            //res.print("Sin cambios");
+            mensajeUrl = "SinCambios";
+            response.sendRedirect("Views/ListadoAdministradores.jsp?respuesta=" + mensajeUrl);
+        } else {
+            try {
+
+                controlUsuarios.edit(usuarioModificar);
+                mensajeUrl = "Modifiacado";
+                response.sendRedirect("Views/ListadoAdministradores.jsp?respuesta=" + mensajeUrl);
+            } catch (Exception ex) {
+                Logger.getLogger(CrudAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public void EliminarAdmin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String mensajeUrl;
+        UsuariosJpaController controlUsuario = new UsuariosJpaController();
+        int id = Integer.parseInt(request.getParameter("ID"));
+
+        try {
+            controlUsuario.destroy(id);
+            mensajeUrl = "eliminado";
+            response.sendRedirect("Views/ListadoAdministradores.jsp?respuesta=" + mensajeUrl);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(CrudAdministradores.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

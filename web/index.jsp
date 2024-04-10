@@ -47,12 +47,11 @@
 
                         <div class="flex-sb-m w-full p-t-3 p-b-32 mb-4">
                             <div>
-                                <a href="#" class="txt1">
+                                <a type="button" data-bs-toggle="modal" data-bs-target="#ModalOlvidoContrasenha">
                                     ¿Olvido su contraseña?
                                 </a>
                             </div>
                         </div>
-
 
                         <div class="container-login100-form-btn">
                             <button value="action" name="BtnIngreso" class="login100-form-btn">
@@ -66,6 +65,33 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalOlvidoContrasenha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="<%=request.getContextPath()%>/RestablecimientosContrase_as">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-family: monospace">Ingrese su numero de documento</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mb-2">Se le sera enviado un correo(Al que se encuentra registrado con su usuario) que confirmara su identidad y hacer el restablecimiento de contraseña</p>
+                            <p class="mt-2">Si no tiene acceso a su correo registrado por favor contactar con bienestar</p>
+                            <img src="IMG/id-facial.webp" class="mb-1" alt="alt" width="30px" height="30px"/>
+                            <label for="numeroDocumentoCambio" class="form-label">N° Documento</label>
+                            <input type="number" name="numeroDocumentoCambio" id="numeroDocumentoCambio" class="form-control mb-3" max="99999999999" required>   
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button name="BtnRestablecer" value="RestablcerPasswordIndex" class="btn btn-success">Enviar correo de recuperacion</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
 
         <footer style="max-height: 160px; font-family: monospace; background-color: #35C35D">
             <div class="container-fluid">
@@ -114,7 +140,7 @@
         </footer>
 
         <%            String res = request.getParameter("respuesta");
-            
+
             if (res != null) {
                 switch (res) {
                     case "contrasenhaIncorrecta":
@@ -131,7 +157,7 @@
                 </div>
             </div>
         </div>
-        <%        
+        <%
                 break;
             case "UserNoExistente":
 
@@ -149,10 +175,26 @@
             </div>
         </div>
         <%                        break;
+            case "ContrasehaModificada":
+        %>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header  text-white" style="background: #35C35D">
+                    <strong class="me-auto ">Informacion!!</strong>
+                    <small>Ahora</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Se ha modificado su contraseña por favor vuelva a iniciar sesion!!
+                </div>
+            </div>
+        </div>
+        <%
+                        break;
                     default:
                         break;
                 }
-                
+
             }
 
         %>

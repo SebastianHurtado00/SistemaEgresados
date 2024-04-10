@@ -79,8 +79,23 @@ public class RegistroTemporalSuperAdmin extends HttpServlet {
             SuperAdminGuardar.setRol(1);
             try {
                 userController.create(SuperAdminGuardar);
-                MensajeUrl = "ExitoSuperAdmin";
-                response.sendRedirect("Views/HomeSuperAdmin.jsp?respuesta=" + MensajeUrl);
+                String mensajeUrl = "ExitoSuperAdmin";
+                String urlDeRetorno = request.getHeader("referer");
+
+// Verifica si la URL ya contiene un parámetro de respuesta
+                if (urlDeRetorno.contains("respuesta=")) {
+                    // Elimina el parámetro de respuesta existente de la URL
+                    urlDeRetorno = urlDeRetorno.replaceAll("[?&]respuesta=.*?(?:&|$)", "");
+                }
+
+// Ahora agrega el nuevo parámetro de respuesta
+                if (urlDeRetorno.contains("?")) {
+                    // La URL ya tiene una cadena de consulta, agrega el parámetro adecuadamente
+                    response.sendRedirect(urlDeRetorno + "&respuesta=" + mensajeUrl);
+                } else {
+                    // La URL no tiene una cadena de consulta, agrega el parámetro con "?"
+                    response.sendRedirect(urlDeRetorno + "?respuesta=" + mensajeUrl);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(RegistroTemporalSuperAdmin.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -88,7 +103,9 @@ public class RegistroTemporalSuperAdmin extends HttpServlet {
         } else {
 
             MensajeUrl = "CCRegistrada";
-            response.sendRedirect("Views/HomeSuperAdmin.jsp?respuesta=" + MensajeUrl);
+            String urlDeRetorno = request.getHeader("referer");
+            // Redirigimos a la página JSP que llamó al servlet
+            response.sendRedirect(urlDeRetorno + "?respuesta=" + MensajeUrl);
         }
 
     }

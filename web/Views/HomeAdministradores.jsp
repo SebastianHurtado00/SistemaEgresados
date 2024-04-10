@@ -62,11 +62,9 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="username-container">
-                                    <div class="notice-content" style="font-family: monospace;">
-                                        <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
-                                        <div class="text-center text-small text-gray mx-2">Admin</div>
-                                    </div>
+                                <div class="notice-content" style="font-family: monospace">
+                                    <div class="username text-small"><%=usuarioEntrante.getNombre()%></div>
+                                    <div class="text-center text-small text-gray">Admin</div>
                                 </div>
                             </button>
                             <ul class="dropdown-menu text-center" style="font-family: monospace">
@@ -103,7 +101,52 @@
             </div>
         </nav>
     </header>
+    <%
+        //Validacion de para que la contraseña no sea igual a la cedula
+        String DocStr = String.valueOf(usuarioEntrante.getCedula());
+        if (usuarioEntrante.DencryptarClave(usuarioEntrante.getPassword(), DocStr)) {
+    %>
+    <script>
 
+        $(document).ready(function () {
+            $('#ModalCambio').modal('show');
+        });
+    </script>
+
+    <%
+        }
+
+    %>
+    <!-- Modal cambio de contraseña -->
+    <div class="modal" id="ModalCambio" tabindex="-1" data-bs-backdrop="static">
+        <form action="<%=request.getContextPath()%>/RestablecimientosContrase_as" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Por seguridad su contraseña la debe actualizar</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <img src="../IMG/id-facial.webp" class="mb-1" alt="alt" width="30px" height="30px"/>
+                            <label for="numeroDocumento" class="form-label">N° Documento</label>
+                            <input type="text" name="numeroDocumentoCambio" id="numeroDocumentoCambio" value="<%=usuarioEntrante.getCedula()%>" class="form-control mb-3" readonly max="99999999999">
+
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="PasswordNueva" class="form-label">Contraseña nueva</label>
+                            <input type="password" name="PasswordNueva" id="PasswordNueva" class="form-control mb-3" maxlength="50" required="">
+
+                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
+                            <label for="ConfirmacionPassword" class="form-label">Confirmacion de contraseña</label>
+                            <input type="password" id="ConfirmacionPassword" name="ConfirmacionPassword" class="form-control mb-3" maxlength="50" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button value="RestablcerPasswordHome" name="BtnRestablecer" class="btn btn-success">Cambiar contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <body style="background: #F1F1F1">
         <section class="section-1">
             <h4 class="text-center py-5" data-aos="fade-up-right" data-aos-easing="linear" data-aos-duration="400" style="font-family: monospace">Sistema de Administracion de Egresados</h4>
@@ -239,13 +282,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>
 
 <script>
-                AOS.init();
+        AOS.init();
 </script>
 <%
     }
