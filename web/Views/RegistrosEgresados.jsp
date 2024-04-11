@@ -298,9 +298,19 @@
     <body style="background: #F1F1F1">
         <!--Formulario Egresados -->
         <section class="p-3" aty>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end  justify-content-sm-end">
-                <button class="btn btn-outline-success mt-4" type="button" style="font-family: monospace">Importar datos desde CSV <i class="fa-solid fa-file-import"></i></button>
+
+            <div class="col-md-12 d-md-flex justify-content-end justify-content-sm-end">
+                <form action="<%=request.getContextPath()%>/ManejoDeExcels" method="post" enctype="multipart/form-data">
+                    <div class="d-grid gap-2 ">
+                        <div class="input-group mb-2">
+                            <input type="file" class="form-control" name="csvFile" id="fileInput3" required="1" accept=".csv">
+                            <button name="BtnExcel" value="action" class="btn btn-outline-success" style="font-family: monospace" onclick="document.getElementById('inputArchivoExcel').click();">Importar datos desde Excel <i class="fa-solid fa-file-excel"></i></button>
+                        </div>
+                    </div>
+                </form>
             </div>
+
+
             <form action="<%=request.getContextPath()%>/RegistroEgresados" method="post">
                 <div class="card mb-5 mt-3 mx-auto" style="max-width: 900px ; min-width: 200px; font-family: monospace">
 
@@ -684,6 +694,38 @@
             </div>
             <div class="toast-body">
                 Super Admin registrado correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "Exito":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                La importacion del archivo CSV fue exitosa!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "fallo":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Error</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Revise su archivo CSV y su logica de llenado no se pudo subir el archivo!!
             </div>
         </div>
     </div>

@@ -80,7 +80,7 @@
                             <p class="mt-2">Si no tiene acceso a su correo registrado por favor contactar con bienestar</p>
                             <img src="IMG/id-facial.webp" class="mb-1" alt="alt" width="30px" height="30px"/>
                             <label for="numeroDocumentoCambio" class="form-label">N° Documento</label>
-                            <input type="number" name="numeroDocumentoCambio" id="numeroDocumentoCambio" class="form-control mb-3" max="99999999999" required>   
+                            <input type="number" name="numeroDocumentoCambio" id="numeroDocumentoCambio" class="form-control mb-3" max="9999999999" required>   
 
                         </div>
                         <div class="modal-footer">
@@ -190,7 +190,24 @@
             </div>
         </div>
         <%
+                break;
+            case "enviado":
+        %>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header  text-white" style="background: #35C35D">
+                    <strong class="me-auto ">Informacion!!</strong>
+                    <small>Ahora</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Se ha enviado a su correo los pasos para cambiar su contraseña!!
+                </div>
+            </div>
+        </div>
+        <%
                         break;
+                        
                     default:
                         break;
                 }

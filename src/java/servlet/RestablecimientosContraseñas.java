@@ -10,8 +10,12 @@ import Entidades.Egresado;
 import Entidades.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -54,8 +58,49 @@ public class RestablecimientosContraseñas extends HttpServlet {
             case "RestablcerPasswordIndex":
                 buscarCorreo(request, response);
                 break;
+            case "RestablecerNewPage":
+                restablecerPaswordUserHome(request, response);
+                break;
+            case "RestablercerAdmin":
+                restablecerAdmin(request, response);
+                break;
             default:
                 break;
+        }
+
+    }
+
+    public void restablecerAdmin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        UsuariosJpaController usuarioControl = new UsuariosJpaController();
+        Usuarios usuario = new Usuarios();
+        PrintWriter res = response.getWriter();
+
+        String cedulaStr = request.getParameter("CC");
+        String cedula = request.getParameter("cedula");
+        String MensajeUrl;
+        if (cedula == "" || cedulaStr == "") {
+            MensajeUrl = "Vacios";
+            response.sendRedirect("Views/RestablecimientoContrasehaEgresados.jsp?respuesta=" + MensajeUrl);
+        } else {
+            int Cc = Integer.parseInt(cedulaStr);
+            usuario = usuarioControl.findUsuarios(Cc);
+            if (usuario == null || usuario.getRol() != 2) {
+                MensajeUrl = "UsuarioNoValido";
+                response.sendRedirect("Views/RestablecimientoContrasehaEgresados.jsp?respuesta=" + MensajeUrl);
+            } else {
+                //Extraemos CC
+                String cedulaEncriptar = usuario.EncryptarClave(cedulaStr);
+                //Asignamos contraseña
+                usuario.setPassword(cedulaEncriptar);
+                try {
+                    usuarioControl.edit(usuario);
+                    MensajeUrl = "Exito";
+                    response.sendRedirect("Views/RestablecimientoContrasehaEgresados.jsp?respuesta=" + MensajeUrl);
+                } catch (Exception ex) {
+                    Logger.getLogger(RestablecimientosContraseñas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
 
     }
@@ -119,7 +164,6 @@ public class RestablecimientosContraseñas extends HttpServlet {
 
         // Aquí configuras los demás atributos del usuario según lo que necesites
         int cedula = usuario.getCedula();
-      
 
         // Crear instancias de los controladores JPA
         UsuariosJpaController controlUsuario = new UsuariosJpaController();
@@ -144,71 +188,84 @@ public class RestablecimientosContraseñas extends HttpServlet {
 
             if (!correoEnviado) {
                 // Si no se envió el correo, significa que no se encontró ninguna cédula
-                String mensaje = "noCedula";
+                String mensaje = "UserNoExistente";
                 response.sendRedirect("index.jsp?respuesta=" + mensaje);
             }
         } catch (Exception ex) {
             // Manejar cualquier excepción que pueda ocurrir durante la búsqueda
             ex.printStackTrace();
-            response.sendRedirect("error.jsp");
+            //response.sendRedirect("error.jsp");
         }
     }
 
-        private void enviarCorreo(String correoDestino, Usuarios usuario, HttpServletResponse response,
-                HttpServletRequest request) throws IOException {
-            String correoOrigen = "sebastiannavaja2006@gmail.com";
-            String password = "ndok qjog axmf ynhd";
+    private void enviarCorreo(String correoDestino, Usuarios usuario, HttpServletResponse response,
+            HttpServletRequest request) throws IOException {
+        String correoOrigen = "pruebasdevssc@gmail.com";
+        String password = "bike gsic nlfr lzna";
 
-            Properties properties = new Properties();
-            properties.put("mail.smtp.auth", "true");
-            properties.put("mail.smtp.starttls.enable", "true");
-            properties.put("mail.smtp.host", "smtp.gmail.com");
-            properties.put("mail.smtp.port", "587");
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
 
-            Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(correoOrigen, password);
-                }
-            });
-
-            try {
-                Message message = new MimeMessage(session);
-
-                message.setFrom(new InternetAddress(correoOrigen));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correoDestino));
-                message.setSubject("Recuperación de contraseña");
-
-                // Generar un token único para la URL de recuperación de contraseña
-                String token = UUID.randomUUID().toString(); // Generar un UUID aleatorio como token único
-
-                String url = "http://192.168.100.16:8080/SistemaEgresados/Views/RestablecerPassword.jsp?token=" + token
-                        + "&cedula=" + usuario.getCedula();
-
-                // Construir el contenido del mensaje con la URL única
-                String mensaje = "Hola,\n\nHemos recibido una solicitud para restablecer tu contraseña. "
-                        + "Si no solicitaste esto, puedes ignorar este correo.\n\n"
-                        + "Para cambiar tu contraseña, haz clic en el siguiente enlace:\n"
-                        + "<a href=\"" + url + "\" rel=\"noopener\">Cambiar contraseña</a>"
-                        + " Si tienes alguna pregunta, contáctanos.";
-
-                message.setContent(mensaje, "text/html");
-
-                // Enviar el correo electrónico
-                Transport.send(message);
-
-                // Redireccionar a la página de inicio con un mensaje de confirmación
-                String mensajeRedireccion = "enviado";
-                response.sendRedirect("index.jsp?respuesta=" + mensajeRedireccion);
-
-                // Mensajes de depuración
-                System.out.println("Correo enviado correctamente.");
-                System.out.println("URL de recuperación de contraseña: " + url);
-
-            } catch (MessagingException e) {
-                e.printStackTrace();
-                System.out.println("Error al enviar el correo: " + e.getMessage());
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(correoOrigen, password);
             }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+
+            message.setFrom(new InternetAddress(correoOrigen));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correoDestino));
+            message.setSubject("Recuperación de contraseña");
+
+            // Generar un token único para la URL de recuperación de contraseña
+            String token = UUID.randomUUID().toString(); // Generar un UUID aleatorio como token único
+
+            // Obtener la fecha y hora actual
+            LocalDateTime now = LocalDateTime.now();
+
+            // Convertir la fecha y hora actual a milisegundos
+            long nowMillis = now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+            // Definir la validez del token en minutos (1 minuto en este caso)
+            int validityMinutes = 1;
+
+            // Calcular la fecha y hora de expiración del token
+            long expirationMillis = nowMillis + (validityMinutes * 60 * 1000);
+
+            String url = "http://192.168.100.16:8080/SistemaEgresados/Views/RestablecerPassword.jsp?token=" + token
+                    + "&cedula=" + usuario.getCedula() + "&expiration=" + expirationMillis;
+            ;
+
+            // Construir el contenido del mensaje con la URL única
+            String mensaje = "Hola,\n\nHemos recibido una solicitud para restablecer tu contraseña. "
+                    + "Si no solicitaste esto, puedes ignorar este correo.\n\n"
+                    + "Para cambiar tu contraseña, haz clic en el siguiente enlace:\n"
+                    + "<a href=\"" + url + "\" rel=\"noopener\">Cambiar contraseña</a>"
+                    + " Si tienes alguna pregunta, contáctanos.(Tendra 5 minutos para realizar el cambio de la contraseña)";
+
+            message.setContent(mensaje, "text/html");
+
+            // Enviar el correo electrónico
+            Transport.send(message);
+
+            // Redireccionar a la página de inicio con un mensaje de confirmación
+            String mensajeRedireccion = "enviado";
+            response.sendRedirect("index.jsp?respuesta=" + mensajeRedireccion);
+
+            // Mensajes de depuración
+            System.out.println("Correo enviado correctamente.");
+            System.out.println("URL de recuperación de contraseña: " + url);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            System.out.println("Error al enviar el correo: " + e.getMessage());
         }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

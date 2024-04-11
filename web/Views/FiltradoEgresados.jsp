@@ -553,7 +553,7 @@
 
 
 
-                <div class="mx-auto">
+                <div class="mx-auto mt-3">
                     <button class="btn btn-outline-danger mb-2">Descargar Reporte PDF Filtrado <i class="fa-regular fa-file-pdf"></i></i></button>
                 </div>
             </div>
@@ -567,12 +567,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <label for="mensajeCorreo" class="form-label">Escriba un mensaje para los aprendices filtrados</label>
+                            <label for="mensajeCorreo" class="form-label">Escriba un mensaje para los Egresados filtrados</label>
                             <textarea id="id" name="name" rows="5" cols="10" class="form-control"></textarea>
                         </div>
                         <div class="modal-footer mt-3 mb-2">
 
-                            <i class="fa-regular fa-xl fa-paper-plane" style="color: #B197FC; margin-right: 5%"></i>
+                            <i  class="btn fa-regular fa-xl fa-paper-plane" style="color: #B197FC; margin-right: 5%"></i>
                         </div>
                     </div>
                 </div>

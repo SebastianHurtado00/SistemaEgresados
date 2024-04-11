@@ -267,38 +267,60 @@
         </div>
     </div>
 
+    <script>
+        function consultarVotante() {
+            var cedulaScript = document.getElementById("EgresadoCedula").value;
+            $.ajax(
+                    {
+                        type: "POST",
+                        url: "BusquedaEgresado.jsp",
+                        data: "cedula=" + cedulaScript,
+                        dataType: "html",
+                        success: function (data) {
+                            $("#DatosEgresados").empty();
+                            $("#DatosEgresados").append(data);
+                        }
+                    });
+
+        }
+    </script>
 
     <body style="background: #F1F1F1">
         <section>
 
             <div class="card mx-auto mt-5 mb-5" style="width: 50% ; min-width: 250px; font-family: monospace">
                 <h5 class="card-title text-center mt-3"> <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/> Restablecimiento de contraseña</h5>
+
                 <div class="card-body">
-                    <div class="input-group mb-3">
-                        <input class="form-control" type="number" name="name" placeholder="Ingrese un numero de cedula">
-                        <button class="btn btn-outline-success">Buscar</button>
-                    </div>
-                    <div class="table-responsive mb-2" >
-                        <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 180px">
-                            <table class="table table-striped-columns " style="height: 100px">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">N° Cedula</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Apellido</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Campos del usuario encontrado -->
-                                </tbody>
-                            </table>
+                    <form action="<%=request.getContextPath()%>/RestablecimientosContrase_as" method="post">
+                        <div class="input-group mb-3">
+                            <input required="" id="EgresadoCedula" class="form-control" type="number" name="CC" placeholder="Ingrese un numero de cedula">
+                            <button type="button" class="btn btn-outline-success" onclick="consultarVotante()">Buscar</button>
                         </div>
-                    </div>
-                    <div class="d-grid gap-2 mx-auto mb-5">
-                        <button class="btn btn-outline-warning mx-auto ">Restablecer Contraseña</button>
-                    </div>
+                        <div class="table-responsive mb-2" >
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar p-2" style="height: 180px">
+                                <table class="table table-striped-columns " style="height: 100px">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">N° Cedula</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Campos del usuario encontrado -->
+                                        <tr id="DatosEgresados"></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mx-auto mb-5">
+                            <button name="BtnRestablecer" value="RestablercerAdmin" class="btn btn-outline-warning mx-auto" >Restablecer Contraseña</button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
         </section>
 
@@ -402,6 +424,55 @@
             </div>
             <div class="toast-body">
                 Super Admin registrado correctamente!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+        case "Vacios":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Campos Vacios!!
+            </div>
+        </div>
+    </div>
+    <%
+            break;
+
+        case "UsuarioNoValido":
+
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Upss!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Usuario No valido!!
+            </div>
+        </div>
+    </div>
+    <%                    break;
+        case "Exito":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Se ha restablecido la contraseña exitosamente!!
             </div>
         </div>
     </div>

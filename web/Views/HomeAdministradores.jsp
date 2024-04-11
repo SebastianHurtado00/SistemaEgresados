@@ -135,7 +135,7 @@
                             <label for="PasswordNueva" class="form-label">Contraseña nueva</label>
                             <input type="password" name="PasswordNueva" id="PasswordNueva" class="form-control mb-3" maxlength="50" required="">
 
-                            <img src="../IMG/establecer-la-contrasena.webp" alt="alt" width="30px" height="30px"/>
+                            <img src="../IMG/contrasena.png" alt="alt" width="30px" height="30px"/>
                             <label for="ConfirmacionPassword" class="form-label">Confirmacion de contraseña</label>
                             <input type="password" id="ConfirmacionPassword" name="ConfirmacionPassword" class="form-control mb-3" maxlength="50" required="">
                         </div>

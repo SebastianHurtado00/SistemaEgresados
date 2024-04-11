@@ -4,8 +4,63 @@
     Author     : ASUS
 --%>
 
+<%@page import="java.time.ZoneId"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+// Obtener la URL base
+    String urlBase = request.getRequestURL().toString();
+
+// Obtener la cadena de consulta (parámetros)
+    String queryString = request.getQueryString();
+
+// Combinar la URL base y la cadena de consulta para obtener la URL completa
+    String urlCompleta = urlBase + (queryString != null ? "?" + queryString : "");
+
+// Almacenar la URL completa en la sesión
+    HttpSession session1 = request.getSession();
+    session1.setAttribute("urlAnterior", urlCompleta);
+
+// Recuperar el token de la URL
+    String tokenFromURL = request.getParameter("token");
+
+// Recuperar la cédula del usuario de la URL
+    int cedula2 = 0; // Inicializamos la cédula a 0 por defecto
+    try {
+        cedula2 = Integer.parseInt(request.getParameter("cedula"));
+    } catch (NumberFormatException e) {
+        // Manejo de error si la cédula no se puede convertir a entero
+        e.printStackTrace();
+    }
+
+// Almacenar el token en la sesión
+    session1.setAttribute("sesionToken", tokenFromURL);
+
+// Verificar si el token es nulo o si ha expirado
+    if (tokenFromURL == null) {
+        // Si el token es nulo, redirigir al usuario a la página de inicio
+        response.sendRedirect("../index.jsp");
+    } else {
+        // Obtener la fecha de expiración del token en milisegundos desde la época
+        long expirationMillis = Long.parseLong(request.getParameter("expiration"));
+
+        // Obtener la fecha y hora actual
+        LocalDateTime now = LocalDateTime.now();
+
+        // Convertir la fecha y hora actual a milisegundos
+        long nowMillis = now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+        System.out.println("className.methodName()" + nowMillis);
+
+        // Verificar si el token ha expirado
+        if (nowMillis > expirationMillis) {
+            // Si el token ha expirado, redirigir al usuario a la página de inicio
+            response.sendRedirect("../index.jsp");
+        } else {
+            // El token es válido, continuar con el proceso de cambio de contraseña
+%>
+
 <html>
     <head>
         <title>Restablecer contraseña</title>
@@ -27,55 +82,55 @@
         <!-- Demo header-->
         <section class="section-0 d-flex justify-content-between">
             <h2 class="text-start mt-4" style="margin-left: 7px; font-family: serif">Regional Sucre</h2>
-            <img  src="../IMG/Logo_Sena_Sin_Fondo.png" width="150px" height="200px" alt="alt" class="align-self-end img-fluid "/> 
+            <img src="../IMG/Logo_Sena_Sin_Fondo.png" width="150px" height="200px" alt="alt" class="align-self-end img-fluid"/>
         </section>
 
         <!--Menu-->
-        <header style="font-family: monospace" class="header sticky-top">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <header style="font-family: monospace" class="header">
+            <nav class="navbar navbar-expand-md bg-body-tertiary">
                 <div class="container-fluid d-flex justify-content-between align-items-center">
 
                     <!--Items del menu -->
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="RestablecerPassword.jsp">Redtablesca su contraseña</a>
+                                <a class="nav-link active" aria-current="page" href="RestablecerPassword.jsp">Restablezca su contraseña</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
-        <div class="container mb-5">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <div class="card mt-5 mb-5">
-                        <div class="card-header">
-                            <h5 class="card-title">Cambiar Contraseña</h5>
+
+        <div class="container">
+            <div class="card mt-5 mx-auto" style="max-width: 800px;">
+                <div class="card-header">
+                    <h5 class="card-title">Cambiar Contraseña</h5>
+                </div>
+                <div class="card-body">
+                    <form action="<%=request.getContextPath()%>/RestablecimientosContrase_as" method="post">
+                        <div class="mb-3">
+                            <label for="numeroDocumento" class="form-label">Número de Documento</label>
+                            <input type="text" class="form-control" id="numeroDocumento" value="<%=cedula2%>" name="numeroDocumentoCambio" readonly>
                         </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="numeroDocumento" class="form-label">Número de Documento</label>
-                                    <input type="text" class="form-control" id="numeroDocumento" readonly>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password1" class="form-label">Contraseña Actual</label>
-                                    <input type="password" class="form-control" id="password1" placeholder="Ingrese su contraseña actual">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password2" class="form-label">Nueva Contraseña</label>
-                                    <input type="password" class="form-control" id="password2" placeholder="Ingrese su nueva contraseña">
-                                </div>
-                                <button type="submit" class="btn btn-success mt-2">Cambiar Contraseña</button>
-                            </form>
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">Contraseña Nueva</label>
+                            <input type="password" class="form-control" name="PasswordNueva" id="password1" placeholder="Ingrese su contraseña actual" required>
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <label for="password2" class="form-label">Confirmar Contraseña</label>
+                            <input type="password" class="form-control" name="ConfirmacionPassword" id="password2" placeholder="Ingrese su nueva contraseña" required>
+                        </div>
+                        <button value="RestablecerNewPage" name="BtnRestablecer" class="btn btn-success mt-2">Cambiar Contraseña</button>
+                    </form>
                 </div>
             </div>
         </div>
+
+
+
     </body>
-    <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D">
+    <footer style="max-height: 160px; font-family: monospace; text-decoration: black; background-color: #35C35D" class="position-fixed bottom-0 w-100">
         <div class="container-fluid">
             <!--Row Principal-->
             <div class="row">
@@ -119,5 +174,14 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer>   
 </html>
+
+<%
+        }
+    }
+// Establecer encabezados para evitar el almacenamiento en caché de la página
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setHeader("Expires", "0");
+%>
