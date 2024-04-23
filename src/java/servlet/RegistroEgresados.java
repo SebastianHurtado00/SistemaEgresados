@@ -62,7 +62,8 @@ public class RegistroEgresados extends HttpServlet {
                 throw new AssertionError();
         }
     }
-
+    
+   
     public void GuardadarDatosEgresado(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

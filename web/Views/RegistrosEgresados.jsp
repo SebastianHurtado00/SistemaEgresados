@@ -416,7 +416,7 @@
                                     <div class = "col-md-6">
                                         <img src="../IMG/atencion-al-cliente.webp" alt="alt" width="30px" height="30px"/>
                                         <label for="numContacto" class="form-label mx-auto">Número de Contacto</label>
-                                        <input type="tel" name="numContacto" id="numContacto" class="form-control mb-3">
+                                        <input type="number" name="numContacto" id="numContacto" class="form-control mb-3">
                                     </div>
                                     <div class = "col-md-3">
                                     </div>

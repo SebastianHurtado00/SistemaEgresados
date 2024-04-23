@@ -19,6 +19,7 @@ import Entidades.Sede;
 import Entidades.Sexo;
 import Entidades.TipoPoblacion;
 import Entidades.Tipodocumento;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -31,7 +32,7 @@ import javax.persistence.Persistence;
 public class EgresadoJpaController implements Serializable {
 
     public EgresadoJpaController() {
-         this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
+        this.emf = Persistence.createEntityManagerFactory("SistemaEgresadosPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -118,6 +119,53 @@ public class EgresadoJpaController implements Serializable {
             if (em != null) {
                 em.close();
             }
+        }
+    }
+
+    public List<String> obtenerCorreosFiltrados(int sexo, int sede, int formacion, int experiencia, int laborando, int ciudad) {
+        EntityManager em = getEntityManager();
+        try {
+            StringBuilder jpql = new StringBuilder("SELECT e.correo FROM Egresado e WHERE 1=1");
+            if (sexo != 0) {
+                jpql.append(" AND e.sexoID.id = :sexo");
+            }
+            if (sede != 0) {
+                jpql.append(" AND e.sedeID.id = :sede");
+            }
+            if (formacion != 0) {
+                jpql.append(" AND e.formacionID.id = :formacion");
+            }
+            if (experiencia != 0) {
+                jpql.append(" AND e.experiencia = :experiencia");
+            }
+            if (laborando != 0) {
+                jpql.append(" AND e.laborando = :laborando");
+            }
+            if (ciudad != 0) {
+                jpql.append(" AND e.ciudadID.id = :ciudad");
+            }
+            Query query = em.createQuery(jpql.toString());
+            if (sexo != 0) {
+                query.setParameter("sexo", sexo);
+            }
+            if (sede != 0) {
+                query.setParameter("sede", sede);
+            }
+            if (formacion != 0) {
+                query.setParameter("formacion", formacion);
+            }
+            if (experiencia != 0) {
+                query.setParameter("experiencia", experiencia);
+            }
+            if (laborando != 0) {
+                query.setParameter("laborando", laborando);
+            }
+            if (ciudad != 0) {
+                query.setParameter("ciudad", ciudad);
+            }
+            return query.getResultList();
+        } finally {
+            em.close();
         }
     }
 
@@ -344,5 +392,5 @@ public class EgresadoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

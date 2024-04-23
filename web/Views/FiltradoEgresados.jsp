@@ -4,6 +4,9 @@
     Author     : ASUS
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.json.JSONArray"%>
+<%@page import="org.json.JSONObject"%>
 <%@page import="Controladores.EgresadoJpaController"%>
 <%@page import="Entidades.Egresado"%>
 <%@page import="Entidades.Formacion"%>
@@ -301,8 +304,9 @@
 
         <section class="mt-3 p-5">
             <div class="card mx-auto p-2" style="font-family: monospace" >
-                <h5 class="card-title text-center mt-4" > <img src="../IMG/formacion.webp" alt="alt" width="30px" height="30px"/> Filtrado de egresados</h5>
-                <div class="input-group mb-3 mt-2 p-2">
+                <h5 class="card-title text-center mt-4 mb-4" > <img src="../IMG/formacion.webp" alt="alt" width="30px" height="30px"/> Filtrado de egresados</h5>
+                <!-- Input de filtrado de oculto -->
+                <div class="input-group mb-3 mt-2 p-2" style="display: none">
                     <i id="start-btn" class="fa-solid fa-microphone-lines btn btn-success py-3" onclick="voz()"></i>
                     <input type="text" class="form-control" placeholder="Busqueda de Egresados"
                            name="Dato_User" id="filtro">
@@ -377,7 +381,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="table-responsive" >
+                <div class="table-responsive" style="height: 300px" >
                     <div class="table-wrapper-scroll-y my-custom-scrollbar p-2">
                         <table id="miTabla" class="table table-striped">
                             <thead>
@@ -529,15 +533,15 @@
                     </div>
                 </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end justify-content-sm-end mt-2 " style="margin-right: 2%">
-                    <button class="correos" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end justify-content-sm-end mt-4  text-center" style="margin-right: 2%">
+                    <button id="obtenerCorreosButton" class="correos" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <div class="svg-wrapper-1">
                             <div class="svg-wrapper">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
-                                    width="24"
-                                    height="24"
+                                    width="20"
+                                    height="20"
                                     >
                                 <path fill="none" d="M0 0h24v24H0z"></path>
                                 <path
@@ -553,32 +557,79 @@
 
 
 
-                <div class="mx-auto mt-3">
+                <div class="mx-auto mt-3" style="display: none">
                     <button class="btn btn-outline-danger mb-2">Descargar Reporte PDF Filtrado <i class="fa-regular fa-file-pdf"></i></i></button>
                 </div>
             </div>
 
+            <script>
+                $(document).ready(function () {
+                    $("#obtenerCorreosButton").click(function () {
+                        $.ajax({
+                            url: "../obtener_correos.jsp",
+                            type: "GET",
+                            data: {
+                                sexo: $("#sexo").val(),
+                                sede: $("#sede").val(),
+                                formacion: $("#formacion").val(),
+                                experiencia: $("#Experiencia").val(),
+                                laborando: $("#Laborando").val(),
+                                ciudad: $("#Ciudad").val()
+                            },
+                            success: function (data) {
+                                /// Handle the response from the server
+                                var emailsArray = JSON.parse(data); // Parsea el JSON en un array
+
+                                // Almacena los correos en un array
+                                var correos = [];
+                                for (var i = 0; i < emailsArray.length; i++) {
+                                    correos.push(emailsArray[i]);
+                                }
+
+                                // Puedes utilizar el array 'correos' como desees, por ejemplo, enviarlo a otra función
+                                console.log("Correos obtenidos:", correos);
+
+                                // Si necesitas usar 'correos' fuera de esta función, puedes guardarlo en un elemento de la página o en una variable global
+                                // Por ejemplo, guardar 'correos' en un elemento con ID 'listaCorreos'
+                                $("#listaCorreos").val(correos.join(", "));
+                            },
+                            error: function (xhr, status, error) {
+                                // Maneja el error
+                                console.log("Problemas en la obtencion de correos")
+                            }
+                        });
+                    });
+                });
+            </script>
+
+
+
+
+
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="font-family:monospace">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Enviar Correo Masivo</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <label for="mensajeCorreo" class="form-label">Escriba un mensaje para los Egresados filtrados</label>
-                            <textarea id="id" name="name" rows="5" cols="10" class="form-control"></textarea>
-                        </div>
-                        <div class="modal-footer mt-3 mb-2">
+                    <form action="<%=request.getContextPath()%>/SendEmails" method="post">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Enviar Correo Masivo</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" id="listaCorreos" name="ListaCorreos">
+                                <label>Asunto</label>
+                                <input type="text" name="asunto" class="form-control mb-2" required>
 
-                            <i  class="btn fa-regular fa-xl fa-paper-plane" style="color: #B197FC; margin-right: 5%"></i>
+                                <label for="mensajeCorreo" class="form-label">Escriba un mensaje para los Egresados filtrados</label>
+                                <textarea id="id" name="cuerpo" rows="5" cols="10" class="form-control" required></textarea>
+                            </div>
+                            <div class="modal-footer mt-3 mb-2">
+                                <button  name="sendEmails" value="action" class="btn fa-regular fa-xl fa-paper-plane" style="color: #B197FC; margin-right: 5%"></button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-
-
         </section>
     </body>
 
@@ -726,6 +777,23 @@
         </div>
     </div>
     <%
+            break;
+
+        case "envioExitoso":
+    %>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header  text-white" style="background: #35C35D">
+                <strong class="me-auto ">Exito!!</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Correos enviados exitosamente!!
+            </div>
+        </div>
+    </div>
+    <%
                     break;
                 default:
                     break;
@@ -754,24 +822,24 @@
 </html>
 <script>
 
-                                        function eliminar() {
-                                            Swal.fire({
-                                                title: "Desea eliminar",
-                                                text: "¿Está seguro de eliminar este Egresado?",
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#3085d6",
-                                                cancelButtonColor: "#d33",
-                                                confirmButtonText: "Si, Eliminar!"
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    // Obtener el ID del documento
-                                                    var documentoID = document.getElementById("numeroDocumentoModal").value;
-                                                    // Redirigir automáticamente a la página de eliminación con el ID del documento
-                                                    window.location.href = "../ModificacionEgresado?ID=" + documentoID + "&BtnEgresados=eliminar";
-                                                }
-                                            });
-                                        }
+                function eliminar() {
+                    Swal.fire({
+                        title: "Desea eliminar",
+                        text: "¿Está seguro de eliminar este Egresado?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Si, Eliminar!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Obtener el ID del documento
+                            var documentoID = document.getElementById("numeroDocumentoModal").value;
+                            // Redirigir automáticamente a la página de eliminación con el ID del documento
+                            window.location.href = "../ModificacionEgresado?ID=" + documentoID + "&BtnEgresados=eliminar";
+                        }
+                    });
+                }
 
 
 </script>
